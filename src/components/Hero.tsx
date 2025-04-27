@@ -10,7 +10,7 @@ const Hero = () => {
           The <span className="bg-gradient-to-r from-[#00D1A1] to-[#00B086] text-transparent bg-clip-text">AI Ad Agency</span> built for Small and Medium Size Business
         </h1>
         <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
-          No technical marketing knowledge required. Grow your business from little to big.
+          Launch ads and grow your business today. No technical marketing knowledge required. No waiting around for overpriced freelancer.
         </p>
         <div className="flex justify-center gap-4">
           <Button className="bg-bamboo-primary hover:bg-bamboo-secondary text-white text-lg px-8 py-6">
