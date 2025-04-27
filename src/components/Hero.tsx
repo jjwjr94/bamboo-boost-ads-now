@@ -17,9 +17,6 @@ const Hero = () => {
             Get Started
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
-        </div>
-        <p className="text-bamboo-navy mt-4">No upfront payment required</p>
-      </div>
     </div>
   );
 };
