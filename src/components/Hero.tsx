@@ -7,7 +7,7 @@ const Hero = () => {
     <div className="pt-32 pb-20 px-4">
       <div className="container mx-auto text-center">
         <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
-          The <span className="bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-transparent bg-clip-text">AI Ad Agency</span> built for Small and Medium Size Business
+          The <span className="bg-gradient-to-r from-[#00D1A1] to-[#3B4B75] text-transparent bg-clip-text">AI Ad Agency</span> built for Small and Medium Size Business
         </h1>
         <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
           No technical marketing knowledge required. Grow your business from little to big.
