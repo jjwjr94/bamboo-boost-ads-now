@@ -1,5 +1,5 @@
 
-import { Youtube, Facebook, TiktokIcon } from "lucide-react";
+import { Youtube, Facebook, Tiktok } from "lucide-react";
 
 const Platforms = () => {
   return (
@@ -18,7 +18,7 @@ const Platforms = () => {
             <span className="mt-2 text-lg font-medium">Meta</span>
           </div>
           <div className="flex flex-col items-center">
-            <TiktokIcon className="h-16 w-16 text-bamboo-primary" />
+            <Tiktok className="h-16 w-16 text-bamboo-primary" />
             <span className="mt-2 text-lg font-medium">TikTok</span>
           </div>
         </div>
