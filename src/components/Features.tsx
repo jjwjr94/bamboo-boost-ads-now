@@ -1,5 +1,4 @@
 
-import React from "react";
 import { Brain, ChartBar, Youtube, Facebook, DollarSign } from "lucide-react";
 
 type FeatureIcon = 
