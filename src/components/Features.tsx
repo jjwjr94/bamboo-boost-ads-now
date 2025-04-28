@@ -1,16 +1,11 @@
-
-import { DollarSign, ChartBar, Youtube, Facebook } from "lucide-react";
+import { Brain, ChartBar, Youtube, Facebook } from "lucide-react";
 
 const Features = () => {
   const features = [
     {
-      title: "0 Technical Knowledge Required",
+      title: "Zero Technical Knowledge Required",
       description: "No learning UIs, jargon or handholding freelancers.",
-      icon: () => (
-        <div className="flex items-center justify-center h-12 w-12 text-bamboo-primary text-3xl font-bold">
-          0
-        </div>
-      ),
+      icon: Brain,
     },
     {
       title: "Cross Channel",
