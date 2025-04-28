@@ -17,13 +17,15 @@ declare global {
   }
 }
 
+interface Message {
+  text?: string;
+  type: "assistant" | "action" | "user";
+  timestamp: Date;
+  showCalendly?: boolean;
+}
+
 const Chat = () => {
-  const [messages, setMessages] = useState<Array<{ 
-    text: string; 
-    type: "assistant" | "action" | "user"; 
-    timestamp: Date;
-    showCalendly?: boolean;
-  }>>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   
   const handleSendMessage = (e: React.FormEvent) => {
@@ -78,6 +80,7 @@ const Chat = () => {
     // Display schedule button message after 3 seconds
     const timer2 = setTimeout(() => {
       setMessages(prev => [...prev, { 
+        text: "", 
         type: "assistant", 
         showCalendly: true,
         timestamp: new Date()
@@ -129,7 +132,7 @@ const Chat = () => {
                       </TooltipContent>
                     </Tooltip>
                     <div className="bg-white p-4 rounded-lg rounded-tl-none max-w-[80%] shadow-sm border border-gray-100">
-                      <p className="text-bamboo-navy">{message.text}</p>
+                      {message.text && <p className="text-bamboo-navy">{message.text}</p>}
                       {message.showCalendly && (
                         <Button 
                           onClick={openCalendly}
