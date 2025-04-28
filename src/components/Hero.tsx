@@ -26,7 +26,7 @@ const Hero = () => {
             </span> built for Small and Medium Size Business
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto md:mx-0">
-            Launch ads and <span className="text-bamboo-primary">grow</span> your business today. No technical marketing knowledge required.
+            <span className="text-bamboo-primary">Launch ads</span> and <span className="text-bamboo-primary">grow</span> your business today. No technical marketing knowledge required.
           </p>
           <div className="flex justify-center md:justify-start gap-4">
             <Button className="bg-bamboo-primary hover:bg-bamboo-secondary text-white text-lg px-8 py-6">
