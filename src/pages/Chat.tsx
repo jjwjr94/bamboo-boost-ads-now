@@ -48,7 +48,7 @@ const Chat = () => {
                 {message.type === "assistant" ? (
                   <>
                     <Avatar className="h-10 w-10 border">
-                      <img src="/lovable-uploads/4983989c-4636-47bd-bab7-f66d5e9199d0.png" alt="Bamboo AI" />
+                      <img src="/lovable-uploads/ee7f1b89-e60e-4121-8fb6-dba324f20c21.png" alt="Bamboo AI" />
                     </Avatar>
                     <div className="bg-gray-100 p-4 rounded-lg rounded-tl-none max-w-[80%]">
                       <p className="text-bamboo-navy">{message.text}</p>
