@@ -1,4 +1,5 @@
 
+import React from "react";
 import { Brain, ChartBar, Youtube, Facebook, DollarSign } from "lucide-react";
 
 type FeatureIcon = 
@@ -52,10 +53,13 @@ const Features = () => {
           {features.map((feature, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
               {typeof feature.icon === 'function' ? (
-                React.isValidElement(feature.icon()) ? (
-                  feature.icon()
-                ) : (
+                // Check if it's a component function like Brain or a render function
+                feature.icon.prototype && feature.icon.prototype.isReactComponent ? (
+                  // It's a React component (Lucide icon)
                   <feature.icon className="h-12 w-12 text-bamboo-primary mb-4" />
+                ) : (
+                  // It's a regular function that returns JSX
+                  feature.icon()
                 )
               ) : (
                 <div>Icon Error</div>
