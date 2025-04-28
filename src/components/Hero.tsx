@@ -11,10 +11,23 @@ const Hero = () => {
 
   return (
     <div className="relative pt-24 pb-16 px-4 overflow-hidden">
+      
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img 
+          src="/Hero banner 4.svg" 
+          alt="Decorative bamboo background" 
+          className="w-full h-full object-cover"
+        />
+        {/* Optional slight dark overlay for better contrast */}
+        <div className="absolute inset-0 bg-black bg-opacity-20" />
+      </div>
+
+      {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10">
         
-        {/* Grey Background Box */}
-        <div className="bg-gray-500 bg-opacity-50 p-8 rounded-lg">
+        {/* Glassmorphism Grey Background Box */}
+        <div className="bg-gray-500 bg-opacity-30 backdrop-blur-md p-8 rounded-2xl shadow-lg">
           <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
             The <span className="relative">
               <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text">AI Ad Agency</span>
@@ -46,15 +59,6 @@ const Hero = () => {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
-        </div>
-
-        {/* Banner Image under Text */}
-        <div className="mt-12 w-full max-w-4xl">
-          <img 
-            src="/Hero banner 4.svg" 
-            alt="Decorative bamboo background" 
-            className="w-full h-auto object-contain"
-          />
         </div>
 
       </div>
