@@ -7,17 +7,17 @@ const Hero = () => {
     <div className="relative pt-32 pb-20 px-4 overflow-hidden">
       <div className="absolute inset-0 w-full h-full">
         <svg className="hero-bamboo w-full h-auto" width="1500" height="855" viewBox="0 0 1500 855" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g clipPath="url(#clip0_381_93)">
-            <g clipPath="url(#clip1_381_93)">
+          <g clip-path="url(#clip0_381_93)">
+            <g clip-path="url(#clip1_381_93)">
               <image href="/Hero banner (3).svg#clip1_381_93" width="375" height="855" />
             </g>
-            <g clipPath="url(#clip2_381_93)">
+            <g clip-path="url(#clip2_381_93)">
               <image href="/Hero banner (3).svg#clip2_381_93" width="375" height="855" x="375" />
             </g>
-            <g clipPath="url(#clip3_381_93)">
+            <g clip-path="url(#clip3_381_93)">
               <image href="/Hero banner (3).svg#clip3_381_93" width="375" height="855" x="750" />
             </g>
-            <g clipPath="url(#clip4_381_93)">
+            <g clip-path="url(#clip4_381_93)">
               <image href="/Hero banner (3).svg#clip4_381_93" width="375" height="853" x="1110" />
             </g>
           </g>
