@@ -6,7 +6,7 @@ const Hero = () => {
     <div className="relative pt-32 pb-20 px-4 overflow-hidden">
       <div className="absolute inset-0 w-full h-full">
         <img 
-          src="/Hero banner (3).svg" 
+          src="/Hero banner 4.svg" 
           alt="Decorative bamboo background"
           className="hero-bamboo w-full h-full object-cover"
         />
