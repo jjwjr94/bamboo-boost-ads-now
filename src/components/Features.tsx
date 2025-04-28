@@ -4,8 +4,8 @@ import { DollarSign, Users, ChartBar, MousePointer } from "lucide-react";
 const Features = () => {
   const features = [
     {
-      title: "No Technical Knowledge",
-      description: "Launch effective ad campaigns without any marketing expertise",
+      title: "XX",
+      description: "Launch ads where your audience is.",
       icon: MousePointer,
     },
     {
@@ -19,9 +19,9 @@ const Features = () => {
       icon: DollarSign,
     },
     {
-      title: "Built for SMBs",
-      description: "Tailored solutions for small and medium-sized businesses",
-      icon: Users,
+      title: "No Technical Knowledge",
+      description: "Launch effective ad campaigns without any marketing expertise",
+      icon: MousePointer,
     },
   ];
 
