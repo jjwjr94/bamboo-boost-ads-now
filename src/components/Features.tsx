@@ -4,8 +4,17 @@ import { DollarSign, ChartBar, Youtube, Facebook } from "lucide-react";
 const Features = () => {
   const features = [
     {
-      title: "Multi-Platform Advertising",
-      description: "Launch ads where your audience is.",
+      title: "0 Technical Knowledge Required",
+      description: "No learning UIs, jargon or handholding freelancers.",
+      icon: () => (
+        <div className="flex items-center justify-center h-12 w-12 text-bamboo-primary text-3xl font-bold">
+          0
+        </div>
+      ),
+    },
+    {
+      title: "Cross Channel",
+      description: "Launch ads across Google, YouTube, Meta, TikTok and more.",
       icon: () => (
         <div className="flex gap-4 items-center">
           <Youtube className="h-8 w-8 text-bamboo-primary" />
@@ -29,22 +38,13 @@ const Features = () => {
     },
     {
       title: "Drive Conversions",
-      description: "Grow your business with AI-powered targeting and optimization",
+      description: "Ads that lead to real business outcomes. Minimize wasted ad spend.",
       icon: ChartBar,
     },
     {
-      title: "Zero Upfront Costs",
-      description: "Start advertising with no initial investment required",
+      title: "Affordable Pricing",
+      description: "Pricing designed for Small and Medium Business.",
       icon: DollarSign,
-    },
-    {
-      title: "No Technical Knowledge",
-      description: "Launch effective ad campaigns without any marketing expertise",
-      icon: () => (
-        <div className="flex items-center justify-center h-12 w-12 text-bamboo-primary text-3xl font-bold">
-          0
-        </div>
-      ),
     },
   ];
 
