@@ -26,7 +26,7 @@ const Hero = () => {
             <img 
               src="/Hero banner 4.svg" 
               alt="Decorative bamboo background"
-              className="hero-bamboo w-full h-full"
+              className="hero-bamboo w-[150%] h-auto max-w-none"
             />
           </div>
         </div>
