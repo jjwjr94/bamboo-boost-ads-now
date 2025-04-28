@@ -18,7 +18,7 @@ const About = () => {
           </div>
           <div className="w-full md:w-3/4 space-y-8">
             <h2 className="text-3xl font-bold text-bamboo-navy">
-              Why I Started Bamboo
+             Story
             </h2>
             <div className="space-y-6 text-gray-600 leading-relaxed">
               <p>
