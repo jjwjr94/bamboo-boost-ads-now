@@ -1,13 +1,14 @@
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Linkedin, Twitter } from "lucide-react";
 
 const About = () => {
   return (
     <div className="py-24 px-4 bg-white">
       <div className="container mx-auto max-w-5xl">
         <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="w-full md:w-1/4 flex justify-center">
-            <Avatar className="w-32 h-32">
+          <div className="w-full md:w-1/4 flex flex-col items-center">
+            <Avatar className="w-32 h-32 mb-4">
               <AvatarImage
                 src="/lovable-uploads/ee7f1b89-e60e-4121-8fb6-dba324f20c21.png"
                 alt="Jay, founder of Bamboo"
@@ -15,6 +16,26 @@ const About = () => {
               />
               <AvatarFallback>JF</AvatarFallback>
             </Avatar>
+            <div className="flex gap-4 mt-2">
+              <a 
+                href="https://www.linkedin.com/in/james-jay-wong-6696567b/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-bamboo-primary transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={24} />
+              </a>
+              <a 
+                href="https://x.com/jayjeffwong" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-bamboo-primary transition-colors"
+                aria-label="X (Twitter)"
+              >
+                <Twitter size={24} />
+              </a>
+            </div>
           </div>
           <div className="w-full md:w-3/4 space-y-8">
             <h2 className="text-3xl font-bold text-bamboo-navy">
@@ -40,4 +61,3 @@ const About = () => {
 };
 
 export default About;
-
