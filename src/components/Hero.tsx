@@ -24,8 +24,8 @@ const Hero = () => {
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10">
         
-        {/* Light Gray Frosted Glass Box */}
-        <div className="bg-gray-100 bg-opacity-60 backdrop-blur-lg backdrop-saturate-150 p-10 rounded-2xl shadow-xl max-w-4xl">
+        {/* Solid Light Gray Box */}
+        <div className="bg-gray-50 p-10 rounded-2xl shadow-xl max-w-4xl">
           <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
             The <span className="relative">
               <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text">AI Ad Agency</span>
