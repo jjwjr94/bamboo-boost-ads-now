@@ -1,60 +1,55 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import BambooSVG from "./BambooSVG";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
-const Hero = () => {
-  const navigate = useNavigate();
-  
-  const handleGetStarted = () => {
-    navigate("/schedule");
-  };
+import { CheckCircle } from "lucide-react";
+
+const Features = () => {
+  const featuresList = [
+    {
+      title: "AI-Powered Ad Creation",
+      description: "Generate compelling ad copy and visuals tailored to your business using advanced AI algorithms."
+    },
+    {
+      title: "Campaign Automation",
+      description: "Set up and manage your advertising campaigns with minimal effort through smart automation."
+    },
+    {
+      title: "Performance Analytics",
+      description: "Track and analyze your ad performance with easy-to-understand metrics and insights."
+    },
+    {
+      title: "Multi-Platform Support",
+      description: "Launch campaigns across multiple social media and advertising platforms from a single dashboard."
+    }
+  ];
 
   return (
-    <div className="relative pt-24 pb-16 px-4 overflow-hidden">
-      <div className="container mx-auto flex flex-col md:flex-row items-center md:items-start">
-        <div className="w-full md:w-[75%] md:pr-8 text-center md:text-left mb-10 md:mb-0">
-          <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
-            The <span className="relative">
-              <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text">AI Ad Agency</span>
-              <svg className="absolute w-full h-3 left-0 -bottom-1" viewBox="0 0 100 8" preserveAspectRatio="none">
-                <path 
-                  d="M0,2 Q25,6 50,2 T100,2"
-                  fill="none"
-                  stroke="url(#gradient)"
-                  strokeWidth="3"
-                />
-                <defs>
-                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#00D1A1" />
-                    <stop offset="100%" stopColor="#5995ED" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </span> built for Small and Medium Size Business
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto md:mx-0">
-            <span className="text-bamboo-primary">Launch ads</span> and <span className="text-bamboo-primary">grow</span> your business today. No technical marketing knowledge required.
+    <section id="features" className="py-20 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-bamboo-navy mb-4">
+            Why Choose <span className="text-bamboo-primary">Bamboo AI</span>
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Our platform combines cutting-edge AI with intuitive design to make advertising simple and effective.
           </p>
-          <div className="flex justify-center md:justify-start gap-4">
-            <Button 
-              className="bg-bamboo-primary hover:bg-bamboo-secondary text-white text-lg px-8 py-6"
-              onClick={handleGetStarted}
-            >
-              Get Started
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
         </div>
-        <div className="w-full md:w-[25%] flex justify-center md:justify-end h-full">
-          <div className="h-[50vh] md:h-[60vh] max-h-[600px] w-full flex items-start">
-            <BambooSVG className="w-full h-full object-contain" />
-          </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {featuresList.map((feature, index) => (
+            <div 
+              key={index} 
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-100"
+            >
+              <div className="flex items-center mb-4">
+                <CheckCircle className="text-bamboo-primary mr-2" />
+                <h3 className="font-bold text-xl text-bamboo-navy">{feature.title}</h3>
+              </div>
+              <p className="text-gray-600">{feature.description}</p>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default Hero;
+export default Features;
