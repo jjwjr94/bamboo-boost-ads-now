@@ -1,5 +1,5 @@
 
-import { DollarSign, Users, ChartBar, Youtube, Facebook, Icons } from "lucide-react";
+import { DollarSign, Users, ChartBar, Youtube, Facebook } from "lucide-react";
 
 const Features = () => {
   const features = [
