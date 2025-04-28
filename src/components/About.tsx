@@ -7,7 +7,7 @@ const About = () => {
       <div className="container mx-auto max-w-5xl">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="w-full md:w-1/3 flex justify-center">
-            <Avatar className="w-64 h-64">
+            <Avatar className="w-32 h-32">
               <AvatarImage
                 src="/lovable-uploads/ee7f1b89-e60e-4121-8fb6-dba324f20c21.png"
                 alt="Jay, founder of Bamboo"
