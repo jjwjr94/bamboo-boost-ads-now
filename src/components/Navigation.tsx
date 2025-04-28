@@ -9,7 +9,7 @@ const Navigation = () => {
           <img 
             src="/lovable-uploads/4983989c-4636-47bd-bab7-f66d5e9199d0.png" 
             alt="Bamboo AI Logo" 
-            className="h-8" 
+            className="h-12" // Changed from h-8 to h-12 (50% increase)
           />
         </div>
         <div className="flex gap-4 items-center">
