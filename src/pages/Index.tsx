@@ -3,6 +3,7 @@ import Navigation from "../components/Navigation";
 import Hero from "../components/Hero";
 import Features from "../components/Features";
 import CampaignSteps from "../components/CampaignSteps";
+import AiTools from "../components/AiTools";
 import About from "../components/About";
 
 const Index = () => {
@@ -12,10 +13,10 @@ const Index = () => {
       <Hero />
       <Features />
       <CampaignSteps />
+      <AiTools />
       <About />
     </div>
   );
 };
 
 export default Index;
-
