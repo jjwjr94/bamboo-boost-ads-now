@@ -21,12 +21,12 @@ const Hero = () => {
             </Button>
           </div>
           
-          {/* Right column with SVG */}
+          {/* Right column with animated SVG */}
           <div className="relative hidden md:block">
             <img 
               src="/Hero banner 4.svg" 
               alt="Decorative bamboo background"
-              className="hero-bamboo w-full h-auto"
+              className="hero-bamboo w-full h-auto animate-in fade-in duration-1000"
             />
           </div>
         </div>
@@ -36,3 +36,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
