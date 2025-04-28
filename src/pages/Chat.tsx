@@ -3,19 +3,10 @@ import React, { useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
-import { Send, Calendar } from "lucide-react";
+import { Send, MessageSquare, Calendar } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
-
-// Define the Calendly interface to fix TypeScript error
-declare global {
-  interface Window {
-    Calendly?: {
-      initPopupWidget: (options: { url: string }) => void;
-    };
-  }
-}
 
 const Chat = () => {
   const [messages, setMessages] = useState<Array<{ 
@@ -108,29 +99,17 @@ const Chat = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       <Navigation />
       <div className="pt-24 pb-24 px-4 flex-grow overflow-y-auto">
         <div className="container mx-auto max-w-3xl">
           <div className="flex flex-col gap-6">
             {messages.map((message, index) => (
               <div key={index} className={`flex items-start gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500 ${
-                message.type === "user" ? "" : "flex-row-reverse"
+                message.type === "user" ? "flex-row-reverse" : ""
               }`}>
                 {message.type === "assistant" ? (
                   <>
-                    <div className="bg-bamboo-primary p-4 rounded-lg rounded-tr-none max-w-[80%]">
-                      <p className="text-white">{message.text}</p>
-                      {message.showCalendly && (
-                        <Button 
-                          onClick={openCalendly}
-                          className="mt-2 bg-white hover:bg-gray-100 text-bamboo-primary"
-                        >
-                          <Calendar className="h-4 w-4 mr-2" />
-                          Schedule time with me
-                        </Button>
-                      )}
-                    </div>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Avatar className="h-10 w-10 border">
@@ -141,9 +120,24 @@ const Chat = () => {
                         <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
                       </TooltipContent>
                     </Tooltip>
+                    <div className="bg-gray-100 p-4 rounded-lg rounded-tl-none max-w-[80%]">
+                      <p className="text-bamboo-navy">{message.text}</p>
+                      {message.showCalendly && (
+                        <Button 
+                          onClick={openCalendly}
+                          className="mt-2 bg-[#00d1a1] hover:bg-[#00b38a] text-white"
+                        >
+                          <Calendar className="h-4 w-4 mr-2" />
+                          Schedule time with me
+                        </Button>
+                      )}
+                    </div>
                   </>
                 ) : message.type === "user" ? (
                   <>
+                    <div className="bg-bamboo-primary p-4 rounded-lg rounded-tr-none max-w-[80%]">
+                      <p className="text-white">{message.text}</p>
+                    </div>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Avatar className="h-10 w-10 bg-bamboo-secondary text-white flex items-center justify-center">
@@ -154,9 +148,6 @@ const Chat = () => {
                         <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
                       </TooltipContent>
                     </Tooltip>
-                    <div className="bg-gray-100 p-4 rounded-lg rounded-tl-none max-w-[80%]">
-                      <p className="text-bamboo-navy">{message.text}</p>
-                    </div>
                   </>
                 ) : null}
               </div>
@@ -170,7 +161,7 @@ const Chat = () => {
         <div className="container mx-auto max-w-3xl">
           <form onSubmit={handleSendMessage} className="flex gap-2">
             <Input 
-              placeholder="Ask Lovable..." 
+              placeholder="Type your message..." 
               value={inputValue} 
               onChange={(e) => setInputValue(e.target.value)}
               className="flex-grow"
