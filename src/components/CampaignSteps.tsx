@@ -4,27 +4,27 @@ import { Compass, Brush, Settings, Tag, ChartLine } from "lucide-react";
 const steps = [
   {
     title: "Strategy & Planning",
-    description: "A 24/7 on-call CMO at your fingertips.",
+    description: "Define your target audience, objectives, and campaign strategy",
     icon: Compass,
   },
   {
     title: "Creative Production",
-    description: "Generate hundreds of creative variations in minutes. Like having dozens of creative agencies compete for your business.",
+    description: "Create engaging ads and content that resonate with your audience",
     icon: Brush,
   },
   {
     title: "Campaign Setup",
-    description: "Agent-led campaign creation. Marketing expert quality assured.",
+    description: "Configure and launch your campaigns across multiple platforms",
     icon: Settings,
   },
   {
     title: "Website Tagging",
-    description: "Automated pixel placement to measure and optimize to outcomes across channels.",
+    description: "Implement tracking to measure campaign performance accurately",
     icon: Tag,
   },
   {
     title: "Reporting & Optimization",
-    description: "Talk directly to your data. Simple weekly reports directly in your inbox.",
+    description: "Monitor results and optimize for better performance",
     icon: ChartLine,
   }
 ];
@@ -34,7 +34,7 @@ const CampaignSteps = () => {
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-bamboo-navy mb-12">
-          Launch Ads Today. No Waiting. 
+          Launch a Campaign Today
         </h2>
         <div className="relative">
           {/* Connecting line */}
