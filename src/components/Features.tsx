@@ -1,4 +1,5 @@
-import { Brain, ChartBar, Youtube, Facebook } from "lucide-react";
+
+import { Brain, ChartBar, Youtube, Facebook, DollarSign } from "lucide-react";
 
 const Features = () => {
   const features = [
