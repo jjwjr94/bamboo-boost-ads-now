@@ -43,7 +43,7 @@ const Chat = () => {
     // Simulate AI response after a delay
     setTimeout(() => {
       setMessages(prev => [...prev, { 
-        text: "Thanks for your message! To help you better, please book a kickoff call.", 
+        text: "Thanks for your message! To get started, please book a kickoff call.", 
         type: "assistant",
         timestamp: new Date()
       }]);
@@ -61,7 +61,7 @@ const Chat = () => {
   useEffect(() => {
     // Display first message immediately
     setMessages([{ 
-      text: "Welcome to Bamboo, the AI Ad Agency", 
+      text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency.", 
       type: "assistant",
       timestamp: new Date() 
     }]);
@@ -69,7 +69,7 @@ const Chat = () => {
     // Display second message after 1.5 seconds
     const timer1 = setTimeout(() => {
       setMessages(prev => [...prev, { 
-        text: "It's really important to me to learn about your business. Please book a one-time 30-minute kickoff meeting to get started.", 
+        text: "It's really important to me to learn about your business so your first campaign is a success. To get started, please book a 30-minute slot for us to chat.", 
         type: "assistant",
         timestamp: new Date() 
       }]);
@@ -79,7 +79,6 @@ const Chat = () => {
     const timer2 = setTimeout(() => {
       setMessages(prev => [...prev, { 
         type: "assistant", 
-        text: "Schedule time with me",
         showCalendly: true,
         timestamp: new Date()
       }]);
@@ -137,7 +136,7 @@ const Chat = () => {
                           className="mt-2 bg-bamboo-primary hover:bg-bamboo-secondary text-white"
                         >
                           <Calendar className="h-4 w-4 mr-2" />
-                          Schedule time with me
+                          Book a Meeting
                         </Button>
                       )}
                     </div>
