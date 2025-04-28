@@ -19,15 +19,13 @@ const Hero = () => {
           alt="Decorative bamboo background" 
           className="w-full h-full object-cover"
         />
-        {/* Optional slight dark overlay for better contrast */}
-        <div className="absolute inset-0 bg-black bg-opacity-20" />
       </div>
 
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10">
         
-        {/* Glassmorphism Grey Background Box */}
-        <div className="bg-gray-500 bg-opacity-30 backdrop-blur-md p-8 rounded-2xl shadow-lg">
+        {/* Light Glassmorphism Box */}
+        <div className="bg-white bg-opacity-40 backdrop-blur-lg backdrop-saturate-150 p-10 rounded-2xl shadow-xl max-w-3xl">
           <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
             The <span className="relative">
               <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text">AI Ad Agency</span>
@@ -47,7 +45,7 @@ const Hero = () => {
               </svg>
             </span> built for Small and Medium Size Business
           </h1>
-          <p className="text-xl md:text-2xl text-gray-100 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-800 mb-8">
             <span className="text-bamboo-primary">Launch ads</span> and <span className="text-bamboo-primary">grow</span> your business today. No technical marketing knowledge required.
           </p>
           <div className="flex justify-center gap-4">
