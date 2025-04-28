@@ -1,12 +1,17 @@
-
-import { DollarSign, Users, ChartBar, MousePointer } from "lucide-react";
+import { DollarSign, Users, ChartBar, MousePointer, Youtube, Facebook, Tiktok } from "lucide-react";
 
 const Features = () => {
   const features = [
     {
-      title: "XX",
+      title: "Multi-Platform Advertising",
       description: "Launch ads where your audience is.",
-      icon: MousePointer,
+      icon: () => (
+        <div className="flex gap-4 items-center">
+          <Youtube className="h-8 w-8 text-bamboo-primary" />
+          <Facebook className="h-8 w-8 text-bamboo-primary" />
+          <Tiktok className="h-8 w-8 text-bamboo-primary" />
+        </div>
+      ),
     },
     {
       title: "Drive Conversions",
@@ -31,7 +36,7 @@ const Features = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <feature.icon className="h-12 w-12 text-bamboo-primary mb-4" />
+              {typeof feature.icon === 'function' ? feature.icon() : <feature.icon className="h-12 w-12 text-bamboo-primary mb-4" />}
               <h3 className="text-xl font-semibold text-bamboo-navy mb-2">{feature.title}</h3>
               <p className="text-gray-600">{feature.description}</p>
             </div>
