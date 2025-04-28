@@ -118,22 +118,22 @@
   100% { transform: rotate(0deg); }
 }
 
-.hero-bamboo g[clip-path="url(#clip1_381_93)"] {
+.hero-bamboo g[clipPath="url(#clip1_381_93)"] {
   animation: slideUp 2.0s ease-out forwards, sway 6s ease-in-out infinite 2.0s;
   transform-origin: center bottom;
 }
 
-.hero-bamboo g[clip-path="url(#clip2_381_93)"] {
+.hero-bamboo g[clipPath="url(#clip2_381_93)"] {
   animation: slideUp 2.2s ease-out forwards, sway 6s ease-in-out infinite 2.2s;
   transform-origin: center bottom;
 }
 
-.hero-bamboo g[clip-path="url(#clip3_381_93)"] {
+.hero-bamboo g[clipPath="url(#clip3_381_93)"] {
   animation: slideUp 1.8s ease-out forwards, sway 6s ease-in-out infinite 1.8s;
   transform-origin: center bottom;
 }
 
-.hero-bamboo g[clip-path="url(#clip4_381_93)"] {
+.hero-bamboo g[clipPath="url(#clip4_381_93)"] {
   animation: slideUp 2.1s ease-out forwards, sway 6s ease-in-out infinite 2.1s;
   transform-origin: center bottom;
 }
