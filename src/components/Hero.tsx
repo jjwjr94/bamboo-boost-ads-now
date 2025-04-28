@@ -18,11 +18,11 @@ const Hero = () => {
       
       {/* Content Layer (z-20) */}
       <div className="container mx-auto text-center relative z-20">
-        <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
+        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
           The <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text">AI Ad Agency</span> built for Small and Medium Size Business
         </h1>
-        <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
-          Launch ads and grow your business today. No technical marketing knowledge required. No waiting around for overpriced freelancer.
+        <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto">
+          Launch ads and <span className="text-bamboo-primary">grow</span> your business today. No technical marketing knowledge required. No waiting around for <span className="text-bamboo-primary">overpriced</span> freelancer.
         </p>
         <div className="flex justify-center gap-4">
           <Button className="bg-bamboo-primary hover:bg-bamboo-secondary text-white text-lg px-8 py-6">
