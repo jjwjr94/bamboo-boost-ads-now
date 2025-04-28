@@ -2,14 +2,13 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import BambooSVG from "./BambooSVG";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const navigate = useNavigate();
   
   const handleGetStarted = () => {
-    navigate("/schedule");
+    navigate("/chat");
   };
 
   return (
