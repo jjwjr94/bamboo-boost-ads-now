@@ -1,9 +1,11 @@
 
 import Navigation from "../components/Navigation";
 import Hero from "../components/Hero";
-import Features from "../components/Features";
-import CampaignSteps from "../components/CampaignSteps";
 import AiTools from "../components/AiTools";
+import CampaignSteps from "../components/CampaignSteps";
+import Features from "../components/Features";
+
+
 import About from "../components/About";
 
 const Index = () => {
