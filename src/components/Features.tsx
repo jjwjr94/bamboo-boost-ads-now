@@ -52,13 +52,14 @@ const Features = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              {typeof feature.icon === 'function' ? (
-                // Check if it's a component function like Brain or a render function
-                feature.icon.prototype && feature.icon.prototype.isReactComponent ? (
-                  // It's a React component (Lucide icon)
+              {React.isValidElement(feature.icon) ? (
+                // It's already a React element
+                feature.icon
+              ) : typeof feature.icon === 'function' ? (
+                // It's a function that returns JSX or a Lucide icon component
+                typeof feature.icon.prototype?.isReactComponent !== 'undefined' ? (
                   <feature.icon className="h-12 w-12 text-bamboo-primary mb-4" />
                 ) : (
-                  // It's a regular function that returns JSX
                   feature.icon()
                 )
               ) : (

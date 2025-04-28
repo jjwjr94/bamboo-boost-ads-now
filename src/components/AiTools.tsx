@@ -1,5 +1,6 @@
 
 import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 
 interface ToolProps {
   name: string;
@@ -39,15 +40,22 @@ const tools = [
 ];
 
 const ToolLogo = ({ name, logo, className }: ToolProps) => (
-  <div className={cn("flex items-center justify-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow", className)}>
-    <div className="h-16 w-16 flex items-center justify-center">
-      <img 
-        src={logo} 
-        alt={`${name} logo`} 
-        className="max-h-full max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300" 
-      />
-    </div>
-  </div>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <div className={cn("flex items-center justify-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow", className)}>
+        <div className="h-16 w-16 flex items-center justify-center">
+          <img 
+            src={logo} 
+            alt={`${name} logo`} 
+            className="max-h-full max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300" 
+          />
+        </div>
+      </div>
+    </TooltipTrigger>
+    <TooltipContent side="bottom">
+      <p className="font-medium">{name}</p>
+    </TooltipContent>
+  </Tooltip>
 );
 
 const AiTools = () => {
@@ -58,11 +66,13 @@ const AiTools = () => {
           All AI Ads Tools from One Source
         </h2>
         
-        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
-          {tools.map((tool) => (
-            <ToolLogo key={tool.name} name={tool.name} logo={tool.logo} />
-          ))}
-        </div>
+        <TooltipProvider>
+          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
+            {tools.map((tool) => (
+              <ToolLogo key={tool.name} name={tool.name} logo={tool.logo} />
+            ))}
+          </div>
+        </TooltipProvider>
       </div>
     </section>
   );

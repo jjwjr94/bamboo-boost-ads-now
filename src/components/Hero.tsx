@@ -1,10 +1,12 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import BambooSVG from "./BambooSVG";
 
 const Hero = () => {
   return (
     <div className="relative pt-24 pb-16 px-4 overflow-hidden">
-      <div className="container mx-auto flex flex-col md:flex-row items-start">
+      <div className="container mx-auto flex flex-col md:flex-row items-center md:items-start">
         <div className="w-full md:w-[75%] md:pr-8 text-center md:text-left mb-10 md:mb-0">
           <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
             The <span className="relative">
@@ -35,12 +37,10 @@ const Hero = () => {
             </Button>
           </div>
         </div>
-        <div className="w-full md:w-[25%] flex justify-center md:justify-end">
-          <img 
-            src="/Hero banner 4.svg" 
-            alt="Animated bamboo stalks"
-            className="w-full max-h-[600px] object-contain" 
-          />
+        <div className="w-full md:w-[25%] flex justify-center md:justify-end h-full">
+          <div className="h-[50vh] md:h-[60vh] max-h-[600px] w-full flex items-start">
+            <BambooSVG className="w-full h-full object-contain" />
+          </div>
         </div>
       </div>
     </div>
