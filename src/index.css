@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -95,44 +94,8 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
-}
-
-/* Hero SVG Animations */
-@keyframes grow {
-  0% {
-    transform: scaleY(0);
-    transform-origin: bottom;
-    opacity: 0;
-  }
-  100% {
-    transform: scaleY(1);
-    transform-origin: bottom;
-    opacity: 1;
-  }
-}
-
-@keyframes sway {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(1deg); }
-  100% { transform: rotate(0deg); }
-}
-
-/* Animated bamboo sections */
-.bamboo-section-1 {
-  animation: grow 2s ease-out forwards, sway 6s ease-in-out infinite;
-}
-
-.bamboo-section-2 {
-  animation: grow 2s ease-out forwards 0.3s, sway 6s ease-in-out infinite 2.3s;
-}
-
-.bamboo-section-3 {
-  animation: grow 2s ease-out forwards 0.6s, sway 6s ease-in-out infinite 2.6s;
-}
-
-.bamboo-section-4 {
-  animation: grow 2s ease-out forwards 0.9s, sway 6s ease-in-out infinite 2.9s;
 }
