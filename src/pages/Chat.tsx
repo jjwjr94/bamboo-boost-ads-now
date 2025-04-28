@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
-import { Send, MessageSquare } from "lucide-react";
+import { Send, MessageSquare, Calendar } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
@@ -13,6 +13,7 @@ const Chat = () => {
     text: string; 
     type: "assistant" | "action" | "user"; 
     timestamp: Date;
+    showCalendly?: boolean;
   }>>([]);
   const [inputValue, setInputValue] = useState("");
   
@@ -40,9 +41,12 @@ const Chat = () => {
     }, 1000);
   };
 
-  const handleGetStarted = () => {
-    // The Calendly widget will handle this interaction now
-    // This function remains for any additional functionality needed
+  const openCalendly = () => {
+    if (window.Calendly) {
+      window.Calendly.initPopupWidget({
+        url: 'https://calendly.com/jayjeffwong/bamboo-intro'
+      });
+    }
   };
 
   useEffect(() => {
@@ -62,11 +66,12 @@ const Chat = () => {
       }]);
     }, 1500);
     
-    // Display get started button after 3 seconds
+    // Display schedule button message after 3 seconds
     const timer2 = setTimeout(() => {
       setMessages(prev => [...prev, { 
-        type: "action", 
-        text: "",
+        type: "assistant", 
+        text: "Schedule time with me",
+        showCalendly: true,
         timestamp: new Date()
       }]);
     }, 3000);
@@ -77,33 +82,19 @@ const Chat = () => {
     link.rel = "stylesheet";
     document.head.appendChild(link);
     
-    const script1 = document.createElement("script");
-    script1.src = "https://assets.calendly.com/assets/external/widget.js";
-    script1.async = true;
-    document.body.appendChild(script1);
-    
-    script1.onload = () => {
-      const script2 = document.createElement("script");
-      script2.text = `
-        Calendly.initBadgeWidget({
-          url: 'https://calendly.com/jayjeffwong/bamboo-intro',
-          text: 'Schedule time with me',
-          color: '#00d1a1',
-          textColor: '#ffffff'
-        });
-      `;
-      document.body.appendChild(script2);
-    };
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
     
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
       // Clean up scripts when component unmounts
       document.head.removeChild(link);
-      if (document.body.contains(script1)) {
-        document.body.removeChild(script1);
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
       }
-      // Note: script2 is difficult to clean up as it's dynamically created
     };
   }, []);
 
@@ -131,6 +122,15 @@ const Chat = () => {
                     </Tooltip>
                     <div className="bg-gray-100 p-4 rounded-lg rounded-tl-none max-w-[80%]">
                       <p className="text-bamboo-navy">{message.text}</p>
+                      {message.showCalendly && (
+                        <Button 
+                          onClick={openCalendly}
+                          className="mt-2 bg-[#00d1a1] hover:bg-[#00b38a] text-white"
+                        >
+                          <Calendar className="h-4 w-4 mr-2" />
+                          Schedule time with me
+                        </Button>
+                      )}
                     </div>
                   </>
                 ) : message.type === "user" ? (
@@ -149,12 +149,7 @@ const Chat = () => {
                       </TooltipContent>
                     </Tooltip>
                   </>
-                ) : (
-                  <div className="ml-14 mt-2">
-                    {/* Removed the button as Calendly popup will handle this now */}
-                    <div id="calendly-badge-container"></div>
-                  </div>
-                )}
+                ) : null}
               </div>
             ))}
           </div>
