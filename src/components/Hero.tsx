@@ -4,22 +4,18 @@ import { ArrowRight } from "lucide-react";
 const Hero = () => {
   return (
     <div className="relative pt-32 pb-20 px-4 overflow-hidden">
-      {/* Background Image Layer (z-0) */}
       <div className="absolute inset-0 w-full h-full">
-        <img 
-          src="/Hero banner 4.svg" 
-          alt="Decorative bamboo background"
-          className="hero-bamboo w-full h-full object-cover"
-        />
+        <div className="backdrop-blur-sm w-full h-full">
+          <img 
+            src="/Hero banner 4.svg" 
+            alt="Decorative bamboo background"
+            className="hero-bamboo w-full h-full object-cover"
+          />
+        </div>
       </div>
-      
-      {/* Dark Overlay Layer (z-10) */}
-      <div className="absolute inset-0 bg-black/30 z-10"></div>
-      
-      {/* Content Layer (z-20) */}
-      <div className="container mx-auto text-center relative z-20">
+      <div className="container mx-auto text-center relative z-10">
         <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
-          The <span className="bg-gradient-to-r from-[#FFB800] to-[#FFB800] text-transparent bg-clip-text">AI Ad Agency</span> built for Small and Medium Size Business
+          The <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text">AI Ad Agency</span> built for Small and Medium Size Business
         </h1>
         <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
           Launch ads and grow your business today. No technical marketing knowledge required. No waiting around for overpriced freelancer.
