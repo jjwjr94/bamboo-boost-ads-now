@@ -19,20 +19,11 @@ const Features = () => {
         <div className="flex gap-4 items-center">
           <Youtube className="h-8 w-8 text-bamboo-primary" />
           <Facebook className="h-8 w-8 text-bamboo-primary" />
-          <svg
-            className="h-8 w-8 text-bamboo-primary"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M9 12.18v0c0-4 1.558-8.18 6.18-8.18v0c4.622 0 6.18 4.18 6.18 8.18v0c0 4-1.558 8.18-6.18 8.18v0c-4.622 0-6.18-4.18-6.18-8.18z" />
-            <path d="M12 12l4 4.5" />
-            <path d="M12 12l-4 4.5" />
-            <path d="M12 8v4" />
-          </svg>
+          <img 
+            src="/lovable-uploads/057375d3-5b67-4b7d-9870-406f3d8b07e2.png" 
+            alt="TikTok"
+            className="h-8 w-8"
+          />
         </div>
       ),
     },
@@ -54,10 +45,11 @@ const Features = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              {typeof feature.icon === 'function' ? 
-                feature.icon() : 
+              {typeof feature.icon === 'function' ? (
+                <div className="mb-4">{feature.icon()}</div>
+              ) : (
                 <feature.icon className="h-12 w-12 text-bamboo-primary mb-4" />
-              }
+              )}
               <h3 className="text-xl font-semibold text-bamboo-navy mb-2">{feature.title}</h3>
               <p className="text-gray-600">{feature.description}</p>
             </div>
