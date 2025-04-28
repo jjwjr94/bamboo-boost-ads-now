@@ -4,17 +4,8 @@ import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
   return (
-    <div className="relative pt-16 md:pt-24 pb-20 px-4 overflow-hidden">
-      <div className="absolute inset-0 w-full h-full">
-        <div className="backdrop-blur-sm w-full h-full">
-          <img 
-            src="/Hero banner 4.svg" 
-            alt="Decorative bamboo background"
-            className="hero-bamboo w-full h-full object-cover opacity-50"
-          />
-        </div>
-      </div>
-      <div className="container mx-auto relative z-10">
+    <div className="relative pt-16 md:pt-24 pb-20 px-4">
+      <div className="container mx-auto">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Left column with text */}
           <div className="text-left">
@@ -30,12 +21,12 @@ const Hero = () => {
             </Button>
           </div>
           
-          {/* Right column with decorative image */}
+          {/* Right column with SVG */}
           <div className="relative hidden md:block">
             <img 
-              src={"/lovable-uploads/12ff5732-97a8-4200-b7c4-d5556837d824.png"}
-              alt="Decorative geometric shapes and patterns"
-              className="w-full h-auto"
+              src="/Hero banner 4.svg" 
+              alt="Decorative bamboo background"
+              className="hero-bamboo w-full h-auto"
             />
           </div>
         </div>
