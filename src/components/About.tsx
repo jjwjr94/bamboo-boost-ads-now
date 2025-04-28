@@ -1,4 +1,3 @@
-
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const About = () => {
@@ -6,7 +5,7 @@ const About = () => {
     <div className="py-24 px-4 bg-white">
       <div className="container mx-auto max-w-5xl">
         <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="w-full md:w-1/3 flex justify-center">
+          <div className="w-full md:w-1/4 flex justify-center">
             <Avatar className="w-32 h-32">
               <AvatarImage
                 src="/lovable-uploads/ee7f1b89-e60e-4121-8fb6-dba324f20c21.png"
@@ -16,11 +15,11 @@ const About = () => {
               <AvatarFallback>JF</AvatarFallback>
             </Avatar>
           </div>
-          <div className="w-full md:w-2/3 space-y-6">
+          <div className="w-full md:w-3/4 space-y-8">
             <h2 className="text-3xl font-bold text-bamboo-navy">
               Hi, I'm Jay, founder of Bamboo.
             </h2>
-            <div className="space-y-4 text-gray-600 leading-relaxed">
+            <div className="space-y-6 text-gray-600 leading-relaxed">
               <p>
                 I've spent the past decade in advertising product and operations, responsible for billions in ad spend across channels. Before Bamboo, I was Ad Product Lead at Roku and spent five years at a top agency working with Fortune 100 clients.
               </p>
