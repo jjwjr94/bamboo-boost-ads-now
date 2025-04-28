@@ -5,11 +5,13 @@ const Hero = () => {
   return (
     <div className="relative pt-32 pb-20 px-4 overflow-hidden">
       <div className="absolute inset-0 w-full h-full">
-        <img 
-          src="/Hero banner 4.svg" 
-          alt="Decorative bamboo background"
-          className="hero-bamboo w-full h-full object-cover"
-        />
+        <div className="backdrop-blur-sm w-full h-full">
+          <img 
+            src="/Hero banner 4.svg" 
+            alt="Decorative bamboo background"
+            className="hero-bamboo w-full h-full object-cover"
+          />
+        </div>
       </div>
       <div className="container mx-auto text-center relative z-10">
         <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
