@@ -55,7 +55,7 @@ const AiTools = () => {
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-bamboo-navy mb-12">
-          Get the Benefits of All State of the Art AI Advertising Tools in One Place
+          All AI Ads Tools from One Place.
         </h2>
         
         <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
