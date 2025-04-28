@@ -16,7 +16,7 @@ const Hero = () => {
           </h1>
           {/* Paragraph */}
           <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto md:mx-0">
-            Launch ads and <span className="text-bamboo-primary">grow</span> your business today. No technical marketing knowledge required. No waiting around for <span className="text-bamboo-primary">overpriced</span> freelancer.
+            Launch ads and <span className="text-bamboo-primary">grow</span> your business today. No technical marketing knowledge required.
           </p>
           {/* Button */}
           <div className="flex justify-center md:justify-start gap-4">
