@@ -2,8 +2,16 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import BambooSVG from "./BambooSVG";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+  
+  const handleGetStarted = () => {
+    navigate("/schedule");
+  };
+
   return (
     <div className="relative pt-24 pb-16 px-4 overflow-hidden">
       <div className="container mx-auto flex flex-col md:flex-row items-center md:items-start">
@@ -31,7 +39,10 @@ const Hero = () => {
             <span className="text-bamboo-primary">Launch ads</span> and <span className="text-bamboo-primary">grow</span> your business today. No technical marketing knowledge required.
           </p>
           <div className="flex justify-center md:justify-start gap-4">
-            <Button className="bg-bamboo-primary hover:bg-bamboo-secondary text-white text-lg px-8 py-6">
+            <Button 
+              className="bg-bamboo-primary hover:bg-bamboo-secondary text-white text-lg px-8 py-6"
+              onClick={handleGetStarted}
+            >
               Get Started
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

@@ -1,78 +1,60 @@
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import BambooSVG from "./BambooSVG";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import React from "react";
-import { Brain, ChartBar, Youtube, Facebook, DollarSign } from "lucide-react";
+const Hero = () => {
+  const navigate = useNavigate();
+  
+  const handleGetStarted = () => {
+    navigate("/schedule");
+  };
 
-type FeatureIcon = 
-  | React.ComponentType<React.SVGProps<SVGSVGElement>>
-  | (() => JSX.Element);
-
-interface Feature {
-  title: string;
-  description: string;
-  icon: FeatureIcon;
-}
-
-const features: Feature[] = [
-  {
-    title: "Zero Technical Knowledge Required",
-    description: "No learning UIs, jargon or handholding freelancers.",
-    icon: Brain,
-  },
-  {
-    title: "Cross Channel",
-    description: "Launch ads across Google, YouTube, Meta, TikTok and more.",
-    icon: () => (
-      <div className="flex gap-4 items-center">
-        <Youtube className="h-8 w-8 text-bamboo-primary" />
-        <Facebook className="h-8 w-8 text-bamboo-primary" />
-        <img 
-          src="/lovable-uploads/057375d3-5b67-4b7d-9870-406f3d8b07e2.png" 
-          alt="TikTok"
-          className="h-8 w-8"
-        />
-      </div>
-    ),
-  },
-  {
-    title: "Drive Conversions",
-    description: "Ads that lead to real business outcomes. Minimize wasted ad spend.",
-    icon: ChartBar,
-  },
-  {
-    title: "Affordable Pricing",
-    description: "Pricing designed for Small and Medium Business.",
-    icon: DollarSign,
-  },
-];
-
-const Features = () => {
   return (
-    <div className="bg-gray-50 py-20">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              {React.isValidElement(feature.icon) ? (
-                // It's already a React element
-                feature.icon
-              ) : typeof feature.icon === 'function' ? (
-                // It's a function that returns JSX or a Lucide icon component
-                typeof feature.icon.prototype?.isReactComponent !== 'undefined' ? (
-                  <feature.icon className="h-12 w-12 text-bamboo-primary mb-4" />
-                ) : (
-                  feature.icon()
-                )
-              ) : (
-                <div>Icon Error</div>
-              )}
-              <h3 className="text-xl font-semibold text-bamboo-navy mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
-            </div>
-          ))}
+    <div className="relative pt-24 pb-16 px-4 overflow-hidden">
+      <div className="container mx-auto flex flex-col md:flex-row items-center md:items-start">
+        <div className="w-full md:w-[75%] md:pr-8 text-center md:text-left mb-10 md:mb-0">
+          <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
+            The <span className="relative">
+              <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text">AI Ad Agency</span>
+              <svg className="absolute w-full h-3 left-0 -bottom-1" viewBox="0 0 100 8" preserveAspectRatio="none">
+                <path 
+                  d="M0,2 Q25,6 50,2 T100,2"
+                  fill="none"
+                  stroke="url(#gradient)"
+                  strokeWidth="3"
+                />
+                <defs>
+                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#00D1A1" />
+                    <stop offset="100%" stopColor="#5995ED" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span> built for Small and Medium Size Business
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto md:mx-0">
+            <span className="text-bamboo-primary">Launch ads</span> and <span className="text-bamboo-primary">grow</span> your business today. No technical marketing knowledge required.
+          </p>
+          <div className="flex justify-center md:justify-start gap-4">
+            <Button 
+              className="bg-bamboo-primary hover:bg-bamboo-secondary text-white text-lg px-8 py-6"
+              onClick={handleGetStarted}
+            >
+              Get Started
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+        <div className="w-full md:w-[25%] flex justify-center md:justify-end h-full">
+          <div className="h-[50vh] md:h-[60vh] max-h-[600px] w-full flex items-start">
+            <BambooSVG className="w-full h-full object-contain" />
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Features;
+export default Hero;
