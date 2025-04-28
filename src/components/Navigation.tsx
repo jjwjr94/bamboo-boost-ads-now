@@ -6,6 +6,7 @@ const Navigation = () => {
   return (
     <nav className="fixed w-full bg-white/90 backdrop-blur-sm z-50 border-b">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Logo */}
         <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <img 
             src="/lovable-uploads/4983989c-4636-47bd-bab7-f66d5e9199d0.png" 
@@ -13,12 +14,18 @@ const Navigation = () => {
             className="h-12" 
           />
         </Link>
+
+        {/* Center Navigation */}
         <div className="flex gap-4 items-center">
           <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">About</Button>
           <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Features</Button>
           <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Pricing</Button>
+        </div>
+        
+        {/* Right Navigation */}
+        <div className="flex gap-4 items-center">
           <Link to="/chat">
-            <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Chat</Button>
+            <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">App</Button>
           </Link>
           <Link to="/chat">
             <Button className="bg-bamboo-primary hover:bg-bamboo-secondary text-white">Get Started</Button>
