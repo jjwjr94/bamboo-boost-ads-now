@@ -17,6 +17,9 @@ const Navigation = () => {
           <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">About</Button>
           <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Features</Button>
           <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Pricing</Button>
+          <Link to="/chat">
+            <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Chat</Button>
+          </Link>
           <Button className="bg-bamboo-primary hover:bg-bamboo-secondary text-white">Get Started</Button>
         </div>
       </div>
