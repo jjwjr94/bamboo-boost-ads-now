@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
-import { ArrowRight, Send, MessageSquare } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Send, MessageSquare } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
@@ -16,12 +15,7 @@ const Chat = () => {
     timestamp: Date;
   }>>([]);
   const [inputValue, setInputValue] = useState("");
-  const navigate = useNavigate();
   
-  const handleGetStarted = () => {
-    navigate("/schedule");
-  };
-
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
@@ -44,6 +38,11 @@ const Chat = () => {
         timestamp: new Date()
       }]);
     }, 1000);
+  };
+
+  const handleGetStarted = () => {
+    // The Calendly widget will handle this interaction now
+    // This function remains for any additional functionality needed
   };
 
   useEffect(() => {
@@ -72,9 +71,39 @@ const Chat = () => {
       }]);
     }, 3000);
     
+    // Load Calendly widget
+    const link = document.createElement("link");
+    link.href = "https://assets.calendly.com/assets/external/widget.css";
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+    
+    const script1 = document.createElement("script");
+    script1.src = "https://assets.calendly.com/assets/external/widget.js";
+    script1.async = true;
+    document.body.appendChild(script1);
+    
+    script1.onload = () => {
+      const script2 = document.createElement("script");
+      script2.text = `
+        Calendly.initBadgeWidget({
+          url: 'https://calendly.com/jayjeffwong/bamboo-intro',
+          text: 'Schedule time with me',
+          color: '#00d1a1',
+          textColor: '#ffffff'
+        });
+      `;
+      document.body.appendChild(script2);
+    };
+    
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
+      // Clean up scripts when component unmounts
+      document.head.removeChild(link);
+      if (document.body.contains(script1)) {
+        document.body.removeChild(script1);
+      }
+      // Note: script2 is difficult to clean up as it's dynamically created
     };
   }, []);
 
@@ -122,13 +151,8 @@ const Chat = () => {
                   </>
                 ) : (
                   <div className="ml-14 mt-2">
-                    <Button 
-                      className="bg-bamboo-primary hover:bg-bamboo-secondary text-white text-lg px-6 py-5"
-                      onClick={handleGetStarted}
-                    >
-                      Get Started
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
+                    {/* Removed the button as Calendly popup will handle this now */}
+                    <div id="calendly-badge-container"></div>
                   </div>
                 )}
               </div>
