@@ -8,8 +8,8 @@ const Hero = () => {
       {/* Two-column layout container */}
       <div className="container mx-auto flex flex-col md:flex-row items-start">
         
-        {/* Left Column (Text Content - 80% width) */}
-        <div className="w-full md:w-[80%] md:pr-8 text-center md:text-left mb-10 md:mb-0">
+        {/* Left Column (Text Content - 75% width) */}
+        <div className="w-full md:w-[75%] md:pr-8 text-center md:text-left mb-10 md:mb-0">
           {/* Heading */}
           <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
             The <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text">AI Ad Agency</span> built for Small and Medium Size Business
@@ -27,8 +27,8 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Right Column (Bamboo SVG - 20% width) */}
-        <div className="w-full md:w-[20%] flex justify-center md:justify-end">
+        {/* Right Column (Bamboo SVG - 25% width) */}
+        <div className="w-full md:w-[25%] flex justify-center md:justify-end">
           {/* Using the existing Hero banner 4.svg file */}
           <img 
             src="/Hero banner 4.svg" 
