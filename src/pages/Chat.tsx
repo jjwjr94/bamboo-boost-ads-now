@@ -115,22 +115,10 @@ const Chat = () => {
           <div className="flex flex-col gap-6">
             {messages.map((message, index) => (
               <div key={index} className={`flex items-start gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500 ${
-                message.type === "user" ? "" : "flex-row-reverse"
+                message.type === "user" ? "justify-end" : "justify-start"
               }`}>
                 {message.type === "assistant" ? (
                   <>
-                    <div className="bg-bamboo-primary p-4 rounded-lg rounded-tr-none max-w-[80%]">
-                      <p className="text-white">{message.text}</p>
-                      {message.showCalendly && (
-                        <Button 
-                          onClick={openCalendly}
-                          className="mt-2 bg-white hover:bg-gray-100 text-bamboo-primary"
-                        >
-                          <Calendar className="h-4 w-4 mr-2" />
-                          Schedule time with me
-                        </Button>
-                      )}
-                    </div>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Avatar className="h-10 w-10 border">
@@ -141,9 +129,24 @@ const Chat = () => {
                         <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
                       </TooltipContent>
                     </Tooltip>
+                    <div className="bg-white p-4 rounded-lg rounded-tl-none max-w-[80%] shadow-sm border border-gray-100">
+                      <p className="text-bamboo-navy">{message.text}</p>
+                      {message.showCalendly && (
+                        <Button 
+                          onClick={openCalendly}
+                          className="mt-2 bg-bamboo-primary hover:bg-bamboo-secondary text-white"
+                        >
+                          <Calendar className="h-4 w-4 mr-2" />
+                          Schedule time with me
+                        </Button>
+                      )}
+                    </div>
                   </>
                 ) : message.type === "user" ? (
                   <>
+                    <div className="bg-white p-4 rounded-lg rounded-tr-none max-w-[80%] shadow-sm border border-gray-100">
+                      <p className="text-bamboo-navy">{message.text}</p>
+                    </div>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Avatar className="h-10 w-10 bg-bamboo-secondary text-white flex items-center justify-center">
@@ -154,9 +157,6 @@ const Chat = () => {
                         <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
                       </TooltipContent>
                     </Tooltip>
-                    <div className="bg-gray-100 p-4 rounded-lg rounded-tl-none max-w-[80%]">
-                      <p className="text-bamboo-navy">{message.text}</p>
-                    </div>
                   </>
                 ) : null}
               </div>
@@ -178,9 +178,9 @@ const Chat = () => {
             <Button 
               type="submit" 
               className="bg-bamboo-primary hover:bg-bamboo-secondary text-white"
+              size="icon"
             >
-              <Send className="h-4 w-4 mr-2" />
-              Send
+              <Send className="h-4 w-4" />
             </Button>
           </form>
         </div>
