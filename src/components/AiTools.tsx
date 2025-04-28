@@ -9,23 +9,23 @@ interface ToolProps {
 
 const tools = [
   {
-    name: "Anthropic",
+    name: "ArcAds",
     logo: "/lovable-uploads/05db8896-5f4d-4c11-96b8-a51df3f422c0.png",
   },
   {
-    name: "Builder.ai",
+    name: "Billo",
     logo: "/lovable-uploads/3ec659bd-36d5-4a17-87b4-6c0a6782352b.png",
   },
   {
-    name: "Omneky",
+    name: "Icon",
     logo: "/lovable-uploads/0f7ef381-cd49-4568-b2a9-2e4c76924003.png",
   },
   {
-    name: "Jasper",
+    name: "AdCreative.ai",
     logo: "/lovable-uploads/6d16446a-d0d4-4f1f-8787-f003a1dc57f3.png",
   },
   {
-    name: "Midjourney",
+    name: "Foreplay",
     logo: "/lovable-uploads/4e39041b-a8ef-46be-ad5d-d55ef2aae10a.png",
   },
   {
@@ -33,7 +33,7 @@ const tools = [
     logo: "/lovable-uploads/25b82aba-2dcb-4a3a-816f-be13c379451b.png",
   },
   {
-    name: "Munch",
+    name: "MakeUGC",
     logo: "/lovable-uploads/98dc43a2-a5b8-4cfa-8246-e57f6cd80a3a.png",
   },
 ];
