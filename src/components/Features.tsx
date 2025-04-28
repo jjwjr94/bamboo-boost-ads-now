@@ -1,4 +1,4 @@
-import { DollarSign, Users, ChartBar, MousePointer, Youtube, Facebook, Tiktok } from "lucide-react";
+import { DollarSign, Users, ChartBar, Youtube, Facebook, Tiktok } from "lucide-react";
 
 const Features = () => {
   const features = [
@@ -26,7 +26,7 @@ const Features = () => {
     {
       title: "No Technical Knowledge",
       description: "Launch effective ad campaigns without any marketing expertise",
-      icon: MousePointer,
+      icon: Users,
     },
   ];
 
