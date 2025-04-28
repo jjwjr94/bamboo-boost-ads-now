@@ -1,5 +1,5 @@
 
-import { DollarSign, Users, ChartBar, Youtube, Facebook } from "lucide-react";
+import { DollarSign, ChartBar, Youtube, Facebook } from "lucide-react";
 
 const Features = () => {
   const features = [
@@ -40,7 +40,11 @@ const Features = () => {
     {
       title: "No Technical Knowledge",
       description: "Launch effective ad campaigns without any marketing expertise",
-      icon: Users,
+      icon: () => (
+        <div className="flex items-center justify-center h-12 w-12 text-bamboo-primary text-3xl font-bold">
+          0
+        </div>
+      ),
     },
   ];
 
