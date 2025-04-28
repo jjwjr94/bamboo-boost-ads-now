@@ -1,3 +1,4 @@
+
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const About = () => {
@@ -17,10 +18,11 @@ const About = () => {
           </div>
           <div className="w-full md:w-3/4 space-y-8">
             <h2 className="text-3xl font-bold text-bamboo-navy">
-              Hi, I'm Jay, founder of Bamboo.
+              Why I Started Bamboo
             </h2>
             <div className="space-y-6 text-gray-600 leading-relaxed">
               <p>
+                Hi, I'm Jay, founder of Bamboo.
                 I've spent the past decade in advertising product and operations, responsible for billions in ad spend across channels. Before Bamboo, I was Ad Product Lead at Roku and spent five years at a top agency working with Fortune 100 clients.
               </p>
               <p>
@@ -38,3 +40,4 @@ const About = () => {
 };
 
 export default About;
+
