@@ -10,11 +10,12 @@ const Index = () => {
     <div className="min-h-screen">
       <Navigation />
       <Hero />
+      <Features />
       <Platforms />
       <About />
-      <Features />
     </div>
   );
 };
 
 export default Index;
+
