@@ -15,7 +15,7 @@ const Hero = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img 
-          src="/Hero banner 4.svg" 
+          src="/Hero-banner-4.svg" 
           alt="Decorative bamboo background" 
           className="w-full h-full object-cover"
         />
