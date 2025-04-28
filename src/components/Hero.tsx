@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -6,39 +5,11 @@ const Hero = () => {
   return (
     <div className="relative pt-32 pb-20 px-4 overflow-hidden">
       <div className="absolute inset-0 w-full h-full">
-        <svg className="hero-bamboo w-full h-auto" width="1500" height="855" viewBox="0 0 1500 855" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g clipPath="url(#clip0_381_93)">
-            <g clipPath="url(#clip1_381_93)">
-              <image href="/Hero banner (3).svg#clip1_381_93" width="375" height="855" />
-            </g>
-            <g clipPath="url(#clip2_381_93)">
-              <image href="/Hero banner (3).svg#clip2_381_93" width="375" height="855" x="375" />
-            </g>
-            <g clipPath="url(#clip3_381_93)">
-              <image href="/Hero banner (3).svg#clip3_381_93" width="375" height="855" x="750" />
-            </g>
-            <g clipPath="url(#clip4_381_93)">
-              <image href="/Hero banner (3).svg#clip4_381_93" width="375" height="853" x="1110" />
-            </g>
-          </g>
-          <defs>
-            <clipPath id="clip0_381_93">
-              <rect width="1500" height="855" fill="white"/>
-            </clipPath>
-            <clipPath id="clip1_381_93">
-              <rect width="375" height="855" fill="white"/>
-            </clipPath>
-            <clipPath id="clip2_381_93">
-              <rect width="375" height="855" fill="white" transform="translate(375)"/>
-            </clipPath>
-            <clipPath id="clip3_381_93">
-              <rect width="375" height="855" fill="white" transform="translate(750)"/>
-            </clipPath>
-            <clipPath id="clip4_381_93">
-              <rect width="375" height="853" fill="white" transform="translate(1110)"/>
-            </clipPath>
-          </defs>
-        </svg>
+        <img 
+          src="/Hero banner (3).svg" 
+          alt="Decorative bamboo background"
+          className="hero-bamboo w-full h-full object-cover"
+        />
       </div>
       <div className="container mx-auto text-center relative z-10">
         <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
