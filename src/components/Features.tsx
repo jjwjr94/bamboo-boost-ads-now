@@ -1,7 +1,9 @@
 
 import { Brain, ChartBar, Youtube, Facebook, DollarSign } from "lucide-react";
 
-type FeatureIcon = React.ComponentType<React.SVGProps<SVGSVGElement>> | (() => JSX.Element);
+type FeatureIcon = 
+  | React.ComponentType<React.SVGProps<SVGSVGElement>>
+  | (() => JSX.Element);
 
 interface Feature {
   title: string;
@@ -49,10 +51,12 @@ const Features = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              {typeof feature.icon === 'function' && 'render' in feature.icon ? (
-                <feature.icon className="h-12 w-12 text-bamboo-primary mb-4" />
-              ) : typeof feature.icon === 'function' ? (
-                <div className="mb-4">{feature.icon()}</div>
+              {typeof feature.icon === 'function' ? (
+                React.isValidElement(feature.icon()) ? (
+                  feature.icon()
+                ) : (
+                  <feature.icon className="h-12 w-12 text-bamboo-primary mb-4" />
+                )
               ) : (
                 <div>Icon Error</div>
               )}

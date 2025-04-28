@@ -38,12 +38,15 @@ const tools = [
   },
 ];
 
-const ToolCard = ({ name, logo, className }: ToolProps) => (
-  <div className={cn("flex flex-col items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow", className)}>
-    <div className="h-20 w-20 flex items-center justify-center mb-3">
-      <img src={logo} alt={`${name} logo`} className="max-h-full max-w-full object-contain" />
+const ToolLogo = ({ name, logo, className }: ToolProps) => (
+  <div className={cn("flex items-center justify-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow", className)}>
+    <div className="h-16 w-16 flex items-center justify-center">
+      <img 
+        src={logo} 
+        alt={`${name} logo`} 
+        className="max-h-full max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300" 
+      />
     </div>
-    <span className="text-sm font-medium text-bamboo-navy">{name}</span>
   </div>
 );
 
@@ -51,16 +54,13 @@ const AiTools = () => {
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-bamboo-navy mb-3">
+        <h2 className="text-3xl font-bold text-center text-bamboo-navy mb-12">
           The Hub of State of the Art AI Advertising Tools
         </h2>
-        <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-          Leverage the power of cutting-edge AI technology to create, optimize, and scale your advertising campaigns.
-        </p>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
           {tools.map((tool) => (
-            <ToolCard key={tool.name} name={tool.name} logo={tool.logo} />
+            <ToolLogo key={tool.name} name={tool.name} logo={tool.logo} />
           ))}
         </div>
       </div>
