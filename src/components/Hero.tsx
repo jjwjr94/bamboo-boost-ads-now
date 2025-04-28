@@ -39,7 +39,7 @@ const Hero = () => {
           <img 
             src="/Hero banner 4.svg" 
             alt="Animated bamboo stalks"
-            className="w-full max-h-[700px] object-contain" 
+            className="w-full max-h-[600px] object-contain" 
           />
         </div>
       </div>
