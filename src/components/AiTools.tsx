@@ -42,35 +42,35 @@ const tools = [
     logo: "/lovable-uploads/28534fde-35f0-461e-bde6-42e6789351df.png",
   },
   {
-    name: "Sailthru",
+    name: "Midjourney",
     logo: "/lovable-uploads/e01fe29b-4535-4385-bb3f-5e31b214483d.png",
   },
   {
-    name: "Figma",
+    name: "Pencil AI",
     logo: "/lovable-uploads/a93c1ba3-8974-40e9-a3f0-1905227adadd.png",
   },
   {
-    name: "Uberflip",
+    name: "Copy AI",
     logo: "/lovable-uploads/d0cfa4e0-b9a7-4626-8567-86ff12dc685d.png",
   },
   {
-    name: "Pacifica",
+    name: "Postless",
     logo: "/lovable-uploads/c2dbb6dc-6dcd-40b0-a681-c1316675666c.png",
   },
   {
-    name: "TransitScreen",
+    name: "Hunch",
     logo: "/lovable-uploads/4ad46b9d-5907-4244-96a3-9d97583d897c.png",
   },
   {
-    name: "Kickstarter",
+    name: "Kular",
     logo: "/lovable-uploads/f1216895-a44b-462b-ada3-3ccfb4c98d31.png",
   },
   {
-    name: "Outbrain",
+    name: "Rehook",
     logo: "/lovable-uploads/e1f84740-a400-49ee-baab-d7a897b01593.png",
   },
   {
-    name: "Boosted",
+    name: "Syllaby",
     logo: "/lovable-uploads/dffbff21-21c9-4b5f-9f06-8aa5a8eaa3d4.png",
   },
 ];
