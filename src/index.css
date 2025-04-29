@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -136,4 +137,26 @@
 .hero-bamboo g[clipPath="url(#clip4_381_93)"] {
   animation: slideUp 2.1s ease-out forwards, sway 6s ease-in-out infinite 2.1s;
   transform-origin: center bottom;
+}
+
+/* Text shimmer animation */
+@keyframes text-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.text-shimmer {
+  background: linear-gradient(90deg, #FFFFFF 0%, #5995ED 50%, #FFFFFF 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: text-shimmer 3s linear infinite;
 }

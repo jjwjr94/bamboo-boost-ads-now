@@ -54,7 +54,7 @@ const Hero = () => {
               className="bg-bamboo-primary hover:bg-bamboo-secondary text-white text-lg px-8 py-6"
               onClick={handleGetStarted}
             >
-              Get Started
+              <span className="text-shimmer">Get Started</span>
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
