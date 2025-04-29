@@ -1,6 +1,8 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import BambooSVG from "./BambooSVG";
 
 const Hero = () => {
   const navigate = useNavigate();
