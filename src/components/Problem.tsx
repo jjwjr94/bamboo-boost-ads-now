@@ -176,7 +176,7 @@ const Problem = () => {
                   ))}
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-bamboo-navy text-center mt-4">Advertising is too complicated to juggle alone</h3>
+              <h3 className="text-xl font-semibold text-center mt-4">Advertising is <span className="text-bamboo-primary">too complicated</span> to juggle alone</h3>
             </div>
 
             {/* Card 2 */}
@@ -196,7 +196,7 @@ const Problem = () => {
                 </div>
                 <p className="text-xs text-gray-500 mt-1">Agency Fees</p>
               </div>
-              <h3 className="text-xl font-semibold text-bamboo-navy text-center mt-4">Agencies are too expensive</h3>
+              <h3 className="text-xl font-semibold text-center mt-4">Agencies are <span className="text-bamboo-primary">too expensive</span></h3>
             </div>
 
             {/* Card 3 */}
@@ -229,7 +229,7 @@ const Problem = () => {
                   </div>
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-bamboo-navy text-center mt-4">Freelancers are too limited</h3>
+              <h3 className="text-xl font-semibold text-center mt-4">Freelancers are <span className="text-bamboo-primary">too limited</span></h3>
             </div>
           </div>
         </div>
