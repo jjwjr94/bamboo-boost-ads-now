@@ -149,6 +149,13 @@
   animation: text-shimmer 6s linear infinite;
 }
 
+/* Stroke shimmer for SVG path */
+.text-shimmer-stroke {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+  animation: text-shimmer 6s linear infinite;
+}
+
 /* Button shimmer styling */
 .button-shimmer {
   background: linear-gradient(90deg, #ffffff 0%, #f9fafb 50%, #ffffff 100%);

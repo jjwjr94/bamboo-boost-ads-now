@@ -29,13 +29,14 @@ const Hero = () => {
         {/* Fully Transparent Box */}
           <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
             The <span className="relative">
-              <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text">AI Ad Agency</span>
+              <span className="text-shimmer">AI Ad Agency</span>
               <svg className="absolute w-full h-3 left-0 -bottom-1" viewBox="0 0 100 8" preserveAspectRatio="none">
                 <path 
                   d="M0,2 Q25,6 50,2 T100,2"
                   fill="none"
                   stroke="url(#gradient)"
                   strokeWidth="3"
+                  className="text-shimmer-stroke"
                 />
                 <defs>
                   <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
