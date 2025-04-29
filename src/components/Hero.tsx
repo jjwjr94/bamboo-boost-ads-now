@@ -29,7 +29,7 @@ const Hero = () => {
         {/* Fully Transparent Box */}
           <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
             The <span className="relative">
-              <span className="text-shimmer">AI Ad Agency</span>
+              <span className="ai-ad-agency-gradient">AI Ad Agency</span>
               <svg className="absolute w-full h-3 left-0 -bottom-1 text-shimmer-stroke" viewBox="0 0 100 8" preserveAspectRatio="none">
                 <path 
                   d="M0,2 Q25,6 50,2 T100,2"
