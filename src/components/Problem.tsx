@@ -206,25 +206,27 @@ const Problem = () => {
                 card3Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <div className="flex items-start justify-center flex-grow">
-                <div className="flex-shrink-0">
-                  <Avatar className="h-10 w-10 bg-gray-200 filter grayscale">
-                    <AvatarImage src="/lovable-uploads/7bf5741a-95ba-4ff0-b819-4dd682543c16.png" alt="Freelancer" />
-                    <AvatarFallback className="bg-gray-300">
-                      <UserRound size={20} className="text-gray-500" />
-                    </AvatarFallback>
-                  </Avatar>
-                </div>
-                <div className="ml-2 bg-gray-100 p-3 rounded-lg min-h-[2.5rem]" style={{
-                  width: card3Visible ? `${Math.max(12, Math.min(typingIndex * 0.7, freelancerMessage.length) * 0.7)}rem` : '12rem',
-                  transition: 'width 70ms linear'
-                }}>
-                  <p className="text-gray-600 text-sm text-left">
-                    {freelancerMessage.substring(0, typingIndex)}
-                    <span className="inline-block w-1 h-4 bg-gray-400 ml-0.5 animate-pulse">
-                      {typingIndex < freelancerMessage.length ? "|" : ""}
-                    </span>
-                  </p>
+              <div className="flex items-center justify-center flex-grow">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <Avatar className="h-10 w-10 bg-gray-200 filter grayscale">
+                      <AvatarImage src="/lovable-uploads/7bf5741a-95ba-4ff0-b819-4dd682543c16.png" alt="Freelancer" />
+                      <AvatarFallback className="bg-gray-300">
+                        <UserRound size={20} className="text-gray-500" />
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <div className="ml-2 bg-gray-100 p-3 rounded-lg min-h-[2.5rem]" style={{
+                    width: card3Visible ? `${Math.max(12, Math.min(typingIndex * 0.7, freelancerMessage.length) * 0.7)}rem` : '12rem',
+                    transition: 'width 70ms linear'
+                  }}>
+                    <p className="text-gray-600 text-sm text-left">
+                      {freelancerMessage.substring(0, typingIndex)}
+                      <span className="inline-block w-1 h-4 bg-gray-400 ml-0.5 animate-pulse">
+                        {typingIndex < freelancerMessage.length ? "|" : ""}
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
               <h3 className="text-xl font-semibold text-bamboo-navy text-center mt-4">Freelancers are too limited</h3>
