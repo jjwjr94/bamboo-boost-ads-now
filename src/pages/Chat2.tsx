@@ -23,6 +23,11 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle
+} from "@/components/ui/resizable";
 
 interface Task {
   id: number;
@@ -242,9 +247,17 @@ const Chat2 = () => {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navigation />
       
-      <div className="flex flex-grow pt-16 overflow-hidden">
+      <ResizablePanelGroup 
+        direction="horizontal" 
+        className="flex flex-grow pt-16 overflow-hidden"
+      >
         {/* Left Sidebar - Tasks List */}
-        <div className="w-[320px] border-r bg-gray-50 flex flex-col">
+        <ResizablePanel 
+          defaultSize={20} 
+          minSize={15}
+          maxSize={30}
+          className="bg-gray-50 flex flex-col border-r"
+        >
           <div className="p-4 border-b bg-white">
             <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy">
               <span className="flex items-center">
@@ -280,10 +293,16 @@ const Chat2 = () => {
               </div>
             ))}
           </div>
-        </div>
+        </ResizablePanel>
+        
+        <ResizableHandle withHandle />
         
         {/* Middle Content - Chat */}
-        <div className="flex-grow flex flex-col h-full relative">
+        <ResizablePanel 
+          defaultSize={50}
+          minSize={30}
+          className="flex flex-col h-full relative"
+        >
           {/* Header */}
           <div className="border-b bg-white p-4 flex items-center gap-2">
             <h2 className="text-lg font-medium text-bamboo-navy">{selectedTask?.title || "Task"}</h2>
@@ -438,8 +457,8 @@ const Chat2 = () => {
             </div>
           </div>
           
-          {/* Message input area - Fixed to bottom and spans the width of the middle panel */}
-          <div className="border-t bg-white p-4 fixed bottom-0 left-[320px] right-[400px] z-10">
+          {/* Message input area - Fixed to bottom and adjusted for the resizable panels */}
+          <div className="border-t bg-white p-4 absolute bottom-0 left-0 right-0 z-10">
             <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
               <Input 
                 placeholder="Message Bamboo..." 
@@ -456,10 +475,17 @@ const Chat2 = () => {
               </Button>
             </form>
           </div>
-        </div>
+        </ResizablePanel>
+        
+        <ResizableHandle withHandle />
         
         {/* Right Sidebar - Media Preview */}
-        <div className="w-[400px] border-l bg-white overflow-hidden flex flex-col">
+        <ResizablePanel 
+          defaultSize={30}
+          minSize={20}
+          maxSize={50}
+          className="bg-white overflow-hidden flex flex-col border-l"
+        >
           <div className="p-4 border-b flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className={rightPanelContent === "chart" ? "text-bamboo-primary" : "text-blue-500"}>
@@ -599,8 +625,8 @@ export default Hero;`}
               </pre>
             )}
           </div>
-        </div>
-      </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </div>
   );
 };
