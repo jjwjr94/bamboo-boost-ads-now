@@ -5,6 +5,7 @@ import { Rocket, ChartBarIncreasing, UserRound, Compass, Brush, Settings, Tag } 
 import { Progress } from "./ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
+const [currentStep, setCurrentStep] = useState(0);
 const Problem = () => {
   const [cost, setCost] = useState(10000);
   const [progress, setProgress] = useState(0);
@@ -24,30 +25,33 @@ const Problem = () => {
   
   // Set up intersection observer for sequential animation
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.5,
-    };
-    
-    const handleIntersection = (entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Determine which card is intersecting
-          if (entry.target === card1Ref.current) {
-            setCard1Visible(true);
-          } else if (entry.target === card2Ref.current) {
-            setTimeout(() => setCard2Visible(true), 500); // Delay for sequential effect
-          } else if (entry.target === card3Ref.current) {
-            setTimeout(() => setCard3Visible(true), 1000); // More delay for third card
-          }
-          
-          // Once visible, no need to observe anymore
-          observer.unobserve(entry.target);
+  const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5,
+  };
+
+  const handleIntersection = (entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target === card1Ref.current && currentStep === 0) {
+          setCurrentStep(1);
         }
-      });
+        observer.unobserve(entry.target);
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(handleIntersection, options);
+
+  if (card1Ref.current) observer.observe(card1Ref.current);
+
+  return () => {
+    if (card1Ref.current) observer.unobserve(card1Ref.current);
+  };
+}, [currentStep]);
     };
-    
+
     const observer = new IntersectionObserver(handleIntersection, options);
     
     if (card1Ref.current) observer.observe(card1Ref.current);
@@ -60,6 +64,17 @@ const Problem = () => {
       if (card3Ref.current) observer.unobserve(card3Ref.current);
     };
   }, []);
+useEffect(() => {
+  if (currentStep === 1) {
+    setCard1Visible(true);
+    setTimeout(() => setCurrentStep(2), 1000);
+  } else if (currentStep === 2) {
+    setCard2Visible(true);
+    setTimeout(() => setCurrentStep(3), 1000);
+  } else if (currentStep === 3) {
+    setCard3Visible(true);
+  }
+}, [currentStep]);
 
   // Cost animation effect - only run when card2 is visible
   useEffect(() => {
