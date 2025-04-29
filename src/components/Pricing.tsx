@@ -18,7 +18,7 @@ const Pricing = () => {
 
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {/* Free Plan */}
-          <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+          <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col">
             <CardHeader className="p-6">
               <h3 className="text-xl font-bold mb-2">Free</h3>
               <div className="flex items-baseline">
@@ -39,7 +39,7 @@ const Pricing = () => {
                 </li>
               </ul>
             </CardContent>
-            <CardFooter className="p-6 pt-4">
+            <CardFooter className="p-6 pt-4 mt-auto">
               <Button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800">
                 Get Started
               </Button>
@@ -47,7 +47,7 @@ const Pricing = () => {
           </Card>
 
           {/* Standard Plan */}
-          <Card className="border border-bamboo-primary shadow-md hover:shadow-lg transition-shadow relative">
+          <Card className="border border-bamboo-primary shadow-md hover:shadow-lg transition-shadow relative flex flex-col">
             <div className="absolute -top-3 left-0 right-0 flex justify-center">
               <span className="bg-blue-500 text-white text-sm font-medium px-4 py-1 rounded-full">
                 POPULAR
@@ -77,7 +77,7 @@ const Pricing = () => {
                 </li>
               </ul>
             </CardContent>
-            <CardFooter className="p-6 pt-4">
+            <CardFooter className="p-6 pt-4 mt-auto">
               <Button className="w-full bg-bamboo-primary hover:bg-bamboo-secondary text-white">
                 Upgrade
               </Button>
@@ -85,7 +85,7 @@ const Pricing = () => {
           </Card>
 
           {/* Premium Plan */}
-          <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+          <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col">
             <CardHeader className="p-6">
               <h3 className="text-xl font-bold mb-2">Premium</h3>
               <div className="flex items-baseline">
@@ -110,7 +110,7 @@ const Pricing = () => {
                 </li>
               </ul>
             </CardContent>
-            <CardFooter className="p-6 pt-4">
+            <CardFooter className="p-6 pt-4 mt-auto">
               <Button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800">
                 Contact Sales
               </Button>
