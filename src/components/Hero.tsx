@@ -46,8 +46,8 @@ const Hero = () => {
             </svg>
           </span> built for Small and Medium Size Business
         </h1>
-        <p className="text-xl md:text-2xl text-gray-800 mb-8">
-          <span className="text-bamboo-primary">Launch ads</span> and <span className="text-bamboo-primary">grow</span> your business today. No technical marketing knowledge required.
+        <p className="text-xl md:text-2xl text-bamboo-navy mb-8">
+          <strong>Launch ads</strong> and <strong>grow</strong> your business today. No technical marketing knowledge required.
         </p>
         <div className="flex justify-center gap-4">
           <Button 
