@@ -58,7 +58,7 @@ const Pricing = () => {
               <h3 className="text-xl font-bold mb-2">Standard</h3>
               <div className="flex items-baseline">
                 <span className="text-4xl font-bold">$100</span>
-                <span className="text-gray-500 ml-1">/mo + 10% ad spend*</span>
+                <span className="text-gray-500 ml-1">/month</span>
               </div>
               <p className="text-gray-600 mt-2">Launch campaigns</p>
             </CardHeader>
@@ -91,7 +91,7 @@ const Pricing = () => {
               <h3 className="text-xl font-bold mb-2">Premium</h3>
               <div className="flex items-baseline">
                 <span className="text-4xl font-bold">$500</span>
-                <span className="text-gray-500 ml-1">/mo + 10% ad spend*</span>
+                <span className="text-gray-500 ml-1">/month</span>
               </div>
               <p className="text-gray-600 mt-2">Omni-channel</p>
             </CardHeader>
@@ -117,10 +117,6 @@ const Pricing = () => {
               </Button>
             </CardFooter>
           </Card>
-        </div>
-        
-        <div className="max-w-5xl mx-auto mt-8 text-right">
-          <p className="text-sm text-gray-500 italic">*Monthly fee is eligible to be used as ad credits.</p>
         </div>
       </Container>
     </section>
