@@ -7,16 +7,9 @@ import { Check } from "lucide-react";
 
 const Pricing = () => {
   return (
-    <section id="pricing" className="py-16 bg-gray-50">
+    <section id="pricing" className="py-16 bg-white">
       <Container>
         <div className="max-w-5xl mx-auto text-center mb-12">
-          <div className="inline-flex items-center justify-center p-2 bg-gradient-to-br from-red-400 to-blue-500 rounded-md mb-6">
-            <img 
-              src="/lovable-uploads/3482e3c6-bc2e-4444-84fa-5e125cb3dd65.png" 
-              alt="Pricing icon" 
-              className="w-8 h-8" 
-            />
-          </div>
           <h2 className="text-3xl md:text-4xl font-bold text-bamboo-navy mb-6">Pricing</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Start for free. Upgrade to get the capacity that exactly matches your business needs.
