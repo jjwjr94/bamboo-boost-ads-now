@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { Container } from "./ui/container";
-import { Rocket, ChartBarIncreasing, UserRound, Compass, Brush, Settings, Tag } from "lucide-react";
+import { Rocket, UserRound, Compass, Brush, Settings, Tag } from "lucide-react";
 import { Progress } from "./ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
@@ -87,26 +87,36 @@ const Problem = () => {
     }
   }, [card2AnimationComplete, currentStep]);
 
-  // Cost counter animation
+  // Cost counter animation - Modified to loop continuously
   useEffect(() => {
     if (!card2Visible) return;
 
-    const interval = setInterval(() => {
-      setCost(prev => {
-        if (prev >= 20000) {
+    const runAnimation = () => {
+      let currentCost = 10000;
+      let currentProgress = 0;
+      
+      const interval = setInterval(() => {
+        currentCost += 500;
+        currentProgress += 5;
+        
+        setCost(currentCost);
+        setProgress(currentProgress);
+        
+        if (currentCost >= 20000) {
           clearInterval(interval);
           setTimeout(() => {
             setCost(10000);
             setProgress(0);
-          }, 2000);
-          return 20000;
+            runAnimation(); // Restart the animation
+          }, 500); // Short pause before restarting
         }
-        return prev + 500;
-      });
-
-      setProgress(prev => (prev >= 100 ? 0 : prev + 5));
-    }, 200);
-
+      }, 200);
+      
+      return interval;
+    };
+    
+    const interval = runAnimation();
+    
     return () => clearInterval(interval);
   }, [card2Visible]);
 
@@ -179,7 +189,7 @@ const Problem = () => {
               <h3 className="text-xl font-semibold text-center mt-4">Advertising is <span className="text-bamboo-primary">too complicated</span> to juggle alone</h3>
             </div>
 
-            {/* Card 2 */}
+            {/* Card 2 - Removed ChartBarIncreasing icon */}
             <div 
               ref={card2Ref}
               className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-700 ease-out transform flex flex-col justify-between h-64 ${
@@ -188,7 +198,6 @@ const Problem = () => {
             >
               <div className="flex flex-col items-center justify-center flex-grow">
                 <div className="flex items-center justify-center mb-2">
-                  <ChartBarIncreasing size={28} className="text-gray-500 mr-2" />
                   <span className="text-2xl font-bold text-gray-700">${cost.toLocaleString()}</span>
                 </div>
                 <div className="w-full max-w-xs mt-2">
