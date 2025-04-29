@@ -4,6 +4,7 @@ import { Container } from "./ui/container";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import { Check } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Pricing = () => {
   return (
@@ -40,8 +41,8 @@ const Pricing = () => {
               </ul>
             </CardContent>
             <CardFooter className="p-6 pt-4 mt-auto">
-              <Button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800">
-                Get Started
+              <Button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800" asChild>
+                <Link to="/chat">Get Started</Link>
               </Button>
             </CardFooter>
           </Card>
@@ -78,8 +79,8 @@ const Pricing = () => {
               </ul>
             </CardContent>
             <CardFooter className="p-6 pt-4 mt-auto">
-              <Button className="w-full bg-bamboo-primary hover:bg-bamboo-secondary text-white">
-                Upgrade
+              <Button className="w-full bg-bamboo-primary hover:bg-bamboo-secondary text-white" asChild>
+                <Link to="/chat">Upgrade</Link>
               </Button>
             </CardFooter>
           </Card>
@@ -111,8 +112,8 @@ const Pricing = () => {
               </ul>
             </CardContent>
             <CardFooter className="p-6 pt-4 mt-auto">
-              <Button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800">
-                Contact Sales
+              <Button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800" asChild>
+                <Link to="/chat">Contact Sales</Link>
               </Button>
             </CardFooter>
           </Card>
