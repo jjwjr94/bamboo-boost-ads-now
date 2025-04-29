@@ -1,6 +1,7 @@
 
 import React from "react";
 import { Container } from "./ui/container";
+import { Rocket } from "lucide-react";
 
 const Problem = () => {
   return (
@@ -24,7 +25,7 @@ const Problem = () => {
               </svg>
               <p className="text-bamboo-primary font-medium uppercase tracking-wider text-sm">The Problem</p>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-bamboo-navy mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-bamboo-navy mb-8">
               Growing Your Small Business is Hard
             </h2>
           </div>
@@ -33,42 +34,42 @@ const Problem = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Card 1: Advertising */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-semibold text-bamboo-navy mb-4">Advertising is too complicated</h3>
+              <h3 className="text-xl font-semibold text-bamboo-navy mb-4 text-center">Advertising is too complicated</h3>
               <div className="flex flex-wrap justify-center gap-3 my-6">
-                {/* Icons for complex advertising */}
+                {/* Icons for complex advertising - updated to match Launch Ads Today section */}
+                <div className="bg-green-50 p-3 rounded-full">
+                  <Rocket size={24} className="text-bamboo-primary" />
+                </div>
+                <div className="bg-green-50 p-3 rounded-full">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-bamboo-primary">
+                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                    <line x1="4" x2="4" y1="22" y2="15"></line>
+                  </svg>
+                </div>
+                <div className="bg-green-50 p-3 rounded-full">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-bamboo-primary">
+                    <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+                    <path d="M7 7h.01"></path>
+                    <path d="M12 7h.01"></path>
+                    <path d="m7 12 .01-.011"></path>
+                    <path d="M12 12h.01"></path>
+                    <path d="M17 12h.01"></path>
+                    <path d="M7 17h.01"></path>
+                    <path d="M12 17h.01"></path>
+                    <path d="M17 17h.01"></path>
+                  </svg>
+                </div>
                 <div className="bg-green-50 p-3 rounded-full">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-bamboo-primary">
                     <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 8v8"></path>
-                    <path d="M8 12h8"></path>
+                    <path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"></path>
+                    <path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"></path>
+                    <path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"></path>
                   </svg>
                 </div>
                 <div className="bg-green-50 p-3 rounded-full">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-bamboo-primary">
-                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z"></path>
-                  </svg>
-                </div>
-                <div className="bg-green-50 p-3 rounded-full">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-bamboo-primary">
-                    <path d="M2 2v20h20"></path>
-                    <path d="m6 16 6-8 6 8"></path>
-                  </svg>
-                </div>
-                <div className="bg-green-50 p-3 rounded-full">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-bamboo-primary">
-                    <path d="M12 2H2v10h10V2Z"></path>
-                    <path d="M5 5h4"></path>
-                    <path d="M5 8h4"></path>
-                    <path d="M8 11h4"></path>
-                    <path d="M17 17v.01"></path>
-                    <path d="M13 15h8v8h-8v-8Z"></path>
-                    <path d="M17 15v-2a5 5 0 0 0-10 0v2"></path>
-                  </svg>
-                </div>
-                <div className="bg-green-50 p-3 rounded-full">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-bamboo-primary">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"></path>
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                   </svg>
                 </div>
               </div>
@@ -77,7 +78,7 @@ const Problem = () => {
 
             {/* Card 2: Agencies */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-semibold text-bamboo-navy mb-4">Agencies are too expensive</h3>
+              <h3 className="text-xl font-semibold text-bamboo-navy mb-4 text-center">Agencies are too expensive</h3>
               <div className="flex justify-center my-6">
                 <div className="relative flex flex-col items-center">
                   <div className="text-bamboo-primary text-4xl font-bold">$$$</div>
@@ -94,7 +95,7 @@ const Problem = () => {
 
             {/* Card 3: Freelancers */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-semibold text-bamboo-navy mb-4">Freelancers are too limited</h3>
+              <h3 className="text-xl font-semibold text-bamboo-navy mb-4 text-center">Freelancers are too limited</h3>
               <div className="flex justify-center my-6">
                 <div className="bg-green-50 p-4 rounded-lg inline-flex items-center justify-center">
                   <div className="text-center">
