@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
@@ -243,14 +242,14 @@ const Chat2 = () => {
         </div>
         
         {/* Middle Content - Chat */}
-        <div className="flex-grow flex flex-col h-full">
+        <div className="flex-grow flex flex-col h-full relative">
           {/* Header */}
           <div className="border-b bg-white p-4 flex items-center gap-2">
             <h2 className="text-lg font-medium text-bamboo-navy">{selectedTask?.title || "Task"}</h2>
           </div>
           
-          {/* Main content area - Adjust to accommodate fixed input box */}
-          <div className="flex-grow p-4 overflow-y-auto pb-20" ref={mainContentRef}>
+          {/* Main content area - Added extra bottom padding to accommodate fixed input box */}
+          <div className="flex-grow p-4 overflow-y-auto pb-24" ref={mainContentRef}>
             <div className="max-w-3xl mx-auto">
               <div className="flex flex-col gap-6">
                 {/* Chat messages */}
@@ -398,8 +397,8 @@ const Chat2 = () => {
             </div>
           </div>
           
-          {/* Message input area - Fixed to bottom */}
-          <div className="border-t bg-white p-4 absolute bottom-0 left-[320px] right-[400px]">
+          {/* Message input area - Fixed to bottom and spans the width of the middle panel */}
+          <div className="border-t bg-white p-4 fixed bottom-0 left-[320px] right-[400px] z-10">
             <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
               <Input 
                 placeholder="Message Bamboo..." 
