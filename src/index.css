@@ -106,6 +106,19 @@
   }
 }
 
+/* Button background shimmer animation */
+@keyframes button-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 /* === Apply animations to elements === */
 
 /* Bamboo SVG hero animations */
@@ -134,4 +147,11 @@
   -webkit-background-clip: text;
   background-clip: text;
   animation: text-shimmer 6s linear infinite;
+}
+
+/* Button shimmer styling */
+.button-shimmer {
+  background: linear-gradient(90deg, #ffffff 0%, #f9fafb 50%, #ffffff 100%);
+  background-size: 200% 100%;
+  animation: button-shimmer 6s linear infinite;
 }
