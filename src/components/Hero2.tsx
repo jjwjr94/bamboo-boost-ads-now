@@ -27,8 +27,22 @@ const Hero2 = () => {
       <div className="container mx-auto flex flex-col items-center text-center relative z-10">
         
         <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
-          The <span className="px-2 py-1 bg-gradient-to-r from-[#00D1A1]/20 to-[#5995ED]/20 rounded-lg">
+          The <span className="relative">
             <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text">AI Ad Agency</span>
+            <svg className="absolute w-full h-3 left-0 -bottom-1" viewBox="0 0 100 8" preserveAspectRatio="none">
+              <path 
+                d="M0,2 Q25,6 50,2 T100,2"
+                fill="none"
+                stroke="url(#gradient)"
+                strokeWidth="3"
+              />
+              <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#00D1A1" />
+                  <stop offset="100%" stopColor="#5995ED" />
+                </linearGradient>
+              </defs>
+            </svg>
           </span> built for Small and Medium Size Business
         </h1>
         <p className="text-xl md:text-2xl text-gray-800 mb-8">
