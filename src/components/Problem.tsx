@@ -1,9 +1,38 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "./ui/container";
-import { Rocket } from "lucide-react";
+import { Rocket, ChartBarIncreasing } from "lucide-react";
+import { Progress } from "./ui/progress";
 
 const Problem = () => {
+  const [cost, setCost] = useState(10000);
+  const [progress, setProgress] = useState(0);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCost(prevCost => {
+        if (prevCost >= 20000) {
+          clearInterval(interval);
+          setTimeout(() => {
+            setCost(10000);
+            setProgress(0);
+          }, 2000);
+          return 20000;
+        }
+        return prevCost + 500;
+      });
+      
+      setProgress(prevProgress => {
+        if (prevProgress >= 100) {
+          return 0;
+        }
+        return prevProgress + 5;
+      });
+    }, 200);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="py-16 bg-gray-50">
       <Container>
@@ -64,16 +93,15 @@ const Problem = () => {
 
             {/* Card 2: Agencies */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex justify-center mb-6">
-                <div className="relative flex flex-col items-center">
-                  <div className="text-bamboo-primary text-4xl font-bold">$$$</div>
-                  <div className="flex items-end mt-2">
-                    <div className="h-16 w-4 bg-bamboo-primary rounded-t-md mx-1"></div>
-                    <div className="h-20 w-4 bg-bamboo-primary rounded-t-md mx-1"></div>
-                    <div className="h-24 w-4 bg-bamboo-primary rounded-t-md mx-1"></div>
-                    <div className="h-28 w-4 bg-bamboo-primary rounded-t-md mx-1"></div>
-                  </div>
+              <div className="flex flex-col items-center mb-6">
+                <div className="flex items-center justify-center mb-2">
+                  <ChartBarIncreasing size={28} className="text-bamboo-primary mr-2" />
+                  <span className="text-2xl font-bold text-bamboo-primary">${cost.toLocaleString()}</span>
                 </div>
+                <div className="w-full max-w-xs mt-2">
+                  <Progress value={progress} className="h-3 bg-gray-200" />
+                </div>
+                <p className="text-xs text-gray-500 mt-1">Agency Monthly Retainer</p>
               </div>
               <h3 className="text-xl font-semibold text-bamboo-navy text-center">Agencies are too expensive</h3>
             </div>
