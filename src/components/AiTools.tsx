@@ -78,7 +78,7 @@ const tools = [
 const ToolLogo = ({ name, logo, className }: ToolProps) => (
   <Tooltip>
     <TooltipTrigger asChild>
-      <div className={cn("flex items-center justify-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow", className)}>
+      <div className={cn("flex items-center justify-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow", className)}>
         <div className="h-16 w-16 flex items-center justify-center">
           <img 
             src={logo} 
@@ -96,7 +96,7 @@ const ToolLogo = ({ name, logo, className }: ToolProps) => (
 
 const AiTools = () => {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-bamboo-navy mb-12">
           All AI Ads Tools from One Source
