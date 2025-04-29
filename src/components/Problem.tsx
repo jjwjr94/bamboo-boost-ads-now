@@ -1,8 +1,9 @@
 
 import React, { useEffect, useState } from "react";
 import { Container } from "./ui/container";
-import { Rocket, ChartBarIncreasing } from "lucide-react";
+import { Rocket, ChartBarIncreasing, UserRound } from "lucide-react";
 import { Progress } from "./ui/progress";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const Problem = () => {
   const [cost, setCost] = useState(10000);
@@ -39,13 +40,13 @@ const Problem = () => {
   }, []);
 
   useEffect(() => {
-    // Typing animation logic
+    // Typing animation logic with increased speed
     const fullMessage = freelancerMessage;
     
     if (isTyping && typingIndex < fullMessage.length) {
       const typingTimer = setTimeout(() => {
         setTypingIndex(prev => prev + 1);
-      }, 100);
+      }, 70); // Increased speed (reduced from 100ms to 70ms)
       
       return () => clearTimeout(typingTimer);
     } 
@@ -53,7 +54,7 @@ const Problem = () => {
     if (isTyping && typingIndex >= fullMessage.length) {
       const pauseTimer = setTimeout(() => {
         setIsTyping(false);
-      }, 2000);
+      }, 1500); // Reduce pause time from 2000ms to 1500ms
       
       return () => clearTimeout(pauseTimer);
     }
@@ -67,7 +68,7 @@ const Problem = () => {
         );
         setTypingIndex(0);
         setIsTyping(true);
-      }, 1000);
+      }, 800); // Reduce waiting time from 1000ms to 800ms
       
       return () => clearTimeout(resetTimer);
     }
@@ -148,8 +149,19 @@ const Problem = () => {
 
             {/* Card 3: Freelancers */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex justify-center mb-6">
-                <div className="bg-gray-100 p-4 rounded-lg inline-flex items-center justify-center h-16 min-w-48">
+              <div className="flex justify-center items-start mb-6">
+                {/* Avatar Profile Picture */}
+                <div className="mr-2 flex-shrink-0 mt-1">
+                  <Avatar className="h-8 w-8 bg-gray-200">
+                    <AvatarImage src="https://api.dicebear.com/7.x/bottts/svg?seed=freelancer" alt="Freelancer" />
+                    <AvatarFallback>
+                      <UserRound size={16} className="text-gray-500" />
+                    </AvatarFallback>
+                  </Avatar>
+                </div>
+                
+                {/* Chat Bubble */}
+                <div className="bg-gray-100 p-3 rounded-lg inline-flex items-center justify-center min-h-12 min-w-48">
                   <p className="text-gray-500 font-medium text-sm overflow-hidden whitespace-nowrap">
                     {freelancerMessage.substring(0, typingIndex)}
                     <span className="inline-block w-1 h-4 bg-gray-400 ml-0.5 animate-pulse">
