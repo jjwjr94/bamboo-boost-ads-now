@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
@@ -244,8 +245,8 @@ const Chat2 = () => {
       
       <div className="flex flex-grow pt-16 overflow-hidden">
         {/* Left Sidebar - Tasks List */}
-        <div className="w-[320px] border-r bg-gray-50 flex flex-col">
-          <div className="p-4">
+        <div className="w-[320px] border-r bg-white flex flex-col">
+          <div className="p-4 border-b">
             <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy">
               <span className="flex items-center">
                 + New task
@@ -257,7 +258,7 @@ const Chat2 = () => {
             {tasks.map(task => (
               <div 
                 key={task.id}
-                className={`p-4 cursor-pointer hover:bg-gray-100 ${selectedTaskId === task.id ? 'bg-bamboo-primary/5 border-l-4 border-l-bamboo-primary' : ''}`}
+                className={`p-4 cursor-pointer hover:bg-gray-50 ${selectedTaskId === task.id ? 'bg-bamboo-primary/5 border-l-4 border-l-bamboo-primary' : 'border-b'}`}
                 onClick={() => selectTask(task.id)}
               >
                 <div className="flex gap-3">
