@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
-import { Send, Link } from "lucide-react";
+import { Send, Link, ChevronLeft, ChevronRight } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
@@ -83,6 +83,7 @@ const Chat2 = () => {
   
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(1);
   const [rightPanelContent, setRightPanelContent] = useState<"code" | "chart" | null>("code");
+  const [rightPanelCollapsed, setRightPanelCollapsed] = useState(true);
   const mainContentRef = useRef<HTMLDivElement>(null);
   
   const performanceData = [
@@ -149,6 +150,7 @@ const Chat2 = () => {
   
   const showReportInRightPanel = () => {
     setRightPanelContent("chart");
+    setRightPanelCollapsed(false);
   };
 
   const selectTask = (taskId: number) => {
@@ -274,7 +276,7 @@ const Chat2 = () => {
                 onClick={() => selectTask(task.id)}
               >
                 <div className="flex gap-3">
-                  <Avatar className="h-8 w-8 border">
+                  <Avatar className="h-8 w-8 border flex-shrink-0">
                     {task.id === 1 && (
                       <div className="bg-zinc-900 text-white w-full h-full flex items-center justify-center text-xs">M</div>
                     )}
@@ -284,11 +286,11 @@ const Chat2 = () => {
                       </div>
                     )}
                   </Avatar>
-                  <div className="flex-grow">
-                    <h3 className="text-sm font-medium text-bamboo-navy">{task.title}</h3>
+                  <div className="flex-grow min-w-0">
+                    <h3 className="text-sm font-medium text-bamboo-navy truncate">{task.title}</h3>
                     <p className="text-xs text-gray-500 truncate">{task.description}</p>
                   </div>
-                  <div className="text-xs text-gray-400">{task.date}</div>
+                  <div className="text-xs text-gray-400 flex-shrink-0">{task.date}</div>
                 </div>
               </div>
             ))}
@@ -299,7 +301,7 @@ const Chat2 = () => {
         
         {/* Middle Content - Chat */}
         <ResizablePanel 
-          defaultSize={50}
+          defaultSize={rightPanelCollapsed ? 80 : 50}
           minSize={30}
           className="flex flex-col h-full relative"
         >
@@ -477,116 +479,125 @@ const Chat2 = () => {
           </div>
         </ResizablePanel>
         
-        <ResizableHandle withHandle />
+        {!rightPanelCollapsed && <ResizableHandle withHandle />}
         
         {/* Right Sidebar - Media Preview */}
-        <ResizablePanel 
-          defaultSize={30}
-          minSize={20}
-          maxSize={50}
-          className="bg-white overflow-hidden flex flex-col border-l"
-        >
-          <div className="p-4 border-b flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className={rightPanelContent === "chart" ? "text-bamboo-primary" : "text-blue-500"}>
-                {rightPanelContent === "chart" ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 3v18h18"></path>
-                    <path d="M18 17V9"></path>
-                    <path d="M13 17V5"></path>
-                    <path d="M8 17v-3"></path>
-                  </svg>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                  </svg>
-                )}
-              </div>
-              <span className="text-sm">
-                {rightPanelContent === "chart" ? "Performance Report" : "pasted_content.txt"}
-              </span>
-            </div>
-          </div>
-          <div className="p-4 overflow-y-auto flex-grow bg-gray-50">
-            {rightPanelContent === "chart" ? (
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-base">Platform Conversions</CardTitle>
-                    <CardDescription className="text-xs">Overall performance across platforms</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ChartContainer config={{}}>
-                      <BarChart data={performanceData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                        <XAxis dataKey="platform" />
-                        <YAxis />
-                        <RechartsTooltip 
-                          content={({ active, payload }) => {
-                            if (active && payload && payload.length) {
-                              return (
-                                <div className="bg-white p-2 border rounded shadow-sm">
-                                  <p className="text-sm font-medium">{`${payload[0].payload.platform}`}</p>
-                                  <p className="text-xs">{`Conversions: ${payload[0].value}`}</p>
-                                  <p className="text-xs">{`CPA: $${payload[0].payload.cpa.toFixed(2)}`}</p>
-                                </div>
-                              );
-                            }
-                            return null;
-                          }}
-                        />
-                        <Legend />
-                        <Bar dataKey="conversions" fill="#00D1A1" name="Conversions" />
-                      </BarChart>
-                    </ChartContainer>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-base">Platform Performance Summary</CardTitle>
-                    <CardDescription className="text-xs">Detailed metrics by platform</CardDescription>
-                  </CardHeader>
-                  <CardContent className="px-0">
-                    <div className="overflow-x-auto">
-                      <table className="w-full border-collapse text-sm">
-                        <thead>
-                          <tr className="bg-gray-50">
-                            <th className="border px-4 py-2 text-left">Platform</th>
-                            <th className="border px-4 py-2 text-left">Spend</th>
-                            <th className="border px-4 py-2 text-left">CPA</th>
-                            <th className="border px-4 py-2 text-left">Conversions</th>
-                            <th className="border px-4 py-2 text-left">CPM</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {tableData.map((row, i) => (
-                            <tr key={i} className={row.platform === 'Total' ? 'font-medium bg-gray-50' : ''}>
-                              <td className="border px-4 py-2">{row.platform}</td>
-                              <td className="border px-4 py-2">${row.spend}</td>
-                              <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
-                              <td className="border px-4 py-2">{row.conversions}</td>
-                              <td className="border px-4 py-2">{typeof row.cpm === 'number' ? `$${row.cpm.toFixed(2)}` : row.cpm}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <div className="text-sm text-gray-500">
-                  <p className="font-medium mb-2">Key Insights:</p>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>TikTok is outperforming Meta by 24% in CPA efficiency</li>
-                    <li>Google has the highest CPA at $10.00</li>
-                    <li>Overall campaign ROAS is positive at 2.4x</li>
-                  </ul>
+        {!rightPanelCollapsed && (
+          <ResizablePanel 
+            defaultSize={30}
+            minSize={20}
+            maxSize={50}
+            className="bg-white overflow-hidden flex flex-col border-l"
+          >
+            <div className="p-4 border-b flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className={rightPanelContent === "chart" ? "text-bamboo-primary" : "text-blue-500"}>
+                  {rightPanelContent === "chart" ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 3v18h18"></path>
+                      <path d="M18 17V9"></path>
+                      <path d="M13 17V5"></path>
+                      <path d="M8 17v-3"></path>
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                  )}
                 </div>
+                <span className="text-sm">
+                  {rightPanelContent === "chart" ? "Performance Report" : "pasted_content.txt"}
+                </span>
               </div>
-            ) : (
-              <pre className="text-xs text-gray-800 font-mono">
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={() => setRightPanelCollapsed(true)}
+                className="h-8 w-8"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="p-4 overflow-y-auto flex-grow bg-gray-50">
+              {rightPanelContent === "chart" ? (
+                <div className="space-y-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base">Platform Conversions</CardTitle>
+                      <CardDescription className="text-xs">Overall performance across platforms</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ChartContainer config={{}}>
+                        <BarChart data={performanceData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                          <XAxis dataKey="platform" />
+                          <YAxis />
+                          <RechartsTooltip 
+                            content={({ active, payload }) => {
+                              if (active && payload && payload.length) {
+                                return (
+                                  <div className="bg-white p-2 border rounded shadow-sm">
+                                    <p className="text-sm font-medium">{`${payload[0].payload.platform}`}</p>
+                                    <p className="text-xs">{`Conversions: ${payload[0].value}`}</p>
+                                    <p className="text-xs">{`CPA: $${payload[0].payload.cpa.toFixed(2)}`}</p>
+                                  </div>
+                                );
+                              }
+                              return null;
+                            }}
+                          />
+                          <Legend />
+                          <Bar dataKey="conversions" fill="#00D1A1" name="Conversions" />
+                        </BarChart>
+                      </ChartContainer>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base">Platform Performance Summary</CardTitle>
+                      <CardDescription className="text-xs">Detailed metrics by platform</CardDescription>
+                    </CardHeader>
+                    <CardContent className="px-0">
+                      <div className="overflow-x-auto">
+                        <table className="w-full border-collapse text-sm">
+                          <thead>
+                            <tr className="bg-gray-50">
+                              <th className="border px-4 py-2 text-left">Platform</th>
+                              <th className="border px-4 py-2 text-left">Spend</th>
+                              <th className="border px-4 py-2 text-left">CPA</th>
+                              <th className="border px-4 py-2 text-left">Conversions</th>
+                              <th className="border px-4 py-2 text-left">CPM</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {tableData.map((row, i) => (
+                              <tr key={i} className={row.platform === 'Total' ? 'font-medium bg-gray-50' : ''}>
+                                <td className="border px-4 py-2">{row.platform}</td>
+                                <td className="border px-4 py-2">${row.spend}</td>
+                                <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
+                                <td className="border px-4 py-2">{row.conversions}</td>
+                                <td className="border px-4 py-2">{typeof row.cpm === 'number' ? `$${row.cpm.toFixed(2)}` : row.cpm}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <div className="text-sm text-gray-500">
+                    <p className="font-medium mb-2">Key Insights:</p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>TikTok is outperforming Meta by 24% in CPA efficiency</li>
+                      <li>Google has the highest CPA at $10.00</li>
+                      <li>Overall campaign ROAS is positive at 2.4x</li>
+                    </ul>
+                  </div>
+                </div>
+              ) : (
+                <pre className="text-xs text-gray-800 font-mono">
 {`import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -622,10 +633,11 @@ const Hero = () => {
 };
 
 export default Hero;`}
-              </pre>
-            )}
-          </div>
-        </ResizablePanel>
+                </pre>
+              )}
+            </div>
+          </ResizablePanel>
+        )}
       </ResizablePanelGroup>
     </div>
   );
