@@ -50,11 +50,11 @@ const Hero = () => {
           </p>
           <div className="flex justify-center gap-4">
             <Button 
-              className="button-shimmer border-2 border-bamboo-primary text-lg px-8 py-6 shadow-lg"
+              className="bg-[#4BD0A0] hover:bg-[#3DBB8D] text-white font-medium rounded-md text-lg px-8 py-6 shadow-sm flex items-center"
               onClick={handleGetStarted}
             >
-              <span className="text-shimmer">Get Started</span>
-              <ArrowRight className="ml-2 h-5 w-5 text-bamboo-primary" />
+              Get Started
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </div>

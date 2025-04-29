@@ -105,21 +105,6 @@
   }
 }
 
-/* Button background shimmer animation */
-@keyframes button-shimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* === Apply animations to elements === */
-
 /* Bamboo SVG hero animations */
 .hero-bamboo g[clipPath="url(#clip1_381_93)"] {
   animation: slideUp 2.0s ease-out forwards, sway 6s ease-in-out infinite 2.0s;
@@ -163,11 +148,4 @@
   100% {
     stroke-dashoffset: 0;
   }
-}
-
-/* Button shimmer styling */
-.button-shimmer {
-  background: linear-gradient(90deg, #ffffff 0%, #f9fafb 50%, #ffffff 100%);
-  background-size: 200% 100%;
-  animation: button-shimmer 6s linear infinite;
 }
