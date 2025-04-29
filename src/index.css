@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -95,14 +96,29 @@
   100% { transform: rotate(0deg); }
 }
 
-/* Text shimmer animation (reversed + slower) */
-@keyframes text-shimmer {
+/* Stroke shimmer for SVG path */
+.text-shimmer-stroke path {
+  stroke: url(#gradient);
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+  animation: stroke-shimmer 3s linear infinite;
+}
+
+@keyframes stroke-shimmer {
   0% {
-    background-position: 200% 50%;
+    stroke-dashoffset: 100;
   }
   100% {
-    background-position: 0% 50%;
+    stroke-dashoffset: 0;
   }
+}
+
+/* AI Ad Agency gradient - updated with specific colors */
+.ai-ad-agency-gradient {
+  background: linear-gradient(90deg, #00D1A1 0%, #5995ED 100%);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 /* Bamboo SVG hero animations */
@@ -123,29 +139,3 @@
   transform-origin: center bottom;
 }
 
-/* Text shimmer styling */
-.text-shimmer {
-  background: linear-gradient(90deg, #00D1A1 0%, #5995ED 50%, #00D1A1 100%);
-  background-size: 200% auto;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: text-shimmer 4s linear infinite;
-}
-
-/* Stroke shimmer for SVG path */
-.text-shimmer-stroke path {
-  stroke: url(#gradient);
-  stroke-dasharray: 100;
-  stroke-dashoffset: 0;
-  animation: stroke-shimmer 2s linear infinite;
-}
-
-@keyframes stroke-shimmer {
-  0% {
-    stroke-dashoffset: 100;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
