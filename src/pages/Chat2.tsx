@@ -310,8 +310,8 @@ const Chat2 = () => {
             <h2 className="text-lg font-medium text-bamboo-navy">{selectedTask?.title || "Task"}</h2>
           </div>
           
-          {/* Main content area - Added extra bottom padding to accommodate fixed input box */}
-          <div className="flex-grow p-4 overflow-y-auto pb-24" ref={mainContentRef}>
+          {/* Main content area - Updated with bottom padding to account for fixed input box */}
+          <div className="flex-grow p-4 overflow-y-auto pb-20" ref={mainContentRef}>
             <div className="max-w-3xl mx-auto">
               <div className="flex flex-col gap-6">
                 {/* Chat messages */}
@@ -459,8 +459,8 @@ const Chat2 = () => {
             </div>
           </div>
           
-          {/* Message input area - Fixed to bottom and adjusted for the resizable panels */}
-          <div className="border-t bg-white p-4 absolute bottom-0 left-0 right-0 z-10">
+          {/* Message input area - Modified to be fixed at the bottom */}
+          <div className="border-t bg-white p-4 absolute bottom-0 left-0 right-0 z-10 shadow-md">
             <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
               <Input 
                 placeholder="Message Bamboo..." 
