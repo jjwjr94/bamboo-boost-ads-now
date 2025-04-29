@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Container } from "./ui/container";
 import { Rocket, ChartBarIncreasing, UserRound, Compass, Brush, Settings, Tag } from "lucide-react";
 import { Progress } from "./ui/progress";
@@ -12,7 +12,59 @@ const Problem = () => {
   const [typingIndex, setTypingIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
   
+  // Animation visibility states
+  const [card1Visible, setCard1Visible] = useState(false);
+  const [card2Visible, setCard2Visible] = useState(false);
+  const [card3Visible, setCard3Visible] = useState(false);
+  
+  // Refs for each card
+  const card1Ref = useRef(null);
+  const card2Ref = useRef(null);
+  const card3Ref = useRef(null);
+  
+  // Set up intersection observer for sequential animation
   useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5,
+    };
+    
+    const handleIntersection = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Determine which card is intersecting
+          if (entry.target === card1Ref.current) {
+            setCard1Visible(true);
+          } else if (entry.target === card2Ref.current) {
+            setTimeout(() => setCard2Visible(true), 500); // Delay for sequential effect
+          } else if (entry.target === card3Ref.current) {
+            setTimeout(() => setCard3Visible(true), 1000); // More delay for third card
+          }
+          
+          // Once visible, no need to observe anymore
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+    
+    const observer = new IntersectionObserver(handleIntersection, options);
+    
+    if (card1Ref.current) observer.observe(card1Ref.current);
+    if (card2Ref.current) observer.observe(card2Ref.current);
+    if (card3Ref.current) observer.observe(card3Ref.current);
+    
+    return () => {
+      if (card1Ref.current) observer.unobserve(card1Ref.current);
+      if (card2Ref.current) observer.unobserve(card2Ref.current);
+      if (card3Ref.current) observer.unobserve(card3Ref.current);
+    };
+  }, []);
+
+  // Cost animation effect - only run when card2 is visible
+  useEffect(() => {
+    if (!card2Visible) return;
+    
     const interval = setInterval(() => {
       setCost(prevCost => {
         if (prevCost >= 20000) {
@@ -37,9 +89,12 @@ const Problem = () => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [card2Visible]);
 
+  // Freelancer typing animation - only run when card3 is visible
   useEffect(() => {
+    if (!card3Visible) return;
+    
     // Typing animation logic with increased speed
     const fullMessage = freelancerMessage;
     
@@ -72,7 +127,7 @@ const Problem = () => {
       
       return () => clearTimeout(resetTimer);
     }
-  }, [freelancerMessage, typingIndex, isTyping]);
+  }, [freelancerMessage, typingIndex, isTyping, card3Visible]);
 
   return (
     <section className="py-16 bg-gray-50">
@@ -90,23 +145,26 @@ const Problem = () => {
           {/* Challenge Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Card 1: Advertising */}
-            <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div 
+              ref={card1Ref}
+              className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-500 ${card1Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+            >
               <div className="flex justify-center relative h-28 mb-6">
                 {/* Icons with juggling animation */}
-                <div className="advertising-icons-container relative w-full h-full">
-                  <div className="absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-1">
+                <div className={`advertising-icons-container relative w-full h-full ${card1Visible ? 'animate-fade-in' : ''}`}>
+                  <div className={`absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-1 ${card1Visible ? 'advertising-icon-active' : ''}`}>
                     <Compass size={24} className="text-gray-500" />
                   </div>
-                  <div className="absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-2">
+                  <div className={`absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-2 ${card1Visible ? 'advertising-icon-active' : ''}`}>
                     <Brush size={24} className="text-gray-500" />
                   </div>
-                  <div className="absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-3">
+                  <div className={`absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-3 ${card1Visible ? 'advertising-icon-active' : ''}`}>
                     <Settings size={24} className="text-gray-500" />
                   </div>
-                  <div className="absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-4">
+                  <div className={`absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-4 ${card1Visible ? 'advertising-icon-active' : ''}`}>
                     <Tag size={24} className="text-gray-500" />
                   </div>
-                  <div className="absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-5">
+                  <div className={`absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-5 ${card1Visible ? 'advertising-icon-active' : ''}`}>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
                       <path d="M3 3v18h18" />
                       <path d="m19 9-5-5" />
@@ -119,7 +177,10 @@ const Problem = () => {
             </div>
 
             {/* Card 2: Agencies */}
-            <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div 
+              ref={card2Ref}
+              className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-500 ${card2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+            >
               <div className="flex flex-col items-center mb-6">
                 <div className="flex items-center justify-center mb-2">
                   <ChartBarIncreasing size={28} className="text-gray-500 mr-2" />
@@ -134,7 +195,10 @@ const Problem = () => {
             </div>
 
             {/* Card 3: Freelancers */}
-            <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div 
+              ref={card3Ref}
+              className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-500 ${card3Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+            >
               <div className="flex items-start mb-6">
                 {/* Avatar Profile Picture - Fixed on the left */}
                 <div className="flex-shrink-0">
@@ -148,7 +212,7 @@ const Problem = () => {
                 
                 {/* Chat Bubble - Expands to the right */}
                 <div className="ml-2 bg-gray-100 p-3 rounded-lg min-h-[2.5rem]" style={{
-                  width: `${Math.max(12, Math.min(typingIndex * 0.7, freelancerMessage.length) * 0.7)}rem`,
+                  width: card3Visible ? `${Math.max(12, Math.min(typingIndex * 0.7, freelancerMessage.length) * 0.7)}rem` : '12rem',
                   transition: 'width 70ms linear'
                 }}>
                   <p className="text-gray-600 text-sm text-left">
@@ -165,8 +229,9 @@ const Problem = () => {
         </div>
       </Container>
 
-      {/* CSS for juggling animation */}
-      <style jsx>{`
+      {/* CSS for juggling animation - fixed to use proper JSX syntax */}
+      <style>
+        {`
         .advertising-icons-container {
           perspective: 1000px;
         }
@@ -176,26 +241,43 @@ const Problem = () => {
           transform-origin: center;
           top: calc(50% - 24px);
           left: calc(50% - 24px);
+          opacity: 0;
+          transform: scale(0.5);
+          transition: opacity 0.3s ease, transform 0.3s ease;
         }
         
-        .advertising-icon-1 {
+        .advertising-icon-active.advertising-icon-1 {
           animation: juggle1 4s infinite ease-in-out;
+          opacity: 1;
+          transform: scale(1);
         }
         
-        .advertising-icon-2 {
+        .advertising-icon-active.advertising-icon-2 {
           animation: juggle2 4s infinite ease-in-out;
+          opacity: 1;
+          transform: scale(1);
+          animation-delay: 0.2s;
         }
         
-        .advertising-icon-3 {
+        .advertising-icon-active.advertising-icon-3 {
           animation: juggle3 4s infinite ease-in-out;
+          opacity: 1;
+          transform: scale(1);
+          animation-delay: 0.4s;
         }
         
-        .advertising-icon-4 {
+        .advertising-icon-active.advertising-icon-4 {
           animation: juggle4 4s infinite ease-in-out;
+          opacity: 1;
+          transform: scale(1);
+          animation-delay: 0.6s;
         }
         
-        .advertising-icon-5 {
+        .advertising-icon-active.advertising-icon-5 {
           animation: juggle5 4s infinite ease-in-out;
+          opacity: 1;
+          transform: scale(1);
+          animation-delay: 0.8s;
         }
         
         @keyframes juggle1 {
@@ -237,7 +319,8 @@ const Problem = () => {
           60% { transform: translate(-30px, 50px) rotate(216deg); }
           80% { transform: translate(-50px, 20px) rotate(288deg); }
         }
-      `}</style>
+        `}
+      </style>
     </section>
   );
 };
