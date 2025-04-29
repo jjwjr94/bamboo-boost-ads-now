@@ -12,19 +12,16 @@ const Hero = () => {
   };
 
   return (
-<div className="relative pt-24 pb-16 px-4 min-h-[600px] overflow-hidden">
+<div className="relative pt-24 pb-16 px-4 overflow-hidden">
       
       {/* Background Image with Animation */}
- <div className="absolute inset-0 w-full h-full">
-  <div className="w-full h-full">
-    <img 
-      src="/Hero-banner-4.svg" 
-      alt="Decorative bamboo background" 
-      className="w-full h-full object-cover"
-    />
-  </div>
-</div>
-
+      <div className="absolute inset-0 animate-slide-up">
+        <img 
+          src="/Hero-banner-4.svg" 
+          alt="Decorative bamboo background" 
+          className="w-full h-full object-cover"
+        />
+      </div>
 
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10 max-w-[800px]">
