@@ -27,7 +27,6 @@ const Hero = () => {
       <div className="container mx-auto flex flex-col items-center text-center relative z-10">
         
         {/* Fully Transparent Box */}
-        <div className="bg-transparent backdrop-blur-sm p-10 rounded-2xl shadow-xl max-w-[800px] mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
             The <span className="relative">
               <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text">AI Ad Agency</span>
