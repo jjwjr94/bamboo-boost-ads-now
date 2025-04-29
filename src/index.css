@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -138,21 +137,3 @@
   animation: slideUp 2.1s ease-out forwards, sway 6s ease-in-out infinite 2.1s;
   transform-origin: center bottom;
 }
-
-/* Button Gradient Animation */
-@keyframes gradient-x {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animate-gradient-x {
-  animation: gradient-x 3s ease infinite;
-}
-

@@ -51,13 +51,11 @@ const Hero = () => {
           </p>
           <div className="flex justify-center gap-4">
             <Button 
-              className="bg-bamboo-primary hover:bg-bamboo-secondary text-lg px-8 py-6 group overflow-hidden relative"
+              className="bg-bamboo-primary hover:bg-bamboo-secondary text-white text-lg px-8 py-6"
               onClick={handleGetStarted}
             >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-[#5995ED] to-white bg-[length:200%_100%] animate-gradient-x"></span>
-              <span className="relative bg-gradient-to-r from-[#5995ED] to-white text-transparent bg-clip-text font-medium group-hover:opacity-0 transition-opacity duration-300">Get Started</span>
-              <span className="relative text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">Get Started</span>
-              <ArrowRight className="ml-2 h-5 w-5 relative text-white" />
+              Get Started
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </div>
