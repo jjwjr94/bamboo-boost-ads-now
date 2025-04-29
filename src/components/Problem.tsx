@@ -21,8 +21,7 @@ const Problem = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Card 1: Advertising */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-semibold text-bamboo-navy mb-4 text-center">Advertising is too complicated</h3>
-              <div className="flex flex-wrap justify-center gap-3 my-6">
+              <div className="flex flex-wrap justify-center gap-3 mb-6">
                 {/* Icons for complex advertising - updated to match Launch Ads Today section */}
                 <div className="bg-green-50 p-3 rounded-full">
                   <Rocket size={24} className="text-bamboo-primary" />
@@ -60,13 +59,12 @@ const Problem = () => {
                   </svg>
                 </div>
               </div>
-              <p className="text-gray-600">Multiple platforms, complex targeting options, and confusing analytics make advertising feel like rocket science.</p>
+              <h3 className="text-xl font-semibold text-bamboo-navy text-center">Advertising is too complicated</h3>
             </div>
 
             {/* Card 2: Agencies */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-semibold text-bamboo-navy mb-4 text-center">Agencies are too expensive</h3>
-              <div className="flex justify-center my-6">
+              <div className="flex justify-center mb-6">
                 <div className="relative flex flex-col items-center">
                   <div className="text-bamboo-primary text-4xl font-bold">$$$</div>
                   <div className="flex items-end mt-2">
@@ -77,24 +75,22 @@ const Problem = () => {
                   </div>
                 </div>
               </div>
-              <p className="text-gray-600">Hiring marketing agencies often requires significant budgets that small businesses simply can't afford.</p>
+              <h3 className="text-xl font-semibold text-bamboo-navy text-center">Agencies are too expensive</h3>
             </div>
 
             {/* Card 3: Freelancers */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-xl font-semibold text-bamboo-navy mb-4 text-center">Freelancers are too limited</h3>
-              <div className="flex justify-center my-6">
+              <div className="flex justify-center mb-6">
                 <div className="bg-green-50 p-4 rounded-lg inline-flex items-center justify-center">
                   <div className="text-center">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-bamboo-primary mx-auto mb-2">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-bamboo-primary mx-auto">
                       <rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect>
                       <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                     </svg>
-                    <span className="text-bamboo-navy font-medium block">Google Ads Only</span>
                   </div>
                 </div>
               </div>
-              <p className="text-gray-600">Most freelancers specialize in just one or two platforms, leaving your business with limited reach and opportunities.</p>
+              <h3 className="text-xl font-semibold text-bamboo-navy text-center">Freelancers are too limited</h3>
             </div>
           </div>
         </div>
