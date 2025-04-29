@@ -37,6 +37,42 @@ const tools = [
     name: "MakeUGC",
     logo: "/lovable-uploads/98dc43a2-a5b8-4cfa-8246-e57f6cd80a3a.png",
   },
+  {
+    name: "Runway",
+    logo: "/lovable-uploads/28534fde-35f0-461e-bde6-42e6789351df.png",
+  },
+  {
+    name: "Sailthru",
+    logo: "/lovable-uploads/e01fe29b-4535-4385-bb3f-5e31b214483d.png",
+  },
+  {
+    name: "Figma",
+    logo: "/lovable-uploads/a93c1ba3-8974-40e9-a3f0-1905227adadd.png",
+  },
+  {
+    name: "Uberflip",
+    logo: "/lovable-uploads/d0cfa4e0-b9a7-4626-8567-86ff12dc685d.png",
+  },
+  {
+    name: "Pacifica",
+    logo: "/lovable-uploads/c2dbb6dc-6dcd-40b0-a681-c1316675666c.png",
+  },
+  {
+    name: "TransitScreen",
+    logo: "/lovable-uploads/4ad46b9d-5907-4244-96a3-9d97583d897c.png",
+  },
+  {
+    name: "Kickstarter",
+    logo: "/lovable-uploads/f1216895-a44b-462b-ada3-3ccfb4c98d31.png",
+  },
+  {
+    name: "Outbrain",
+    logo: "/lovable-uploads/e1f84740-a400-49ee-baab-d7a897b01593.png",
+  },
+  {
+    name: "Boosted",
+    logo: "/lovable-uploads/dffbff21-21c9-4b5f-9f06-8aa5a8eaa3d4.png",
+  },
 ];
 
 const ToolLogo = ({ name, logo, className }: ToolProps) => (
@@ -67,7 +103,7 @@ const AiTools = () => {
         </h2>
         
         <TooltipProvider>
-          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 xl:grid-cols-8 gap-4">
             {tools.map((tool) => (
               <ToolLogo key={tool.name} name={tool.name} logo={tool.logo} />
             ))}
