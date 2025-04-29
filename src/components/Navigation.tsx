@@ -61,8 +61,8 @@ const Navigation = () => {
 
         {/* Mobile Menu (Expanded) */}
         {isMenuOpen && (
-          <div className="lg:hidden bg-white flex flex-col w-full py-4 animate-fade-in">
-            <div className="flex flex-col gap-2">
+          <div className="lg:hidden bg-white fixed left-0 right-0 bottom-0 top-[73px] flex flex-col w-full py-4 animate-fade-in">
+            <div className="flex flex-col gap-2 grow">
               <a href="#about" className="inline-block" onClick={toggleMenu}>
                 <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">About</Button>
               </a>
@@ -74,6 +74,11 @@ const Navigation = () => {
               </a>
               <Link to="/chat" onClick={toggleMenu}>
                 <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">App</Button>
+              </Link>
+            </div>
+            <div className="mt-auto px-4 py-4 border-t">
+              <Link to="/chat" onClick={toggleMenu}>
+                <Button className="w-full bg-bamboo-primary hover:bg-bamboo-secondary text-white">Get Started</Button>
               </Link>
             </div>
           </div>
