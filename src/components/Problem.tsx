@@ -149,20 +149,23 @@ const Problem = () => {
 
             {/* Card 3: Freelancers */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex justify-center items-start mb-6">
-                {/* Avatar Profile Picture */}
-                <div className="mr-2 flex-shrink-0 mt-1">
-                  <Avatar className="h-8 w-8 bg-gray-200">
-                    <AvatarImage src="https://api.dicebear.com/7.x/bottts/svg?seed=freelancer" alt="Freelancer" />
-                    <AvatarFallback>
-                      <UserRound size={16} className="text-gray-500" />
+              <div className="flex items-start mb-6">
+                {/* Avatar Profile Picture - Fixed on the left */}
+                <div className="flex-shrink-0">
+                  <Avatar className="h-10 w-10 bg-gray-200 filter grayscale">
+                    <AvatarImage src="/lovable-uploads/7bf5741a-95ba-4ff0-b819-4dd682543c16.png" alt="Freelancer" />
+                    <AvatarFallback className="bg-gray-300">
+                      <UserRound size={20} className="text-gray-500" />
                     </AvatarFallback>
                   </Avatar>
                 </div>
                 
-                {/* Chat Bubble */}
-                <div className="bg-gray-100 p-3 rounded-lg inline-flex items-center justify-center min-h-12 min-w-48">
-                  <p className="text-gray-500 font-medium text-sm overflow-hidden whitespace-nowrap">
+                {/* Chat Bubble - Expands to the right */}
+                <div className="ml-2 bg-gray-100 p-3 rounded-lg min-h-[2.5rem]" style={{
+                  width: `${Math.max(12, Math.min(typingIndex * 0.7, freelancerMessage.length) * 0.7)}rem`,
+                  transition: 'width 70ms linear'
+                }}>
+                  <p className="text-gray-600 text-sm text-left">
                     {freelancerMessage.substring(0, typingIndex)}
                     <span className="inline-block w-1 h-4 bg-gray-400 ml-0.5 animate-pulse">
                       {typingIndex < freelancerMessage.length ? "|" : ""}
