@@ -54,7 +54,7 @@ const Hero = () => {
               className="bg-white border-2 border-bamboo-primary hover:bg-gray-50 text-lg px-8 py-6 shadow-lg"
               onClick={handleGetStarted}
             >
-              <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text animate-text-shimmer">Get Started</span>
+              <span className="text-shimmer">Get Started</span>
               <ArrowRight className="ml-2 h-5 w-5 text-bamboo-primary" />
             </Button>
           </div>
