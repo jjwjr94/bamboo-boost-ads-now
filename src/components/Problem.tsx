@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Container } from "./ui/container";
-import { Rocket, ChartBarIncreasing, UserRound } from "lucide-react";
+import { Rocket, ChartBarIncreasing, UserRound, Compass, Brush, Settings, Tag } from "lucide-react";
 import { Progress } from "./ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
@@ -91,42 +91,28 @@ const Problem = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Card 1: Advertising */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex flex-wrap justify-center gap-3 mb-6">
-                {/* Icons for complex advertising - updated to match Launch Ads Today section */}
-                <div className="bg-gray-100 p-3 rounded-full">
-                  <Rocket size={24} className="text-gray-500" />
-                </div>
-                <div className="bg-gray-100 p-3 rounded-full">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
-                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
-                    <line x1="4" x2="4" y1="22" y2="15"></line>
-                  </svg>
-                </div>
-                <div className="bg-gray-100 p-3 rounded-full">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
-                    <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-                    <path d="M7 7h.01"></path>
-                    <path d="M12 7h.01"></path>
-                    <path d="m7 12 .01-.011"></path>
-                    <path d="M12 12h.01"></path>
-                    <path d="M17 12h.01"></path>
-                    <path d="M7 17h.01"></path>
-                    <path d="M12 17h.01"></path>
-                    <path d="M17 17h.01"></path>
-                  </svg>
-                </div>
-                <div className="bg-gray-100 p-3 rounded-full">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"></path>
-                    <path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"></path>
-                    <path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"></path>
-                  </svg>
-                </div>
-                <div className="bg-gray-100 p-3 rounded-full">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
-                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                  </svg>
+              <div className="flex justify-center relative h-28 mb-6">
+                {/* Icons with juggling animation */}
+                <div className="advertising-icons-container relative w-full h-full">
+                  <div className="absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-1">
+                    <Compass size={24} className="text-gray-500" />
+                  </div>
+                  <div className="absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-2">
+                    <Brush size={24} className="text-gray-500" />
+                  </div>
+                  <div className="absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-3">
+                    <Settings size={24} className="text-gray-500" />
+                  </div>
+                  <div className="absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-4">
+                    <Tag size={24} className="text-gray-500" />
+                  </div>
+                  <div className="absolute bg-gray-100 p-3 rounded-full advertising-icon advertising-icon-5">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
+                      <path d="M3 3v18h18" />
+                      <path d="m19 9-5-5" />
+                      <path d="m19 9-5 5" />
+                    </svg>
+                  </div>
                 </div>
               </div>
               <h3 className="text-xl font-semibold text-bamboo-navy text-center">Advertising is too complicated</h3>
@@ -178,6 +164,80 @@ const Problem = () => {
           </div>
         </div>
       </Container>
+
+      {/* CSS for juggling animation */}
+      <style jsx>{`
+        .advertising-icons-container {
+          perspective: 1000px;
+        }
+        
+        .advertising-icon {
+          position: absolute;
+          transform-origin: center;
+          top: calc(50% - 24px);
+          left: calc(50% - 24px);
+        }
+        
+        .advertising-icon-1 {
+          animation: juggle1 4s infinite ease-in-out;
+        }
+        
+        .advertising-icon-2 {
+          animation: juggle2 4s infinite ease-in-out;
+        }
+        
+        .advertising-icon-3 {
+          animation: juggle3 4s infinite ease-in-out;
+        }
+        
+        .advertising-icon-4 {
+          animation: juggle4 4s infinite ease-in-out;
+        }
+        
+        .advertising-icon-5 {
+          animation: juggle5 4s infinite ease-in-out;
+        }
+        
+        @keyframes juggle1 {
+          0%, 100% { transform: translate(-50px, 20px) rotate(0deg); }
+          20% { transform: translate(0, -30px) rotate(72deg); }
+          40% { transform: translate(50px, 20px) rotate(144deg); }
+          60% { transform: translate(30px, 50px) rotate(216deg); }
+          80% { transform: translate(-30px, 50px) rotate(288deg); }
+        }
+        
+        @keyframes juggle2 {
+          0%, 100% { transform: translate(50px, 20px) rotate(0deg); }
+          20% { transform: translate(30px, 50px) rotate(72deg); }
+          40% { transform: translate(-30px, 50px) rotate(144deg); }
+          60% { transform: translate(-50px, 20px) rotate(216deg); }
+          80% { transform: translate(0, -30px) rotate(288deg); }
+        }
+        
+        @keyframes juggle3 {
+          0%, 100% { transform: translate(30px, 50px) rotate(0deg); }
+          20% { transform: translate(-30px, 50px) rotate(72deg); }
+          40% { transform: translate(-50px, 20px) rotate(144deg); }
+          60% { transform: translate(0, -30px) rotate(216deg); }
+          80% { transform: translate(50px, 20px) rotate(288deg); }
+        }
+        
+        @keyframes juggle4 {
+          0%, 100% { transform: translate(-30px, 50px) rotate(0deg); }
+          20% { transform: translate(-50px, 20px) rotate(72deg); }
+          40% { transform: translate(0, -30px) rotate(144deg); }
+          60% { transform: translate(50px, 20px) rotate(216deg); }
+          80% { transform: translate(30px, 50px) rotate(288deg); }
+        }
+        
+        @keyframes juggle5 {
+          0%, 100% { transform: translate(0, -30px) rotate(0deg); }
+          20% { transform: translate(50px, 20px) rotate(72deg); }
+          40% { transform: translate(30px, 50px) rotate(144deg); }
+          60% { transform: translate(-30px, 50px) rotate(216deg); }
+          80% { transform: translate(-50px, 20px) rotate(288deg); }
+        }
+      `}</style>
     </section>
   );
 };
