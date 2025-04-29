@@ -1,88 +1,68 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import { Container } from "./ui/container";
 import { Rocket, ChartBarIncreasing, UserRound, Compass, Brush, Settings, Tag } from "lucide-react";
 import { Progress } from "./ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
-const [currentStep, setCurrentStep] = useState(0);
 const Problem = () => {
   const [cost, setCost] = useState(10000);
   const [progress, setProgress] = useState(0);
   const [freelancerMessage, setFreelancerMessage] = useState("Sorry that's out of scope.");
   const [typingIndex, setTypingIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
-  
-  // Animation visibility states
+
+  // Step-based animation control
+  const [currentStep, setCurrentStep] = useState(0);
+
+  // Visibility flags
   const [card1Visible, setCard1Visible] = useState(false);
   const [card2Visible, setCard2Visible] = useState(false);
   const [card3Visible, setCard3Visible] = useState(false);
-  
-  // Refs for each card
-  const card1Ref = useRef(null);
-  const card2Ref = useRef(null);
-  const card3Ref = useRef(null);
-  
-  // Set up intersection observer for sequential animation
+
+  // Refs
+  const card1Ref = useRef<HTMLDivElement>(null);
+
+  // Intersection Observer (only watch card1 to trigger the chain)
   useEffect(() => {
-  const options = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.5,
-  };
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && currentStep === 0) {
+            setCurrentStep(1);
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
 
-  const handleIntersection = (entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        if (entry.target === card1Ref.current && currentStep === 0) {
-          setCurrentStep(1);
-        }
-        observer.unobserve(entry.target);
-      }
-    });
-  };
-
-  const observer = new IntersectionObserver(handleIntersection, options);
-
-  if (card1Ref.current) observer.observe(card1Ref.current);
-
-  return () => {
-    if (card1Ref.current) observer.unobserve(card1Ref.current);
-  };
-}, [currentStep]);
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, options);
-    
     if (card1Ref.current) observer.observe(card1Ref.current);
-    if (card2Ref.current) observer.observe(card2Ref.current);
-    if (card3Ref.current) observer.observe(card3Ref.current);
-    
+
     return () => {
       if (card1Ref.current) observer.unobserve(card1Ref.current);
-      if (card2Ref.current) observer.unobserve(card2Ref.current);
-      if (card3Ref.current) observer.unobserve(card3Ref.current);
     };
-  }, []);
-useEffect(() => {
-  if (currentStep === 1) {
-    setCard1Visible(true);
-    setTimeout(() => setCurrentStep(2), 1000);
-  } else if (currentStep === 2) {
-    setCard2Visible(true);
-    setTimeout(() => setCurrentStep(3), 1000);
-  } else if (currentStep === 3) {
-    setCard3Visible(true);
-  }
-}, [currentStep]);
+  }, [currentStep]);
 
-  // Cost animation effect - only run when card2 is visible
+  // Control the card reveals step-by-step
+  useEffect(() => {
+    if (currentStep === 1) {
+      setCard1Visible(true);
+      setTimeout(() => setCurrentStep(2), 1000);
+    } else if (currentStep === 2) {
+      setCard2Visible(true);
+      setTimeout(() => setCurrentStep(3), 1000);
+    } else if (currentStep === 3) {
+      setCard3Visible(true);
+    }
+  }, [currentStep]);
+
+  // Cost counter animation
   useEffect(() => {
     if (!card2Visible) return;
-    
+
     const interval = setInterval(() => {
-      setCost(prevCost => {
-        if (prevCost >= 20000) {
+      setCost(prev => {
+        if (prev >= 20000) {
           clearInterval(interval);
           setTimeout(() => {
             setCost(10000);
@@ -90,20 +70,13 @@ useEffect(() => {
           }, 2000);
           return 20000;
         }
-        return prevCost + 500;
+        return prev + 500;
       });
-      
-      setProgress(prevProgress => {
-        if (prevProgress >= 100) {
-          return 0;
-        }
-        return prevProgress + 5;
-      });
+
+      setProgress(prev => (prev >= 100 ? 0 : prev + 5));
     }, 200);
-    
-    return () => {
-      clearInterval(interval);
-    };
+
+    return () => clearInterval(interval);
   }, [card2Visible]);
 
   // Freelancer typing animation - only run when card3 is visible
