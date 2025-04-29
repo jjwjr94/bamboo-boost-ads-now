@@ -8,6 +8,8 @@ const Problem = () => {
   const [cost, setCost] = useState(10000);
   const [progress, setProgress] = useState(0);
   const [freelancerMessage, setFreelancerMessage] = useState("Sorry that's out of scope.");
+  const [typingIndex, setTypingIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,19 +33,45 @@ const Problem = () => {
       });
     }, 200);
     
-    const messageInterval = setInterval(() => {
-      setFreelancerMessage(prevMessage => 
-        prevMessage === "Sorry that's out of scope." 
-          ? "I can have that ready in a week." 
-          : "Sorry that's out of scope."
-      );
-    }, 3000);
-    
     return () => {
       clearInterval(interval);
-      clearInterval(messageInterval);
     };
   }, []);
+
+  useEffect(() => {
+    // Typing animation logic
+    const fullMessage = freelancerMessage;
+    
+    if (isTyping && typingIndex < fullMessage.length) {
+      const typingTimer = setTimeout(() => {
+        setTypingIndex(prev => prev + 1);
+      }, 100);
+      
+      return () => clearTimeout(typingTimer);
+    } 
+    
+    if (isTyping && typingIndex >= fullMessage.length) {
+      const pauseTimer = setTimeout(() => {
+        setIsTyping(false);
+      }, 2000);
+      
+      return () => clearTimeout(pauseTimer);
+    }
+    
+    if (!isTyping) {
+      const resetTimer = setTimeout(() => {
+        setFreelancerMessage(prevMessage => 
+          prevMessage === "Sorry that's out of scope." 
+            ? "I can have that ready in a week." 
+            : "Sorry that's out of scope."
+        );
+        setTypingIndex(0);
+        setIsTyping(true);
+      }, 1000);
+      
+      return () => clearTimeout(resetTimer);
+    }
+  }, [freelancerMessage, typingIndex, isTyping]);
 
   return (
     <section className="py-16 bg-gray-50">
@@ -121,9 +149,12 @@ const Problem = () => {
             {/* Card 3: Freelancers */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex justify-center mb-6">
-                <div className="bg-gray-100 p-4 rounded-lg inline-flex items-center justify-center h-16">
-                  <p className="text-gray-500 font-medium text-sm transition-opacity duration-500 animate-pulse">
-                    {freelancerMessage}
+                <div className="bg-gray-100 p-4 rounded-lg inline-flex items-center justify-center h-16 min-w-48">
+                  <p className="text-gray-500 font-medium text-sm overflow-hidden whitespace-nowrap">
+                    {freelancerMessage.substring(0, typingIndex)}
+                    <span className="inline-block w-1 h-4 bg-gray-400 ml-0.5 animate-pulse">
+                      {typingIndex < freelancerMessage.length ? "|" : ""}
+                    </span>
                   </p>
                 </div>
               </div>
