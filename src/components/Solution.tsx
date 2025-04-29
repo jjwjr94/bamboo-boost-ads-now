@@ -4,7 +4,7 @@ import { Container } from "./ui/container";
 
 const Solution = () => {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-gray-50">
       <Container>
         <div className="max-w-5xl mx-auto text-center">
           <p className="text-bamboo-primary font-medium uppercase tracking-wider text-sm mb-4">The Solution</p>

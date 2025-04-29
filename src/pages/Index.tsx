@@ -16,8 +16,8 @@ const Index = () => {
       <Container bordered>
         <Hero />
         <Problem />
-        <Solution />
         <AiTools />
+        <Solution />
         <CampaignSteps />
         <Features />
         <About />
