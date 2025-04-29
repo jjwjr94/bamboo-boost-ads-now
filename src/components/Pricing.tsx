@@ -24,7 +24,7 @@ const Pricing = () => {
               <h3 className="text-xl font-bold mb-2">Free</h3>
               <div className="flex items-baseline">
                 <span className="text-4xl font-bold">$0</span>
-                <span className="text-gray-500 ml-1">/month</span>
+                <span className="text-gray-500 ml-1">/mo</span>
               </div>
               <p className="text-gray-600 mt-2">For getting started</p>
             </CardHeader>
@@ -58,7 +58,7 @@ const Pricing = () => {
               <h3 className="text-xl font-bold mb-2">Standard</h3>
               <div className="flex items-baseline">
                 <span className="text-4xl font-bold">$100</span>
-                <span className="text-gray-500 ml-1">/month + 10% ad spend*</span>
+                <span className="text-gray-500 ml-1">/mo + 10% ad spend*</span>
               </div>
               <p className="text-gray-600 mt-2">Launch campaigns</p>
             </CardHeader>
@@ -91,9 +91,9 @@ const Pricing = () => {
               <h3 className="text-xl font-bold mb-2">Premium</h3>
               <div className="flex items-baseline">
                 <span className="text-4xl font-bold">$500</span>
-                <span className="text-gray-500 ml-1">/month + 10% ad spend*</span>
+                <span className="text-gray-500 ml-1">/mo + 10% ad spend*</span>
               </div>
-              <p className="text-gray-600 mt-2">Omni-channel activation</p>
+              <p className="text-gray-600 mt-2">Omni-channel</p>
             </CardHeader>
             <CardContent className="px-6 py-2 flex-grow">
               <ul className="space-y-3">
@@ -120,7 +120,7 @@ const Pricing = () => {
         </div>
         
         <div className="max-w-5xl mx-auto mt-8 text-right">
-          <p className="text-sm text-gray-500 italic">*Monthly fee is reimbursed if % of ad spend total exceeds monthly fee.</p>
+          <p className="text-sm text-gray-500 italic">*Monthly fee is eligible to be used as ad credits.</p>
         </div>
       </Container>
     </section>
