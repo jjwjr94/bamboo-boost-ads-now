@@ -101,7 +101,7 @@
   stroke: url(#gradient);
   stroke-dasharray: 100;
   stroke-dashoffset: 0;
-  animation: stroke-shimmer 3s linear infinite;
+  animation: stroke-shimmer 5s linear infinite;
 }
 
 @keyframes stroke-shimmer {
