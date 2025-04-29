@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BambooSVG from "./BambooSVG";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   
   const handleGetStarted = () => {
     navigate("/chat");
@@ -21,6 +23,16 @@ const Hero = () => {
           alt="Decorative bamboo background" 
           className="w-full h-full object-cover"
         />
+      </div>
+
+      {/* Left Bamboo */}
+      <div className="absolute left-0 top-0 bottom-0 w-1/4 md:w-1/6 overflow-visible z-0">
+        <BambooSVG className="h-full" position="left" />
+      </div>
+
+      {/* Right Bamboo */}
+      <div className="absolute right-0 top-0 bottom-0 w-1/4 md:w-1/6 overflow-visible z-0">
+        <BambooSVG className="h-full" position="right" />
       </div>
 
       {/* Foreground Content */}
