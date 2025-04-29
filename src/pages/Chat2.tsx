@@ -8,6 +8,22 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip as RechartsTooltip, 
+  ResponsiveContainer,
+  Legend
+} from "recharts";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 
 interface Task {
   id: number;
@@ -22,6 +38,8 @@ interface Message {
   type: "assistant" | "action" | "user";
   timestamp: Date;
   showCalendly?: boolean;
+  showChart?: boolean;
+  chartType?: "performance" | "table";
 }
 
 const Chat2 = () => {
@@ -30,8 +48,8 @@ const Chat2 = () => {
   const [tasks, setTasks] = useState<Task[]>([
     {
       id: 1,
-      title: "Animate SVG Bamboo Growth",
-      description: "The simplified SVG structure improves performance and reduces file size",
+      title: "TikTok Campaign Report",
+      description: "Weekly performance report for your TikTok campaign",
       date: "Mon",
       completed: false
     },
@@ -57,8 +75,29 @@ const Chat2 = () => {
       completed: false
     }
   ]);
+  
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(1);
   const mainContentRef = useRef<HTMLDivElement>(null);
+  
+  const performanceData = [
+    { platform: 'TikTok', conversions: 120, cpa: 7.08 },
+    { platform: 'Meta', conversions: 80, cpa: 9.38 },
+    { platform: 'Google', conversions: 55, cpa: 10.00 },
+  ];
+  
+  const tableData = [
+    { platform: 'TikTok', spend: 850, cpa: 7.08, conversions: 120, cpm: 4.25 },
+    { platform: 'Meta', spend: 600, cpa: 9.38, conversions: 80, cpm: 6.90 },
+    { platform: 'Google', spend: 550, cpa: 10.00, conversions: 55, cpm: 5.60 },
+    { platform: 'Total', spend: 2000, cpa: 8.33, conversions: 255, cpm: '-' },
+  ];
+  
+  const creativeData = [
+    { type: 'Video (UGC)', asset: 'influencer-1.mp4', spend: 400, cpa: 6.25, conversions: 64, cpm: 3.80, ctr: 2.9 },
+    { type: 'Video (Brand)', asset: 'glow-promo-hero.mp4', spend: 300, cpa: 7.50, conversions: 40, cpm: 4.90, ctr: 2.1 },
+    { type: 'Static Image', asset: 'serum_flatlay.png', spend: 150, cpa: 9.00, conversions: 16, cpm: 6.00, ctr: 1.5 },
+    { type: 'Carousel', asset: 'routine_steps_set', spend: 100, cpa: 10.00, conversions: 10, cpm: 5.00, ctr: 1.8 },
+  ];
   
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,11 +115,29 @@ const Chat2 = () => {
     
     // Simulate AI response after a delay
     setTimeout(() => {
-      setMessages(prev => [...prev, { 
-        text: "This solution addresses the specific animation issue while preserving all the benefits of the two-column layout approach we implemented earlier. The bamboo stalks should now slide up smoothly and sway gently, creating the dynamic visual effect you wanted without any visual artifacts or gaps.", 
-        type: "assistant",
-        timestamp: new Date()
-      }]);
+      if (inputValue.toLowerCase() === "creative") {
+        setMessages(prev => [...prev, { 
+          text: "Here's your creative performance breakdown 🎨\n\n🖼️ Performance by Creative", 
+          type: "assistant",
+          timestamp: new Date(),
+          showChart: true,
+          chartType: "table"
+        }]);
+        
+        setTimeout(() => {
+          setMessages(prev => [...prev, { 
+            text: "Top performer: UGC video (influencer-1.mp4) with a CPA of $6.25 and 64 conversions.\nWant me to scale that asset across other channels or create a variant?", 
+            type: "assistant",
+            timestamp: new Date()
+          }]);
+        }, 1000);
+      } else {
+        setMessages(prev => [...prev, { 
+          text: "I'll help you with that. Is there anything specific you'd like to know about the campaign?", 
+          type: "assistant",
+          timestamp: new Date()
+        }]);
+      }
     }, 1000);
   };
 
@@ -88,13 +145,47 @@ const Chat2 = () => {
     setSelectedTaskId(taskId);
     
     // Clear messages when switching tasks
-    setMessages([
-      { 
-        text: "This solution addresses the specific animation issue while preserving all the benefits of the two-column layout approach we implemented earlier. The bamboo stalks should now slide up smoothly and sway gently, creating the dynamic visual effect you wanted without any visual artifacts or gaps.", 
-        type: "assistant",
-        timestamp: new Date()
-      }
-    ]);
+    if (taskId === 1) {
+      setMessages([
+        { 
+          text: "🎉 Congrats! Your TikTok campaign is live! 🚀\nYou're now reaching thousands of potential customers across TikTok, Meta, and Google.", 
+          type: "assistant",
+          timestamp: new Date()
+        },
+        { 
+          text: "Here's your weekly performance report 📊\n\n📈 Overall Campaign Performance\n(based on last 7 days)", 
+          type: "assistant",
+          timestamp: new Date(),
+          showChart: true,
+          chartType: "performance"
+        },
+        { 
+          text: "📊 Performance Summary by Platform", 
+          type: "assistant",
+          timestamp: new Date(),
+          showChart: true,
+          chartType: "table"
+        },
+        { 
+          text: "To improve efficiency, I've shifted $200 from Meta to TikTok, where your CPA is 24% lower and conversions are higher. This will help maximize ROAS.", 
+          type: "assistant",
+          timestamp: new Date()
+        },
+        { 
+          text: "Would you like to do a performance deep dive?\n\n🔍 Audience\n\n🌍 Geography\n\n🎨 Creative", 
+          type: "assistant",
+          timestamp: new Date()
+        }
+      ]);
+    } else {
+      setMessages([
+        { 
+          text: "This solution addresses the specific animation issue while preserving all the benefits of the two-column layout approach we implemented earlier. The bamboo stalks should now slide up smoothly and sway gently, creating the dynamic visual effect you wanted without any visual artifacts or gaps.", 
+          type: "assistant",
+          timestamp: new Date()
+        }
+      ]);
+    }
   };
 
   useEffect(() => {
@@ -155,28 +246,13 @@ const Chat2 = () => {
         <div className="flex-grow flex flex-col h-full">
           {/* Header */}
           <div className="border-b bg-white p-4 flex items-center gap-2">
-            <h2 className="text-lg font-medium text-bamboo-navy">Animate SVG Bamboo Growth</h2>
+            <h2 className="text-lg font-medium text-bamboo-navy">{selectedTask?.title || "Task"}</h2>
           </div>
           
           {/* Main content area - Adjust to accommodate fixed input box */}
           <div className="flex-grow p-4 overflow-y-auto pb-20" ref={mainContentRef}>
             <div className="max-w-3xl mx-auto">
               <div className="flex flex-col gap-6">
-                {/* Task description bullets */}
-                <div className="bg-white rounded-lg p-5 shadow-sm">
-                  <h3 className="font-medium text-lg mb-3 text-bamboo-navy">The simplified SVG structure:</h3>
-                  <ul className="space-y-3 pl-5">
-                    <li className="flex items-start">
-                      <span className="text-bamboo-primary mr-2">•</span>
-                      <span>The simplified SVG structure improves performance and reduces file size</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-bamboo-primary mr-2">•</span>
-                      <span>The two-column layout with 70/30 split remains unchanged</span>
-                    </li>
-                  </ul>
-                </div>
-                
                 {/* Chat messages */}
                 {messages.map((message, index) => (
                   <div key={index} className={`flex items-start gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500 ${
@@ -195,7 +271,101 @@ const Chat2 = () => {
                           </TooltipContent>
                         </Tooltip>
                         <div className="bg-white p-4 rounded-lg rounded-tl-none max-w-[80%] shadow-sm border border-gray-100">
-                          {message.text && <p className="text-bamboo-navy">{message.text}</p>}
+                          {message.text && <p className="text-bamboo-navy whitespace-pre-line">{message.text}</p>}
+                          
+                          {message.showChart && message.chartType === "performance" && (
+                            <Card className="mt-4">
+                              <CardHeader className="pb-2">
+                                <CardTitle className="text-sm font-medium">Platform Conversions</CardTitle>
+                                <CardDescription className="text-xs">TikTok is outperforming other platforms by 35% in CPA</CardDescription>
+                              </CardHeader>
+                              <CardContent>
+                                <ChartContainer config={{}}>
+                                  <BarChart data={performanceData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                    <XAxis dataKey="platform" />
+                                    <YAxis />
+                                    <RechartsTooltip 
+                                      content={({ active, payload }) => {
+                                        if (active && payload && payload.length) {
+                                          return (
+                                            <div className="bg-white p-2 border rounded shadow-sm">
+                                              <p className="text-sm font-medium">{`${payload[0].payload.platform}`}</p>
+                                              <p className="text-xs">{`Conversions: ${payload[0].value}`}</p>
+                                              <p className="text-xs">{`CPA: $${payload[0].payload.cpa.toFixed(2)}`}</p>
+                                            </div>
+                                          );
+                                        }
+                                        return null;
+                                      }}
+                                    />
+                                    <Bar dataKey="conversions" fill="#00D1A1" />
+                                  </BarChart>
+                                </ChartContainer>
+                              </CardContent>
+                            </Card>
+                          )}
+                          
+                          {message.showChart && message.chartType === "table" && (
+                            <>
+                              {message.text?.includes("Platform") ? (
+                                <div className="mt-4 overflow-x-auto">
+                                  <table className="w-full border-collapse text-sm">
+                                    <thead>
+                                      <tr className="bg-gray-50">
+                                        <th className="border px-4 py-2 text-left">Platform</th>
+                                        <th className="border px-4 py-2 text-left">Spend</th>
+                                        <th className="border px-4 py-2 text-left">CPA</th>
+                                        <th className="border px-4 py-2 text-left">Conversions</th>
+                                        <th className="border px-4 py-2 text-left">CPM</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {tableData.map((row, i) => (
+                                        <tr key={i} className={row.platform === 'Total' ? 'font-medium bg-gray-50' : ''}>
+                                          <td className="border px-4 py-2">{row.platform}</td>
+                                          <td className="border px-4 py-2">${row.spend}</td>
+                                          <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
+                                          <td className="border px-4 py-2">{row.conversions}</td>
+                                          <td className="border px-4 py-2">{typeof row.cpm === 'number' ? `$${row.cpm.toFixed(2)}` : row.cpm}</td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              ) : (
+                                <div className="mt-4 overflow-x-auto">
+                                  <table className="w-full border-collapse text-sm">
+                                    <thead>
+                                      <tr className="bg-gray-50">
+                                        <th className="border px-4 py-2 text-left">Creative Type</th>
+                                        <th className="border px-4 py-2 text-left">Asset</th>
+                                        <th className="border px-4 py-2 text-left">Spend</th>
+                                        <th className="border px-4 py-2 text-left">CPA</th>
+                                        <th className="border px-4 py-2 text-left">Conversions</th>
+                                        <th className="border px-4 py-2 text-left">CPM</th>
+                                        <th className="border px-4 py-2 text-left">CTR</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {creativeData.map((row, i) => (
+                                        <tr key={i}>
+                                          <td className="border px-4 py-2">{row.type}</td>
+                                          <td className="border px-4 py-2">{row.asset}</td>
+                                          <td className="border px-4 py-2">${row.spend}</td>
+                                          <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
+                                          <td className="border px-4 py-2">{row.conversions}</td>
+                                          <td className="border px-4 py-2">${row.cpm.toFixed(2)}</td>
+                                          <td className="border px-4 py-2">{row.ctr}%</td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              )}
+                            </>
+                          )}
+                          
                           {message.showCalendly && (
                             <Button 
                               className="mt-2 bg-bamboo-primary hover:bg-bamboo-secondary text-white"
@@ -232,7 +402,7 @@ const Chat2 = () => {
           <div className="border-t bg-white p-4 absolute bottom-0 left-[320px] right-[400px]">
             <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
               <Input 
-                placeholder="Message Manus..." 
+                placeholder="Message Bamboo..." 
                 value={inputValue} 
                 onChange={(e) => setInputValue(e.target.value)}
                 className="flex-grow"
