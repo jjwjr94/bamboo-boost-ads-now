@@ -258,7 +258,7 @@ const Chat2 = () => {
             {tasks.map(task => (
               <div 
                 key={task.id}
-                className={`p-4 border-b cursor-pointer hover:bg-gray-50 ${selectedTaskId === task.id ? 'bg-bamboo-primary/5 border-l-4 border-l-bamboo-primary' : ''}`}
+                className={`p-4 cursor-pointer hover:bg-gray-50 ${selectedTaskId === task.id ? 'bg-bamboo-primary/5 border-l-4 border-l-bamboo-primary' : 'border-b'}`}
                 onClick={() => selectTask(task.id)}
               >
                 <div className="flex gap-3">
