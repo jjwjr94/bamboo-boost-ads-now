@@ -7,6 +7,7 @@ import { Progress } from "./ui/progress";
 const Problem = () => {
   const [cost, setCost] = useState(10000);
   const [progress, setProgress] = useState(0);
+  const [freelancerMessage, setFreelancerMessage] = useState("Sorry that's out of scope.");
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,7 +31,18 @@ const Problem = () => {
       });
     }, 200);
     
-    return () => clearInterval(interval);
+    const messageInterval = setInterval(() => {
+      setFreelancerMessage(prevMessage => 
+        prevMessage === "Sorry that's out of scope." 
+          ? "I can have that ready in a week." 
+          : "Sorry that's out of scope."
+      );
+    }, 3000);
+    
+    return () => {
+      clearInterval(interval);
+      clearInterval(messageInterval);
+    };
   }, []);
 
   return (
@@ -109,13 +121,10 @@ const Problem = () => {
             {/* Card 3: Freelancers */}
             <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex justify-center mb-6">
-                <div className="bg-gray-100 p-4 rounded-lg inline-flex items-center justify-center">
-                  <div className="text-center">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 mx-auto">
-                      <rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect>
-                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                    </svg>
-                  </div>
+                <div className="bg-gray-100 p-4 rounded-lg inline-flex items-center justify-center h-16">
+                  <p className="text-gray-500 font-medium text-sm transition-opacity duration-500 animate-pulse">
+                    {freelancerMessage}
+                  </p>
                 </div>
               </div>
               <h3 className="text-xl font-semibold text-bamboo-navy text-center">Freelancers are too limited</h3>
