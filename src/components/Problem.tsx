@@ -27,10 +27,6 @@ const Problem = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-bamboo-navy mb-8">
               Growing Your Small Business is Hard
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-12">
-              Small business owners face countless challenges with limited resources. Marketing effectively, 
-              creating professional ads, and reaching the right audience can be overwhelming and expensive.
-            </p>
           </div>
           
           {/* Challenge Cards */}
