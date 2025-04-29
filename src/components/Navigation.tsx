@@ -25,7 +25,9 @@ const Navigation = () => {
             <a href="#solution" className="inline-block">
               <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Features</Button>
             </a>
-            <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Pricing</Button>
+            <a href="#pricing" className="inline-block">
+              <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Pricing</Button>
+            </a>
           </div>
           
           {/* Right Navigation */}
