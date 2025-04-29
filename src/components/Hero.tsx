@@ -51,7 +51,7 @@ const Hero = () => {
           </p>
           <div className="flex justify-center gap-4">
             <Button 
-              className="bg-bamboo-primary hover:bg-bamboo-secondary text-white text-lg px-8 py-6"
+              className="bg-bamboo-primary/50 hover:bg-bamboo-secondary/50 text-white text-lg px-8 py-6 shadow-lg"
               onClick={handleGetStarted}
             >
               <span className="text-shimmer">Get Started</span>
