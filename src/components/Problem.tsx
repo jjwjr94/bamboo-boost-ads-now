@@ -156,13 +156,13 @@ const Problem = () => {
             {/* Card 1 */}
             <div 
               ref={card1Ref}
-              className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-700 ease-out transform ${
+              className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-700 ease-out transform flex flex-col justify-between h-64 ${
                 card1Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <div className="flex justify-center relative h-28 mb-6">
+              <div className="flex justify-center items-center relative flex-grow">
                 {/* Icons */}
-                <div className="relative w-full h-full">
+                <div className="relative w-full h-full flex items-center justify-center">
                   {[Compass, Brush, Settings, Tag, Rocket].map((Icon, i) => (
                     <div key={i} className={`absolute bg-gray-100 p-3 rounded-full transition-all ${card1Visible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}
                       style={{
@@ -176,17 +176,17 @@ const Problem = () => {
                   ))}
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-bamboo-navy text-center">Advertising is too complicated</h3>
+              <h3 className="text-xl font-semibold text-bamboo-navy text-center mt-4">Advertising is too complicated</h3>
             </div>
 
             {/* Card 2 */}
             <div 
               ref={card2Ref}
-              className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-700 ease-out transform ${
+              className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-700 ease-out transform flex flex-col justify-between h-64 ${
                 card2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <div className="flex flex-col items-center mb-6">
+              <div className="flex flex-col items-center justify-center flex-grow">
                 <div className="flex items-center justify-center mb-2">
                   <ChartBarIncreasing size={28} className="text-gray-500 mr-2" />
                   <span className="text-2xl font-bold text-gray-700">${cost.toLocaleString()}</span>
@@ -196,17 +196,17 @@ const Problem = () => {
                 </div>
                 <p className="text-xs text-gray-500 mt-1">Agency Fees</p>
               </div>
-              <h3 className="text-xl font-semibold text-bamboo-navy text-center">Agencies are too expensive</h3>
+              <h3 className="text-xl font-semibold text-bamboo-navy text-center mt-4">Agencies are too expensive</h3>
             </div>
 
             {/* Card 3 */}
             <div 
               ref={card3Ref}
-              className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-700 ease-out transform ${
+              className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-700 ease-out transform flex flex-col justify-between h-64 ${
                 card3Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <div className="flex items-start mb-6">
+              <div className="flex items-start justify-center flex-grow">
                 <div className="flex-shrink-0">
                   <Avatar className="h-10 w-10 bg-gray-200 filter grayscale">
                     <AvatarImage src="/lovable-uploads/7bf5741a-95ba-4ff0-b819-4dd682543c16.png" alt="Freelancer" />
@@ -227,7 +227,7 @@ const Problem = () => {
                   </p>
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-bamboo-navy text-center">Freelancers are too limited</h3>
+              <h3 className="text-xl font-semibold text-bamboo-navy text-center mt-4">Freelancers are too limited</h3>
             </div>
           </div>
         </div>
