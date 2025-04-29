@@ -1,6 +1,7 @@
 
 import Navigation from "../components/Navigation";
 import Hero from "../components/Hero";
+import Problem from "../components/Problem";
 import AiTools from "../components/AiTools";
 import CampaignSteps from "../components/CampaignSteps";
 import Features from "../components/Features";
@@ -13,6 +14,7 @@ const Index = () => {
       <Navigation />
       <Container bordered>
         <Hero />
+        <Problem />
         <AiTools />
         <CampaignSteps />
         <Features />
