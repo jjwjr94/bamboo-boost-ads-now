@@ -19,8 +19,12 @@ const Navigation = () => {
 
           {/* Center Navigation */}
           <div className="flex gap-4 items-center">
-            <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">About</Button>
-            <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Features</Button>
+            <a href="#about" className="inline-block">
+              <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">About</Button>
+            </a>
+            <a href="#solution" className="inline-block">
+              <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Features</Button>
+            </a>
             <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Pricing</Button>
           </div>
           

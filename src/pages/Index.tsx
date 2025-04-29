@@ -20,7 +20,9 @@ const Index = () => {
         <AiTools />
         <CampaignSteps />
         <Features />
-        <About />
+        <div id="about">
+          <About />
+        </div>
       </Container>
     </div>
   );
