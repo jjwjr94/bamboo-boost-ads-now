@@ -2,10 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import BambooSVG from "./BambooSVG";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   
   const handleGetStarted = () => {
     navigate("/chat");
@@ -16,11 +17,17 @@ const Hero = () => {
       
       {/* Background Image with Animation */}
       <div className="absolute inset-0 animate-slide-up">
-        <img 
-          src="/Hero-banner-4.svg" 
-          alt="Decorative bamboo background" 
-          className="w-full h-full object-cover"
-        />
+        <div className="relative w-full h-full">
+          <img 
+            src="/Hero-banner-4.svg" 
+            alt="Decorative bamboo background" 
+            className="w-full h-full object-cover md:object-contain"
+            style={{
+              transform: isMobile ? 'scale(2.5)' : 'none',
+              transformOrigin: 'center center'
+            }}
+          />
+        </div>
       </div>
 
       {/* Foreground Content */}
@@ -34,6 +41,7 @@ const Hero = () => {
                 <path 
                   d="M0,2 Q25,6 50,2 T100,2"
                   fill="none"
+                  stroke="url(#gradient)"
                   strokeWidth="3"
                 />
                 <defs>
