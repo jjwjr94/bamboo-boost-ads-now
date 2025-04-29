@@ -1,8 +1,9 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
-import { Send, ArrowRight } from "lucide-react";
+import { Send, Link } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
@@ -39,6 +40,7 @@ interface Message {
   showCalendly?: boolean;
   showChart?: boolean;
   chartType?: "performance" | "table";
+  hasReportLink?: boolean;
 }
 
 const Chat2 = () => {
@@ -76,6 +78,7 @@ const Chat2 = () => {
   ]);
   
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(1);
+  const [rightPanelContent, setRightPanelContent] = useState<"code" | "chart" | null>("code");
   const mainContentRef = useRef<HTMLDivElement>(null);
   
   const performanceData = [
@@ -139,9 +142,14 @@ const Chat2 = () => {
       }
     }, 1000);
   };
+  
+  const showReportInRightPanel = () => {
+    setRightPanelContent("chart");
+  };
 
   const selectTask = (taskId: number) => {
     setSelectedTaskId(taskId);
+    setRightPanelContent("code"); // Reset right panel to code view when changing tasks
     
     // Clear messages when switching tasks
     if (taskId === 1) {
@@ -152,11 +160,12 @@ const Chat2 = () => {
           timestamp: new Date()
         },
         { 
-          text: "Here's your weekly performance report 📊\n\n📈 Overall Campaign Performance\n(based on last 7 days)", 
+          text: "Here's your weekly performance [report] 📊\n\n📈 Overall Campaign Performance\n(based on last 7 days)", 
           type: "assistant",
           timestamp: new Date(),
           showChart: true,
-          chartType: "performance"
+          chartType: "performance",
+          hasReportLink: true
         },
         { 
           text: "📊 Performance Summary by Platform", 
@@ -196,6 +205,39 @@ const Chat2 = () => {
   
   // Find the selected task
   const selectedTask = tasks.find(task => task.id === selectedTaskId);
+
+  // Helper function to process message text and apply link formatting
+  const renderMessageText = (message: Message) => {
+    if (!message.text) return null;
+    
+    if (message.hasReportLink) {
+      return (
+        <p className="text-bamboo-navy whitespace-pre-line">
+          {message.text.split('[report]').map((part, index, array) => {
+            // If this is the last part or not the first part 
+            if (index === array.length - 1 || index > 0) {
+              return <React.Fragment key={index}>{part}</React.Fragment>
+            }
+            // This is the first part, so add the link after it
+            return (
+              <React.Fragment key={index}>
+                {part}
+                <span 
+                  className="text-bamboo-primary underline cursor-pointer inline-flex items-center"
+                  onClick={showReportInRightPanel}
+                >
+                  report
+                  <Link className="h-3 w-3 inline-block ml-0.5" />
+                </span>
+              </React.Fragment>
+            )
+          })}
+        </p>
+      );
+    }
+    
+    return <p className="text-bamboo-navy whitespace-pre-line">{message.text}</p>;
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -270,7 +312,7 @@ const Chat2 = () => {
                           </TooltipContent>
                         </Tooltip>
                         <div className="bg-white p-4 rounded-lg rounded-tl-none max-w-[80%] shadow-sm border border-gray-100">
-                          {message.text && <p className="text-bamboo-navy whitespace-pre-line">{message.text}</p>}
+                          {renderMessageText(message)}
                           
                           {message.showChart && message.chartType === "performance" && (
                             <Card className="mt-4">
@@ -417,21 +459,109 @@ const Chat2 = () => {
           </div>
         </div>
         
-        {/* Right Sidebar - Code Preview */}
+        {/* Right Sidebar - Media Preview */}
         <div className="w-[400px] border-l bg-white overflow-hidden flex flex-col">
           <div className="p-4 border-b flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="text-blue-500">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                </svg>
+              <div className={rightPanelContent === "chart" ? "text-bamboo-primary" : "text-blue-500"}>
+                {rightPanelContent === "chart" ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 3v18h18"></path>
+                    <path d="M18 17V9"></path>
+                    <path d="M13 17V5"></path>
+                    <path d="M8 17v-3"></path>
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                  </svg>
+                )}
               </div>
-              <span className="text-sm">pasted_content.txt</span>
+              <span className="text-sm">
+                {rightPanelContent === "chart" ? "Performance Report" : "pasted_content.txt"}
+              </span>
             </div>
           </div>
           <div className="p-4 overflow-y-auto flex-grow bg-gray-50">
-            <pre className="text-xs text-gray-800 font-mono">
+            {rightPanelContent === "chart" ? (
+              <div className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base">Platform Conversions</CardTitle>
+                    <CardDescription className="text-xs">Overall performance across platforms</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ChartContainer config={{}}>
+                      <BarChart data={performanceData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                        <XAxis dataKey="platform" />
+                        <YAxis />
+                        <RechartsTooltip 
+                          content={({ active, payload }) => {
+                            if (active && payload && payload.length) {
+                              return (
+                                <div className="bg-white p-2 border rounded shadow-sm">
+                                  <p className="text-sm font-medium">{`${payload[0].payload.platform}`}</p>
+                                  <p className="text-xs">{`Conversions: ${payload[0].value}`}</p>
+                                  <p className="text-xs">{`CPA: $${payload[0].payload.cpa.toFixed(2)}`}</p>
+                                </div>
+                              );
+                            }
+                            return null;
+                          }}
+                        />
+                        <Legend />
+                        <Bar dataKey="conversions" fill="#00D1A1" name="Conversions" />
+                      </BarChart>
+                    </ChartContainer>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base">Platform Performance Summary</CardTitle>
+                    <CardDescription className="text-xs">Detailed metrics by platform</CardDescription>
+                  </CardHeader>
+                  <CardContent className="px-0">
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse text-sm">
+                        <thead>
+                          <tr className="bg-gray-50">
+                            <th className="border px-4 py-2 text-left">Platform</th>
+                            <th className="border px-4 py-2 text-left">Spend</th>
+                            <th className="border px-4 py-2 text-left">CPA</th>
+                            <th className="border px-4 py-2 text-left">Conversions</th>
+                            <th className="border px-4 py-2 text-left">CPM</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {tableData.map((row, i) => (
+                            <tr key={i} className={row.platform === 'Total' ? 'font-medium bg-gray-50' : ''}>
+                              <td className="border px-4 py-2">{row.platform}</td>
+                              <td className="border px-4 py-2">${row.spend}</td>
+                              <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
+                              <td className="border px-4 py-2">{row.conversions}</td>
+                              <td className="border px-4 py-2">{typeof row.cpm === 'number' ? `$${row.cpm.toFixed(2)}` : row.cpm}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <div className="text-sm text-gray-500">
+                  <p className="font-medium mb-2">Key Insights:</p>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>TikTok is outperforming Meta by 24% in CPA efficiency</li>
+                    <li>Google has the highest CPA at $10.00</li>
+                    <li>Overall campaign ROAS is positive at 2.4x</li>
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <pre className="text-xs text-gray-800 font-mono">
 {`import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -467,7 +597,8 @@ const Hero = () => {
 };
 
 export default Hero;`}
-            </pre>
+              </pre>
+            )}
           </div>
         </div>
       </div>
