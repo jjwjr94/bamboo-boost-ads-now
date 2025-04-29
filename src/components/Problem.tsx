@@ -140,7 +140,7 @@ const Problem = () => {
       const resetTimer = setTimeout(() => {
         setFreelancerMessage(prev => 
           prev === "Sorry that's out of scope." 
-            ? "I don't have time until next month. 
+            ? "I don't have time until next month." 
             : "Sorry that's out of scope."
         );
         setTypingIndex(0);
