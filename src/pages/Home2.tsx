@@ -1,6 +1,6 @@
 
 import Navigation from "../components/Navigation";
-import Hero2 from "../components/Hero2";
+import Hero from "../components/Hero";
 import AiTools from "../components/AiTools";
 import CampaignSteps from "../components/CampaignSteps";
 import Features from "../components/Features";
@@ -10,7 +10,7 @@ const Home2 = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
-      <Hero2 />
+      <Hero />
       <AiTools />
       <CampaignSteps />
       <Features />
