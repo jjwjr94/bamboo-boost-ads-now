@@ -101,7 +101,7 @@ const Problem = () => {
                 <div className="w-full max-w-xs mt-2">
                   <Progress value={progress} className="h-3 bg-gray-200" />
                 </div>
-                <p className="text-xs text-gray-500 mt-1">Agency Monthly Retainer</p>
+                <p className="text-xs text-gray-500 mt-1">Agency Fees</p>
               </div>
               <h3 className="text-xl font-semibold text-bamboo-navy text-center">Agencies are too expensive</h3>
             </div>
