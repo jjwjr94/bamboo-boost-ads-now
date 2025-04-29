@@ -25,8 +25,11 @@ const Navigation = () => {
             />
           </Link>
 
-          {/* Mobile Menu Toggle */}
-          <div className="lg:hidden">
+          {/* Mobile Actions - Get Started button and Hamburger */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <Link to="/chat">
+              <Button className="bg-bamboo-primary hover:bg-bamboo-secondary text-white">Get Started</Button>
+            </Link>
             <Button variant="ghost" size="icon" onClick={toggleMenu}>
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
@@ -71,9 +74,6 @@ const Navigation = () => {
               </a>
               <Link to="/chat" onClick={toggleMenu}>
                 <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">App</Button>
-              </Link>
-              <Link to="/chat" onClick={toggleMenu}>
-                <Button className="w-full justify-start bg-bamboo-primary hover:bg-bamboo-secondary text-white">Get Started</Button>
               </Link>
             </div>
           </div>
