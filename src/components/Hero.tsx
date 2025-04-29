@@ -12,7 +12,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative min-h-screen pt-24 pb-16 px-4 overflow-visible">
+<div className="relative pt-24 pb-16 px-4 overflow-hidden">
       
       {/* Background Image with Animation */}
       <div className="absolute inset-0 animate-slide-up">
