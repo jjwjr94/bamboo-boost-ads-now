@@ -146,7 +146,7 @@
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  animation: text-shimmer 6s linear infinite;
+  animation: text-shimmer 4s linear infinite;
 }
 
 /* Stroke shimmer for SVG path */
@@ -154,7 +154,7 @@
   stroke: url(#gradient);
   stroke-dasharray: 100;
   stroke-dashoffset: 0;
-  animation: stroke-shimmer 6s linear infinite;
+  animation: stroke-shimmer 4s linear infinite;
 }
 
 @keyframes stroke-shimmer {
@@ -172,3 +172,4 @@
   background-size: 200% 100%;
   animation: button-shimmer 6s linear infinite;
 }
+
