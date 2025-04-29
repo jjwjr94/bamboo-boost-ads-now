@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from "react";
 import { Container } from "./ui/container";
 import { Rocket, ChartBarIncreasing, UserRound, Compass, Brush, Settings, Tag } from "lucide-react";
@@ -19,10 +20,16 @@ const Problem = () => {
   const [card2Visible, setCard2Visible] = useState(false);
   const [card3Visible, setCard3Visible] = useState(false);
 
-  // Refs
+  // Refs for all cards
   const card1Ref = useRef<HTMLDivElement>(null);
+  const card2Ref = useRef<HTMLDivElement>(null);
+  const card3Ref = useRef<HTMLDivElement>(null);
 
-  // Intersection Observer (only watch card1 to trigger the chain)
+  // Animation state for card 1
+  const [card1AnimationComplete, setCard1AnimationComplete] = useState(false);
+  const [card2AnimationComplete, setCard2AnimationComplete] = useState(false);
+
+  // Intersection Observer for card 1 (first in sequence)
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries, obs) => {
@@ -43,18 +50,42 @@ const Problem = () => {
     };
   }, [currentStep]);
 
-  // Control the card reveals step-by-step
+  // Sequential animation control
   useEffect(() => {
     if (currentStep === 1) {
       setCard1Visible(true);
-      setTimeout(() => setCurrentStep(2), 1000);
-    } else if (currentStep === 2) {
-      setCard2Visible(true);
-      setTimeout(() => setCurrentStep(3), 1000);
-    } else if (currentStep === 3) {
-      setCard3Visible(true);
+      
+      // Mark card 1 animation as complete after animation duration
+      const timer = setTimeout(() => {
+        setCard1AnimationComplete(true);
+        setCurrentStep(2);
+      }, 2000); // Duration for card 1 animation + a little extra time
+      
+      return () => clearTimeout(timer);
     }
   }, [currentStep]);
+
+  // Card 2 animation starts after card 1 completes
+  useEffect(() => {
+    if (card1AnimationComplete && currentStep === 2) {
+      setCard2Visible(true);
+      
+      // Mark card 2 animation as complete after its animation duration
+      const timer = setTimeout(() => {
+        setCard2AnimationComplete(true);
+        setCurrentStep(3);
+      }, 2000); // Duration for card 2 animation + a little extra time
+      
+      return () => clearTimeout(timer);
+    }
+  }, [card1AnimationComplete, currentStep]);
+
+  // Card 3 animation starts after card 2 completes
+  useEffect(() => {
+    if (card2AnimationComplete && currentStep === 3) {
+      setCard3Visible(true);
+    }
+  }, [card2AnimationComplete, currentStep]);
 
   // Cost counter animation
   useEffect(() => {
@@ -150,6 +181,7 @@ const Problem = () => {
 
             {/* Card 2 */}
             <div 
+              ref={card2Ref}
               className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-700 ease-out transform ${
                 card2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
@@ -169,6 +201,7 @@ const Problem = () => {
 
             {/* Card 3 */}
             <div 
+              ref={card3Ref}
               className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-700 ease-out transform ${
                 card3Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
@@ -210,10 +243,34 @@ const Problem = () => {
             60% { transform: translate(30px, 50px) rotate(216deg); }
             80% { transform: translate(-30px, 50px) rotate(288deg); }
           }
-          @keyframes juggle2 { ... }
-          @keyframes juggle3 { ... }
-          @keyframes juggle4 { ... }
-          @keyframes juggle5 { ... }
+          @keyframes juggle2 {
+            0%, 100% { transform: translate(50px, 20px) rotate(0deg); }
+            20% { transform: translate(-30px, 50px) rotate(72deg); }
+            40% { transform: translate(-50px, 20px) rotate(144deg); }
+            60% { transform: translate(0, -30px) rotate(216deg); }
+            80% { transform: translate(50px, 20px) rotate(288deg); }
+          }
+          @keyframes juggle3 {
+            0%, 100% { transform: translate(30px, 50px) rotate(0deg); }
+            20% { transform: translate(50px, 20px) rotate(72deg); }
+            40% { transform: translate(0, -30px) rotate(144deg); }
+            60% { transform: translate(-50px, 20px) rotate(216deg); }
+            80% { transform: translate(-30px, 50px) rotate(288deg); }
+          }
+          @keyframes juggle4 {
+            0%, 100% { transform: translate(-30px, 50px) rotate(0deg); }
+            20% { transform: translate(30px, 50px) rotate(72deg); }
+            40% { transform: translate(50px, 20px) rotate(144deg); }
+            60% { transform: translate(0, -30px) rotate(216deg); }
+            80% { transform: translate(-50px, 20px) rotate(288deg); }
+          }
+          @keyframes juggle5 {
+            0%, 100% { transform: translate(0, -30px) rotate(0deg); }
+            20% { transform: translate(-50px, 20px) rotate(72deg); }
+            40% { transform: translate(-30px, 50px) rotate(144deg); }
+            60% { transform: translate(50px, 20px) rotate(216deg); }
+            80% { transform: translate(30px, 50px) rotate(288deg); }
+          }
         `}
       </style>
     </section>
