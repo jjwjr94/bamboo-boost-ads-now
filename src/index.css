@@ -150,10 +150,20 @@
 }
 
 /* Stroke shimmer for SVG path */
-.text-shimmer-stroke {
+.text-shimmer-stroke path {
+  stroke: url(#gradient);
   stroke-dasharray: 100;
   stroke-dashoffset: 0;
-  animation: text-shimmer 6s linear infinite;
+  animation: stroke-shimmer 6s linear infinite;
+}
+
+@keyframes stroke-shimmer {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 
 /* Button shimmer styling */
