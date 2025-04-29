@@ -176,7 +176,7 @@ const Problem = () => {
                   ))}
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-bamboo-navy text-center mt-4">Advertising is too complicated</h3>
+              <h3 className="text-xl font-semibold text-bamboo-navy text-center mt-4">Advertising is too complicated to juggle alone</h3>
             </div>
 
             {/* Card 2 */}
