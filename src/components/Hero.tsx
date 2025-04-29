@@ -12,7 +12,7 @@ const Hero = () => {
   };
 
   return (
-<div className="relative pt-24 pb-16 px-4 overflow-hidden">
+    <div className="relative pt-24 pb-16 px-4 overflow-hidden">
       
       {/* Background Image with Animation */}
       <div className="absolute inset-0 animate-slide-up">
@@ -26,7 +26,8 @@ const Hero = () => {
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10 max-w-[800px]">
         
-        {/* Fully Transparent Box */}
+        {/* Semi-transparent White Box */}
+        <div className="bg-white bg-opacity-50 px-8 py-10 rounded-lg backdrop-blur-sm">
           <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
             The <span className="relative">
               <span className="ai-ad-agency-gradient">AI Ad Agency</span>
@@ -58,6 +59,7 @@ const Hero = () => {
             </Button>
           </div>
         </div>
+      </div>
     </div>
   );
 };
