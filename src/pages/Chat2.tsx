@@ -263,7 +263,7 @@ const Chat2 = () => {
             defaultSize={20} 
             minSize={15}
             maxSize={30}
-            className="bg-gray-50 flex flex-col border-r"
+            className="bg-gray-50 flex flex-col overflow-hidden border-r" // Added overflow-hidden
           >
             <div className="p-4 border-b bg-white flex items-center h-16">
               <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy flex items-center">
@@ -271,7 +271,7 @@ const Chat2 = () => {
               </Button>
             </div>
             
-            <ScrollArea className="flex-grow h-full pb-24">
+            <ScrollArea className="flex-grow overflow-y-auto pb-24"> {/* Changed className */}
               {tasks.map(task => (
                 <div 
                   key={task.id}
@@ -313,7 +313,7 @@ const Chat2 = () => {
             
             {/* Messages container */}
             <div className="relative flex-grow overflow-hidden">
-              <ScrollArea className="h-full pb-24" viewportRef={mainContentRef}>
+              <ScrollArea className="flex-grow overflow-y-auto pb-24" viewportRef={mainContentRef}> {/* Changed className */}
                 <div className="p-4">
                   <div className="max-w-3xl mx-auto">
                     <div className="flex flex-col gap-6">
@@ -492,7 +492,7 @@ const Chat2 = () => {
               defaultSize={30}
               minSize={20}
               maxSize={50}
-              className="bg-white overflow-hidden flex flex-col border-l"
+              className="bg-white overflow-hidden flex flex-col border-l" // Kept overflow-hidden
             >
               <div className="p-4 border-b flex items-center justify-between h-16">
                 <div className="flex items-center gap-2">
@@ -515,7 +515,7 @@ const Chat2 = () => {
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
-              <ScrollArea className="p-4 flex-grow bg-gray-50">
+              <ScrollArea className="flex-grow overflow-y-auto p-4 bg-gray-50"> {/* Changed className */}
                 <div className="space-y-6">
                   <Card>
                     <CardHeader>
@@ -601,3 +601,4 @@ const Chat2 = () => {
 };
 
 export default Chat2;
+
