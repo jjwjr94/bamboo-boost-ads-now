@@ -3,7 +3,7 @@ import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import { Send, Link, ChevronLeft, ChevronRight, BarChart2, Code, Github, BrainCircuit } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -83,7 +83,7 @@ const Chat2 = () => {
   ]);
   
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(1);
-  const [rightPanelContent, setRightPanelContent] = useState<"code" | "chart" | null>("code");
+  const [rightPanelContent, setRightPanelContent] = useState<"chart" | null>("chart");
   const [rightPanelCollapsed, setRightPanelCollapsed] = useState(true);
   const mainContentRef = useRef<HTMLDivElement>(null);
   
@@ -156,7 +156,7 @@ const Chat2 = () => {
 
   const selectTask = (taskId: number) => {
     setSelectedTaskId(taskId);
-    setRightPanelContent("code"); // Reset right panel to code view when changing tasks
+    setRightPanelCollapsed(true); // Always collapse right panel when changing tasks
     
     // Clear messages when switching tasks
     if (taskId === 1) {
@@ -247,281 +247,272 @@ const Chat2 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Navigation />
-      
-      <ResizablePanelGroup 
-        direction="horizontal" 
-        className="flex flex-grow pt-16 overflow-hidden"
-      >
-        {/* Left Sidebar - Tasks List */}
-        <ResizablePanel 
-          defaultSize={20} 
-          minSize={15}
-          maxSize={30}
-          className="bg-gray-50 flex flex-col border-r"
-        >
-          <div className="p-4 border-b bg-white flex items-center h-16">
-            <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy flex items-center">
-              + New task
-            </Button>
-          </div>
-          
-          <div className="flex-grow overflow-y-auto pb-24">
-            {tasks.map(task => (
-              <div 
-                key={task.id}
-                className={`p-4 cursor-pointer hover:bg-gray-100 ${selectedTaskId === task.id ? 'bg-bamboo-primary/5 border-l-4 border-l-bamboo-primary' : 'border-b border-gray-100'}`}
-                onClick={() => selectTask(task.id)}
-              >
-                <div className="flex gap-3 items-center">
-                  <Avatar className="h-8 w-8 border flex-shrink-0 bg-gray-200 flex items-center justify-center">
-                    {task.id === 1 && <BarChart2 className="h-4 w-4 text-gray-600" />}
-                    {task.id === 2 && <Code className="h-4 w-4 text-gray-600" />}
-                    {task.id === 3 && <Github className="h-4 w-4 text-gray-600" />}
-                    {task.id === 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
-                    {/* Fallback for any other tasks */}
-                    {task.id > 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
-                  </Avatar>
-                  <div className="flex-grow min-w-0">
-                    <h3 className="text-sm font-medium text-bamboo-navy truncate overflow-hidden">{task.title}</h3>
-                    <p className="text-xs text-gray-500 truncate overflow-hidden">{task.description}</p>
-                  </div>
-                  <div className="text-xs text-gray-400 flex-shrink-0">{task.date}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </ResizablePanel>
+    <TooltipProvider>
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <Navigation />
         
-        <ResizableHandle withHandle />
-        
-        {/* Middle Content - Chat */}
-        <ResizablePanel 
-          defaultSize={rightPanelCollapsed ? 80 : 50}
-          minSize={30}
-          className="flex flex-col h-full relative overflow-hidden"
+        <ResizablePanelGroup 
+          direction="horizontal" 
+          className="flex flex-grow pt-16 overflow-hidden"
         >
-          {/* Header */}
-          <div className="border-b bg-white p-4 flex items-center gap-2 h-16">
-            <h2 className="text-lg font-medium text-bamboo-navy flex items-center">{selectedTask?.title || "Task"}</h2>
-          </div>
-          
-          {/* Messages container */}
-          <div className="relative flex-grow overflow-hidden">
-            <div className="overflow-y-auto h-full pb-24" ref={mainContentRef}>
-              <div className="p-4">
-                <div className="max-w-3xl mx-auto">
-                  <div className="flex flex-col gap-6">
-                    {/* Chat messages */}
-                    {messages.map((message, index) => (
-                      <div key={index} className={`flex items-start gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500 ${
-                        message.type === "user" ? "justify-end" : "justify-start"
-                      }`}>
-                        {message.type === "assistant" ? (
-                          <>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Avatar className="h-10 w-10 border bg-zinc-900 text-white flex items-center justify-center">
-                                  <div className="text-sm">M</div>
-                                </Avatar>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                            <div className="bg-white p-4 rounded-lg rounded-tl-none max-w-[80%] shadow-sm border border-gray-100">
-                              {renderMessageText(message)}
-                              
-                              {message.showChart && message.chartType === "performance" && (
-                                <Card className="mt-4">
-                                  <CardHeader className="pb-2">
-                                    <CardTitle className="text-sm font-medium flex items-center">Platform Conversions</CardTitle>
-                                    <CardDescription className="text-xs">TikTok is outperforming other platforms by 35% in CPA</CardDescription>
-                                  </CardHeader>
-                                  <CardContent>
-                                    <ChartContainer config={{}}>
-                                      <BarChart data={performanceData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
-                                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                                        <XAxis dataKey="platform" />
-                                        <YAxis />
-                                        <RechartsTooltip 
-                                          content={({ active, payload }) => {
-                                            if (active && payload && payload.length) {
-                                              return (
-                                                <div className="bg-white p-2 border rounded shadow-sm">
-                                                  <p className="text-sm font-medium">{`${payload[0].payload.platform}`}</p>
-                                                  <p className="text-xs">{`Conversions: ${payload[0].value}`}</p>
-                                                  <p className="text-xs">{`CPA: $${payload[0].payload.cpa.toFixed(2)}`}</p>
-                                                </div>
-                                              );
-                                            }
-                                            return null;
-                                          }}
-                                        />
-                                        <Bar dataKey="conversions" fill="#00D1A1" />
-                                      </BarChart>
-                                    </ChartContainer>
-                                  </CardContent>
-                                </Card>
-                              )}
-                              
-                              {message.showChart && message.chartType === "table" && (
-                                <>
-                                  {message.text?.includes("Platform") ? (
-                                    <div className="mt-4 overflow-x-auto">
-                                      <table className="w-full border-collapse text-sm">
-                                        <thead>
-                                          <tr className="bg-gray-50">
-                                            <th className="border px-4 py-2 text-left">Platform</th>
-                                            <th className="border px-4 py-2 text-left">Spend</th>
-                                            <th className="border px-4 py-2 text-left">CPA</th>
-                                            <th className="border px-4 py-2 text-left">Conversions</th>
-                                            <th className="border px-4 py-2 text-left">CPM</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          {tableData.map((row, i) => (
-                                            <tr key={i} className={row.platform === 'Total' ? 'font-medium bg-gray-50' : ''}>
-                                              <td className="border px-4 py-2">{row.platform}</td>
-                                              <td className="border px-4 py-2">${row.spend}</td>
-                                              <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
-                                              <td className="border px-4 py-2">{row.conversions}</td>
-                                              <td className="border px-4 py-2">{typeof row.cpm === 'number' ? `$${row.cpm.toFixed(2)}` : row.cpm}</td>
-                                            </tr>
-                                          ))}
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  ) : (
-                                    <div className="mt-4 overflow-x-auto">
-                                      <table className="w-full border-collapse text-sm">
-                                        <thead>
-                                          <tr className="bg-gray-50">
-                                            <th className="border px-4 py-2 text-left">Creative Type</th>
-                                            <th className="border px-4 py-2 text-left">Asset</th>
-                                            <th className="border px-4 py-2 text-left">Spend</th>
-                                            <th className="border px-4 py-2 text-left">CPA</th>
-                                            <th className="border px-4 py-2 text-left">Conversions</th>
-                                            <th className="border px-4 py-2 text-left">CPM</th>
-                                            <th className="border px-4 py-2 text-left">CTR</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          {creativeData.map((row, i) => (
-                                            <tr key={i}>
-                                              <td className="border px-4 py-2">{row.type}</td>
-                                              <td className="border px-4 py-2">{row.asset}</td>
-                                              <td className="border px-4 py-2">${row.spend}</td>
-                                              <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
-                                              <td className="border px-4 py-2">{row.conversions}</td>
-                                              <td className="border px-4 py-2">${row.cpm.toFixed(2)}</td>
-                                              <td className="border px-4 py-2">{row.ctr}%</td>
-                                            </tr>
-                                          ))}
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  )}
-                                </>
-                              )}
-                              
-                              {message.showCalendly && (
-                                <Button 
-                                  className="mt-2 bg-bamboo-primary hover:bg-bamboo-secondary text-white"
-                                >
-                                  Book a Meeting
-                                </Button>
-                              )}
-                            </div>
-                          </>
-                        ) : message.type === "user" ? (
-                          <>
-                            <div className="bg-white p-4 rounded-lg rounded-tr-none max-w-[80%] shadow-sm border border-gray-100">
-                              <p className="text-bamboo-navy">{message.text}</p>
-                            </div>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Avatar className="h-10 w-10 bg-bamboo-secondary text-white flex items-center justify-center">
-                                  <div className="text-lg font-medium">U</div>
-                                </Avatar>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </>
-                        ) : null}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+          {/* Left Sidebar - Tasks List */}
+          <ResizablePanel 
+            defaultSize={20} 
+            minSize={15}
+            maxSize={30}
+            className="bg-gray-50 flex flex-col border-r"
+          >
+            <div className="p-4 border-b bg-white flex items-center h-16">
+              <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy flex items-center">
+                + New task
+              </Button>
             </div>
             
-            {/* Message input area - fixed at the bottom */}
-            <div className="absolute bottom-0 left-0 right-0 border-t bg-white p-4 z-10 shadow-md">
-              <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
-                <Input 
-                  placeholder="Message Bamboo..." 
-                  value={inputValue} 
-                  onChange={(e) => setInputValue(e.target.value)}
-                  className="flex-grow"
-                />
-                <Button 
-                  type="submit" 
-                  className="bg-bamboo-primary hover:bg-bamboo-secondary text-white"
-                  size="icon"
+            <div className="flex-grow overflow-y-auto pb-24">
+              {tasks.map(task => (
+                <div 
+                  key={task.id}
+                  className={`p-4 cursor-pointer hover:bg-gray-100 ${selectedTaskId === task.id ? 'bg-bamboo-primary/5 border-l-4 border-l-bamboo-primary' : 'border-b border-gray-100'}`}
+                  onClick={() => selectTask(task.id)}
                 >
-                  <Send className="h-4 w-4" />
-                </Button>
-              </form>
+                  <div className="flex gap-3 items-center">
+                    <Avatar className="h-8 w-8 border flex-shrink-0 bg-gray-200 flex items-center justify-center">
+                      {task.id === 1 && <BarChart2 className="h-4 w-4 text-gray-600" />}
+                      {task.id === 2 && <Code className="h-4 w-4 text-gray-600" />}
+                      {task.id === 3 && <Github className="h-4 w-4 text-gray-600" />}
+                      {task.id === 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
+                      {/* Fallback for any other tasks */}
+                      {task.id > 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
+                    </Avatar>
+                    <div className="flex-grow min-w-0">
+                      <h3 className="text-sm font-medium text-bamboo-navy truncate overflow-hidden">{task.title}</h3>
+                      <p className="text-xs text-gray-500 truncate overflow-hidden">{task.description}</p>
+                    </div>
+                    <div className="text-xs text-gray-400 flex-shrink-0">{task.date}</div>
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
-        </ResizablePanel>
-        
-        {!rightPanelCollapsed && <ResizableHandle withHandle />}
-        
-        {/* Right Sidebar - Media Preview */}
-        {!rightPanelCollapsed && (
+          </ResizablePanel>
+          
+          <ResizableHandle withHandle />
+          
+          {/* Middle Content - Chat */}
           <ResizablePanel 
-            defaultSize={30}
-            minSize={20}
-            maxSize={50}
-            className="bg-white overflow-hidden flex flex-col border-l"
+            defaultSize={rightPanelCollapsed ? 80 : 50}
+            minSize={30}
+            className="flex flex-col h-full relative overflow-hidden"
           >
-            <div className="p-4 border-b flex items-center justify-between h-16">
-              <div className="flex items-center gap-2">
-                <div className={rightPanelContent === "chart" ? "text-bamboo-primary" : "text-blue-500"}>
-                  {rightPanelContent === "chart" ? (
+            {/* Header */}
+            <div className="border-b bg-white p-4 flex items-center gap-2 h-16">
+              <h2 className="text-lg font-medium text-bamboo-navy flex items-center">{selectedTask?.title || "Task"}</h2>
+            </div>
+            
+            {/* Messages container */}
+            <div className="relative flex-grow overflow-hidden">
+              <div className="overflow-y-auto h-full pb-24" ref={mainContentRef}>
+                <div className="p-4">
+                  <div className="max-w-3xl mx-auto">
+                    <div className="flex flex-col gap-6">
+                      {/* Chat messages */}
+                      {messages.map((message, index) => (
+                        <div key={index} className={`flex items-start gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500 ${
+                          message.type === "user" ? "justify-end" : "justify-start"
+                        }`}>
+                          {message.type === "assistant" ? (
+                            <>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Avatar className="h-10 w-10 border flex items-center justify-center">
+                                    <img src="/lovable-uploads/ee7f1b89-e60e-4121-8fb6-dba324f20c21.png" alt="Bamboo" className="w-full h-full object-cover" />
+                                  </Avatar>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
+                                </TooltipContent>
+                              </Tooltip>
+                              <div className="bg-white p-4 rounded-lg rounded-tl-none max-w-[80%] shadow-sm border border-gray-100">
+                                {renderMessageText(message)}
+                                
+                                {message.showChart && message.chartType === "performance" && (
+                                  <Card className="mt-4">
+                                    <CardHeader className="pb-2">
+                                      <CardTitle className="text-sm font-medium flex items-center">Platform Conversions</CardTitle>
+                                      <CardDescription className="text-xs">TikTok is outperforming other platforms by 35% in CPA</CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                      <ChartContainer config={{}}>
+                                        <BarChart data={performanceData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
+                                          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                          <XAxis dataKey="platform" />
+                                          <YAxis />
+                                          <RechartsTooltip 
+                                            content={({ active, payload }) => {
+                                              if (active && payload && payload.length) {
+                                                return (
+                                                  <div className="bg-white p-2 border rounded shadow-sm">
+                                                    <p className="text-sm font-medium">{`${payload[0].payload.platform}`}</p>
+                                                    <p className="text-xs">{`Conversions: ${payload[0].value}`}</p>
+                                                    <p className="text-xs">{`CPA: $${payload[0].payload.cpa.toFixed(2)}`}</p>
+                                                  </div>
+                                                );
+                                              }
+                                              return null;
+                                            }}
+                                          />
+                                          <Bar dataKey="conversions" fill="#00D1A1" />
+                                        </BarChart>
+                                      </ChartContainer>
+                                    </CardContent>
+                                  </Card>
+                                )}
+                                
+                                {message.showChart && message.chartType === "table" && (
+                                  <>
+                                    {message.text?.includes("Platform") ? (
+                                      <div className="mt-4 overflow-x-auto">
+                                        <table className="w-full border-collapse text-sm">
+                                          <thead>
+                                            <tr className="bg-gray-50">
+                                              <th className="border px-4 py-2 text-left">Platform</th>
+                                              <th className="border px-4 py-2 text-left">Spend</th>
+                                              <th className="border px-4 py-2 text-left">CPA</th>
+                                              <th className="border px-4 py-2 text-left">Conversions</th>
+                                              <th className="border px-4 py-2 text-left">CPM</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            {tableData.map((row, i) => (
+                                              <tr key={i} className={row.platform === 'Total' ? 'font-medium bg-gray-50' : ''}>
+                                                <td className="border px-4 py-2">{row.platform}</td>
+                                                <td className="border px-4 py-2">${row.spend}</td>
+                                                <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
+                                                <td className="border px-4 py-2">{row.conversions}</td>
+                                                <td className="border px-4 py-2">{typeof row.cpm === 'number' ? `$${row.cpm.toFixed(2)}` : row.cpm}</td>
+                                              </tr>
+                                            ))}
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    ) : (
+                                      <div className="mt-4 overflow-x-auto">
+                                        <table className="w-full border-collapse text-sm">
+                                          <thead>
+                                            <tr className="bg-gray-50">
+                                              <th className="border px-4 py-2 text-left">Creative Type</th>
+                                              <th className="border px-4 py-2 text-left">Asset</th>
+                                              <th className="border px-4 py-2 text-left">Spend</th>
+                                              <th className="border px-4 py-2 text-left">CPA</th>
+                                              <th className="border px-4 py-2 text-left">Conversions</th>
+                                              <th className="border px-4 py-2 text-left">CPM</th>
+                                              <th className="border px-4 py-2 text-left">CTR</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            {creativeData.map((row, i) => (
+                                              <tr key={i}>
+                                                <td className="border px-4 py-2">{row.type}</td>
+                                                <td className="border px-4 py-2">{row.asset}</td>
+                                                <td className="border px-4 py-2">${row.spend}</td>
+                                                <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
+                                                <td className="border px-4 py-2">{row.conversions}</td>
+                                                <td className="border px-4 py-2">${row.cpm.toFixed(2)}</td>
+                                                <td className="border px-4 py-2">{row.ctr}%</td>
+                                              </tr>
+                                            ))}
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    )}
+                                  </>
+                                )}
+                                
+                                {message.showCalendly && (
+                                  <Button 
+                                    className="mt-2 bg-bamboo-primary hover:bg-bamboo-secondary text-white"
+                                  >
+                                    Book a Meeting
+                                  </Button>
+                                )}
+                              </div>
+                            </>
+                          ) : message.type === "user" ? (
+                            <>
+                              <div className="bg-white p-4 rounded-lg rounded-tr-none max-w-[80%] shadow-sm border border-gray-100">
+                                <p className="text-bamboo-navy">{message.text}</p>
+                              </div>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Avatar className="h-10 w-10 bg-bamboo-secondary text-white flex items-center justify-center">
+                                    <div className="text-lg font-medium">U</div>
+                                  </Avatar>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </>
+                          ) : null}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Message input area - fixed at the bottom */}
+              <div className="absolute bottom-0 left-0 right-0 border-t bg-white p-4 z-10 shadow-md">
+                <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
+                  <Input 
+                    placeholder="Message Bamboo..." 
+                    value={inputValue} 
+                    onChange={(e) => setInputValue(e.target.value)}
+                    className="flex-grow"
+                  />
+                  <Button 
+                    type="submit" 
+                    className="bg-bamboo-primary hover:bg-bamboo-secondary text-white"
+                    size="icon"
+                  >
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </form>
+              </div>
+            </div>
+          </ResizablePanel>
+          
+          {!rightPanelCollapsed && <ResizableHandle withHandle />}
+          
+          {/* Right Sidebar - Report Panel */}
+          {!rightPanelCollapsed && (
+            <ResizablePanel 
+              defaultSize={30}
+              minSize={20}
+              maxSize={50}
+              className="bg-white overflow-hidden flex flex-col border-l"
+            >
+              <div className="p-4 border-b flex items-center justify-between h-16">
+                <div className="flex items-center gap-2">
+                  <div className="text-bamboo-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 3v18h18"></path>
                       <path d="M18 17V9"></path>
                       <path d="M13 17V5"></path>
                       <path d="M8 17v-3"></path>
                     </svg>
-                  ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                      <polyline points="14 2 14 8 20 8"></polyline>
-                    </svg>
-                  )}
+                  </div>
+                  <span className="text-sm">Performance Report</span>
                 </div>
-                <span className="text-sm">
-                  {rightPanelContent === "chart" ? "Performance Report" : "pasted_content.txt"}
-                </span>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  onClick={() => setRightPanelCollapsed(true)}
+                  className="h-8 w-8"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
               </div>
-              <Button 
-                variant="ghost" 
-                size="icon"
-                onClick={() => setRightPanelCollapsed(true)}
-                className="h-8 w-8"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-            <div className="p-4 overflow-y-auto flex-grow bg-gray-50">
-              {rightPanelContent === "chart" ? (
+              <div className="p-4 overflow-y-auto flex-grow bg-gray-50">
                 <div className="space-y-6">
                   <Card>
                     <CardHeader>
@@ -597,19 +588,12 @@ const Chat2 = () => {
                     </ul>
                   </div>
                 </div>
-              ) : (
-                <pre className="text-xs text-gray-800 font-mono">
-{`import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-
-export default Hero;`}
-                </pre>
-              )}
-            </div>
-          </ResizablePanel>
-        )}
-      </ResizablePanelGroup>
-    </div>
+              </div>
+            </ResizablePanel>
+          )}
+        </ResizablePanelGroup>
+      </div>
+    </TooltipProvider>
   );
 };
 
