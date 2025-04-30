@@ -14,7 +14,7 @@ const Navigation = () => {
 
   return (
     <nav className="fixed w-full bg-white/90 backdrop-blur-sm z-50 border-b">
-      <Container bordered>
+      <Container bordered={false}>
         <div className="py-4 flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
