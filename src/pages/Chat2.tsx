@@ -167,19 +167,17 @@ const Chat2 = () => {
           timestamp: new Date()
         },
         { 
+          text: "Woohoo!! 🎉", 
+          type: "user",
+          timestamp: new Date()
+        }
+        { 
           text: "Here's your weekly performance [report] 📊\n\n📈 Overall Campaign Performance\n(based on last 7 days)", 
           type: "assistant",
           timestamp: new Date(),
-          showChart: true,
+          showChart: false,
           chartType: "performance",
           hasReportLink: true
-        },
-        { 
-          text: "📊 Performance Summary by Platform", 
-          type: "assistant",
-          timestamp: new Date(),
-          showChart: true,
-          chartType: "table"
         },
         { 
           text: "To improve efficiency, I've shifted $200 from Meta to TikTok, where your CPA is 24% lower and conversions are higher. This will help maximize ROAS.", 
@@ -190,12 +188,17 @@ const Chat2 = () => {
           text: "Would you like to do a performance deep dive?\n\n🔍 Audience\n\n🌍 Geography\n\n🎨 Creative", 
           type: "assistant",
           timestamp: new Date()
+        },
+                { 
+          text: "🎨 Creative", 
+          type: "user",
+          timestamp: new Date()
         }
       ]);
     } else {
       setMessages([
         { 
-          text: "This solution addresses the specific animation issue while preserving all the benefits of the two-column layout approach we implemented earlier. The bamboo stalks should now slide up smoothly and sway gently, creating the dynamic visual effect you wanted without any visual artifacts or gaps.", 
+          text: "ERROR", 
           type: "assistant",
           timestamp: new Date()
         }
