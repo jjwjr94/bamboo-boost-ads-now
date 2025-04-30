@@ -23,11 +23,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import {
-  ResizablePanelGroup,
-  ResizablePanel,
-  ResizableHandle
-} from "@/components/ui/resizable";
+// Removed Resizable components import
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Task {
@@ -83,7 +79,8 @@ const Chat2 = () => {
   ]);
   
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(1);
-  const [rightPanelContent, setRightPanelContent] = useState<"chart" | null>("chart");
+  // rightPanelContent state might still be useful if the content changes, but not for resizing
+  const [rightPanelContent, setRightPanelContent] = useState<"chart" | null>("chart"); 
   const [rightPanelCollapsed, setRightPanelCollapsed] = useState(true);
   const mainContentRef = useRef<HTMLDivElement>(null);
   
@@ -111,17 +108,13 @@ const Chat2 = () => {
     e.preventDefault();
     if (!inputValue.trim()) return;
     
-    // Add user message
     setMessages(prev => [...prev, { 
       text: inputValue, 
       type: "user",
       timestamp: new Date()
     }]);
-    
-    // Clear input
     setInputValue("");
     
-    // Simulate AI response after a delay
     setTimeout(() => {
       if (inputValue.toLowerCase() === "creative") {
         setMessages(prev => [...prev, { 
@@ -156,9 +149,8 @@ const Chat2 = () => {
 
   const selectTask = (taskId: number) => {
     setSelectedTaskId(taskId);
-    setRightPanelCollapsed(true); // Always collapse right panel when changing tasks
+    setRightPanelCollapsed(true); 
     
-    // Clear messages when switching tasks
     if (taskId === 1) {
       setMessages([
         { 
@@ -207,16 +199,13 @@ const Chat2 = () => {
   };
 
   useEffect(() => {
-    // When messages change, scroll to bottom
     if (mainContentRef.current) {
       mainContentRef.current.scrollTop = mainContentRef.current.scrollHeight;
     }
   }, [messages]);
   
-  // Find the selected task
   const selectedTask = tasks.find(task => task.id === selectedTaskId);
 
-  // Helper function to process message text and apply link formatting
   const renderMessageText = (message: Message) => {
     if (!message.text) return null;
     
@@ -224,11 +213,9 @@ const Chat2 = () => {
       return (
         <p className="text-bamboo-navy whitespace-pre-line">
           {message.text.split('[report]').map((part, index, array) => {
-            // If this is the last part or not the first part 
             if (index === array.length - 1 || index > 0) {
               return <React.Fragment key={index}>{part}</React.Fragment>
             }
-            // This is the first part, so add the link after it
             return (
               <React.Fragment key={index}>
                 {part}
@@ -254,24 +241,20 @@ const Chat2 = () => {
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navigation />
         
-        <ResizablePanelGroup 
-          direction="horizontal" 
-          className="flex flex-grow pt-16 overflow-hidden"
-        >
-          {/* Left Sidebar - Tasks List */}
-          <ResizablePanel 
-            defaultSize={20} 
-            minSize={15}
-            maxSize={30}
-            className="bg-gray-50 flex flex-col overflow-hidden border-r" // Added overflow-hidden
-          >
+        {/* Replaced ResizablePanelGroup with a standard div using flex */}
+        <div className="flex flex-grow pt-16 overflow-hidden">
+          
+          {/* Left Sidebar - Tasks List (Fixed Width) */}
+          {/* Replaced ResizablePanel with div, removed size props, kept overflow-hidden */}
+          <div className="w-64 flex-shrink-0 bg-gray-50 flex flex-col overflow-hidden border-r">
             <div className="p-4 border-b bg-white flex items-center h-16">
               <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy flex items-center">
                 + New task
               </Button>
             </div>
             
-            <ScrollArea className="flex-grow overflow-y-auto pb-24"> {/* Changed className */}
+            {/* Kept ScrollArea with updated classes for independent scroll */}
+            <ScrollArea className="flex-grow overflow-y-auto pb-24">
               {tasks.map(task => (
                 <div 
                   key={task.id}
@@ -284,7 +267,6 @@ const Chat2 = () => {
                       {task.id === 2 && <Code className="h-4 w-4 text-gray-600" />}
                       {task.id === 3 && <Github className="h-4 w-4 text-gray-600" />}
                       {task.id === 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
-                      {/* Fallback for any other tasks */}
                       {task.id > 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
                     </Avatar>
                     <div className="flex-grow min-w-0">
@@ -296,16 +278,13 @@ const Chat2 = () => {
                 </div>
               ))}
             </ScrollArea>
-          </ResizablePanel>
+          </div>
           
-          <ResizableHandle withHandle />
+          {/* Removed ResizableHandle */}
           
-          {/* Middle Content - Chat */}
-          <ResizablePanel 
-            defaultSize={rightPanelCollapsed ? 80 : 50}
-            minSize={30}
-            className="flex flex-col h-full relative overflow-hidden"
-          >
+          {/* Middle Content - Chat (Flexible Width) */}
+          {/* Replaced ResizablePanel with div, used flex-grow, kept overflow-hidden */}
+          <div className="flex-grow flex flex-col h-full relative overflow-hidden">
             {/* Header */}
             <div className="border-b bg-white p-4 flex items-center gap-2 h-16">
               <h2 className="text-lg font-medium text-bamboo-navy flex items-center">{selectedTask?.title || "Task"}</h2>
@@ -313,7 +292,8 @@ const Chat2 = () => {
             
             {/* Messages container */}
             <div className="relative flex-grow overflow-hidden">
-              <ScrollArea className="flex-grow overflow-y-auto pb-24" viewportRef={mainContentRef}> {/* Changed className */}
+              {/* Kept ScrollArea with updated classes for independent scroll */}
+              <ScrollArea className="flex-grow overflow-y-auto pb-24" viewportRef={mainContentRef}>
                 <div className="p-4">
                   <div className="max-w-3xl mx-auto">
                     <div className="flex flex-col gap-6">
@@ -482,18 +462,14 @@ const Chat2 = () => {
                 </form>
               </div>
             </div>
-          </ResizablePanel>
+          </div>
           
-          {!rightPanelCollapsed && <ResizableHandle withHandle />}
+          {/* Removed ResizableHandle */}
           
-          {/* Right Sidebar - Report Panel */}
+          {/* Right Sidebar - Report Panel (Fixed Width, Conditionally Rendered) */}
+          {/* Replaced ResizablePanel with div, removed size props, kept overflow-hidden */}
           {!rightPanelCollapsed && (
-            <ResizablePanel 
-              defaultSize={30}
-              minSize={20}
-              maxSize={50}
-              className="bg-white overflow-hidden flex flex-col border-l" // Kept overflow-hidden
-            >
+            <div className="w-96 flex-shrink-0 bg-white overflow-hidden flex flex-col border-l">
               <div className="p-4 border-b flex items-center justify-between h-16">
                 <div className="flex items-center gap-2">
                   <div className="text-bamboo-primary">
@@ -515,7 +491,8 @@ const Chat2 = () => {
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
-              <ScrollArea className="flex-grow overflow-y-auto p-4 bg-gray-50"> {/* Changed className */}
+              {/* Kept ScrollArea with updated classes for independent scroll */}
+              <ScrollArea className="flex-grow overflow-y-auto p-4 bg-gray-50">
                 <div className="space-y-6">
                   <Card>
                     <CardHeader>
@@ -592,9 +569,9 @@ const Chat2 = () => {
                   </div>
                 </div>
               </ScrollArea>
-            </ResizablePanel>
+            </div>
           )}
-        </ResizablePanelGroup>
+        </div>
       </div>
     </TooltipProvider>
   );
