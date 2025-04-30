@@ -1,6 +1,7 @@
 
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ToolProps {
   name: string;
@@ -75,24 +76,34 @@ const tools = [
   },
 ];
 
-const ToolLogo = ({ name, logo, className }: ToolProps) => (
-  <Tooltip>
-    <TooltipTrigger asChild>
-      <div className={cn("flex items-center justify-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow", className)}>
-        <div className="h-16 w-16 flex items-center justify-center">
-          <img 
-            src={logo} 
-            alt={`${name} logo`} 
-            className="max-h-full max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300" 
-          />
+const ToolLogo = ({ name, logo, className }: ToolProps) => {
+  const isMobile = useIsMobile();
+  
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div className={cn(
+          "flex items-center justify-center p-2 sm:p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow", 
+          className
+        )}>
+          <div className={cn(
+            "flex items-center justify-center",
+            isMobile ? "h-10 w-10" : "h-16 w-16"
+          )}>
+            <img 
+              src={logo} 
+              alt={`${name} logo`} 
+              className="max-h-full max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300" 
+            />
+          </div>
         </div>
-      </div>
-    </TooltipTrigger>
-    <TooltipContent side="bottom">
-      <p className="font-medium">{name}</p>
-    </TooltipContent>
-  </Tooltip>
-);
+      </TooltipTrigger>
+      <TooltipContent side="bottom">
+        <p className="font-medium">{name}</p>
+      </TooltipContent>
+    </Tooltip>
+  );
+};
 
 const AiTools = () => {
   return (
@@ -103,7 +114,7 @@ const AiTools = () => {
         </h2>
         
         <TooltipProvider>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 xl:grid-cols-8 gap-4">
+          <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 gap-2 sm:gap-4">
             {tools.map((tool) => (
               <ToolLogo key={tool.name} name={tool.name} logo={tool.logo} />
             ))}
