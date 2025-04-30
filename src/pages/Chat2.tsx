@@ -313,11 +313,11 @@ const Chat2 = () => {
           </div>
           
           {/* Messages container with fixed height to accommodate the input box */}
-          <div className="flex-grow overflow-hidden flex flex-col">
-            <ScrollArea className="flex-grow" viewportRef={mainContentRef}>
-              <div className="p-4">
-                <div className="max-w-3xl mx-auto">
-                  <div className="flex flex-col gap-6">
+<div className="relative flex-grow overflow-hidden">
+  <ScrollArea className="pb-28" viewportRef={mainContentRef}>
+    <div className="p-4">
+      <div className="max-w-3xl mx-auto">
+        <div className="flex flex-col gap-6">
                     {/* Chat messages */}
                     {messages.map((message, index) => (
                       <div key={index} className={`flex items-start gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500 ${
@@ -464,25 +464,25 @@ const Chat2 = () => {
               </div>
             </ScrollArea>
             
-            {/* Message input area - Fixed at the bottom */}
-            <div className="border-t bg-white p-4 z-10 shadow-md">
-              <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
-                <Input 
-                  placeholder="Message Bamboo..." 
-                  value={inputValue} 
-                  onChange={(e) => setInputValue(e.target.value)}
-                  className="flex-grow"
-                />
-                <Button 
-                  type="submit" 
-                  className="bg-bamboo-primary hover:bg-bamboo-secondary text-white"
-                  size="icon"
-                >
-                  <Send className="h-4 w-4" />
-                </Button>
-              </form>
-            </div>
-          </div>
+             {/* Message input area - truly fixed at the bottom */}
+  <div className="absolute bottom-0 left-0 w-full border-t bg-white p-4 z-10 shadow-md">
+    <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
+      <Input 
+        placeholder="Message Bamboo..." 
+        value={inputValue} 
+        onChange={(e) => setInputValue(e.target.value)}
+        className="flex-grow"
+      />
+      <Button 
+        type="submit" 
+        className="bg-bamboo-primary hover:bg-bamboo-secondary text-white"
+        size="icon"
+      >
+        <Send className="h-4 w-4" />
+      </Button>
+    </form>
+  </div>
+</div>
         </ResizablePanel>
         
         {!rightPanelCollapsed && <ResizableHandle withHandle />}
