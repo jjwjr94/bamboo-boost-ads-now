@@ -79,7 +79,6 @@ const Chat2 = () => {
   ]);
   
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(1);
-  // rightPanelContent state might still be useful if the content changes, but not for resizing
   const [rightPanelContent, setRightPanelContent] = useState<"chart" | null>("chart"); 
   const [rightPanelCollapsed, setRightPanelCollapsed] = useState(true);
   const mainContentRef = useRef<HTMLDivElement>(null);
@@ -241,19 +240,16 @@ const Chat2 = () => {
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navigation />
         
-        {/* Replaced ResizablePanelGroup with a standard div using flex */}
         <div className="flex flex-grow pt-16 overflow-hidden">
           
-          {/* Left Sidebar - Tasks List (Increased width from w-64 to w-96, which is 1.5x wider) */}
-          {/* Replaced ResizablePanel with div, removed size props, kept overflow-hidden */}
-          <div className="w-96 flex-shrink-0 bg-gray-50 flex flex-col overflow-hidden border-r">
+          {/* Left Sidebar - Tasks List (Fixed Width) */}
+          <div className="w-64 flex-shrink-0 bg-gray-50 flex flex-col overflow-hidden border-r">
             <div className="p-4 border-b bg-white flex items-center h-16">
               <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy flex items-center">
                 + New task
               </Button>
             </div>
             
-            {/* Kept ScrollArea with updated classes for independent scroll */}
             <ScrollArea className="flex-grow overflow-y-auto pb-24">
               {tasks.map(task => (
                 <div 
@@ -261,29 +257,31 @@ const Chat2 = () => {
                   className={`p-4 cursor-pointer hover:bg-gray-100 ${selectedTaskId === task.id ? 'bg-bamboo-primary/5 border-l-4 border-l-bamboo-primary' : 'border-b border-gray-100'}`}
                   onClick={() => selectTask(task.id)}
                 >
-                  <div className="flex gap-3 items-center min-w-0">
-                    <Avatar className="h-8 w-8 border flex-shrink-0 bg-gray-200 flex items-center justify-center">
-                      {task.id === 1 && <BarChart2 className="h-4 w-4 text-gray-600" />}
-                      {task.id === 2 && <Code className="h-4 w-4 text-gray-600" />}
-                      {task.id === 3 && <Github className="h-4 w-4 text-gray-600" />}
-                      {task.id === 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
-                      {task.id > 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
-                    </Avatar>
-                    <div className="flex-grow min-w-0">
-                      <h3 className="text-sm font-medium text-bamboo-navy truncate">{task.title}</h3>
-                      <p className="text-xs text-gray-500 truncate">{task.description}</p>
+                  {/* Changed flex layout: Added outer flex, inner div for text, separate div for date */}
+                  <div className="flex justify-between items-start gap-3">
+                    <div className="flex items-start gap-3 flex-grow min-w-0"> {/* Added flex-grow min-w-0 here */}
+                      <Avatar className="h-8 w-8 border flex-shrink-0 bg-gray-200 flex items-center justify-center mt-0.5"> {/* Adjusted margin-top */}
+                        {task.id === 1 && <BarChart2 className="h-4 w-4 text-gray-600" />}
+                        {task.id === 2 && <Code className="h-4 w-4 text-gray-600" />}
+                        {task.id === 3 && <Github className="h-4 w-4 text-gray-600" />}
+                        {task.id === 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
+                        {task.id > 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
+                      </Avatar>
+                      <div className="flex-grow min-w-0"> {/* Removed flex-grow min-w-0 from here */}
+                        {/* Removed overflow-hidden from h3 and p as truncate implies it */}
+                        <h3 className="text-sm font-medium text-bamboo-navy truncate">{task.title}</h3>
+                        <p className="text-xs text-gray-500 truncate">{task.description}</p>
+                      </div>
                     </div>
-                    <div className="text-xs text-gray-400 flex-shrink-0">{task.date}</div>
+                    {/* Ensured date div is outside the inner text div and shrinks */}
+                    <div className="text-xs text-gray-400 flex-shrink-0 pt-0.5">{task.date}</div>
                   </div>
                 </div>
               ))}
             </ScrollArea>
           </div>
           
-          {/* Removed ResizableHandle */}
-          
           {/* Middle Content - Chat (Flexible Width) */}
-          {/* Replaced ResizablePanel with div, used flex-grow, kept overflow-hidden */}
           <div className="flex-grow flex flex-col h-full relative overflow-hidden">
             {/* Header */}
             <div className="border-b bg-white p-4 flex items-center gap-2 h-16">
@@ -292,7 +290,6 @@ const Chat2 = () => {
             
             {/* Messages container */}
             <div className="relative flex-grow overflow-hidden">
-              {/* Kept ScrollArea with updated classes for independent scroll */}
               <ScrollArea className="flex-grow overflow-y-auto pb-24" viewportRef={mainContentRef}>
                 <div className="p-4">
                   <div className="max-w-3xl mx-auto">
@@ -464,12 +461,9 @@ const Chat2 = () => {
             </div>
           </div>
           
-          {/* Removed ResizableHandle */}
-          
-          {/* Right Sidebar - Report Panel (Increased width from w-96 to w-144, which is 1.5x wider) */}
-          {/* Replaced ResizablePanel with div, removed size props, kept overflow-hidden */}
+          {/* Right Sidebar - Report Panel (Fixed Width, Conditionally Rendered) */}
           {!rightPanelCollapsed && (
-            <div className="w-144 flex-shrink-0 bg-white overflow-hidden flex flex-col border-l">
+            <div className="w-96 flex-shrink-0 bg-white overflow-hidden flex flex-col border-l">
               <div className="p-4 border-b flex items-center justify-between h-16">
                 <div className="flex items-center gap-2">
                   <div className="text-bamboo-primary">
@@ -491,7 +485,6 @@ const Chat2 = () => {
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
-              {/* Kept ScrollArea with updated classes for independent scroll */}
               <ScrollArea className="flex-grow overflow-y-auto p-4 bg-gray-50">
                 <div className="space-y-6">
                   <Card>
@@ -578,3 +571,4 @@ const Chat2 = () => {
 };
 
 export default Chat2;
+
