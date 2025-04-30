@@ -56,25 +56,11 @@ const Chat2 = () => {
     },
     {
       id: 2,
-      title: "Animate SVG Bamboo Growth",
-      description: "I've completed my analysis of your repository and identified the issue",
-      date: "Mon",
+      title: "Let's Get Started",
+      description: "Welcome to Bamboo! To get started please send your website URL.",
+      date: "Wed",
       completed: false
     },
-    {
-      id: 3,
-      title: "Update GitHub Repo with Logos and Favicon",
-      description: "I'm still unable to access the repository at https://github...",
-      date: "Sat",
-      completed: false
-    },
-    {
-      id: 4,
-      title: "AI Agency Setup for Small Business Advertising",
-      description: "Based on your preference for a name like 'Bamboo'...",
-      date: "Sat",
-      completed: false
-    }
   ]);
   
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(1);
