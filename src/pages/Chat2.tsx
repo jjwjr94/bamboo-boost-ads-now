@@ -583,7 +583,7 @@ const Chat2 = () => {
                     </CardContent>
                   </Card>
                   
-                  <div className="text-sm text-gray-500">
+                  <div className="text-gray-700">
                     <p className="font-medium mb-2">Key Insights:</p>
                     <ul className="list-disc pl-5 space-y-1">
                       <li>TikTok is outperforming Meta by 24% in CPA efficiency</li>
