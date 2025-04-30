@@ -8,7 +8,7 @@ const Hero = () => {
   const navigate = useNavigate();
   
   const handleGetStarted = () => {
-    navigate("/chat2"); // Updated to navigate to the new chat2 page
+    navigate("/chat"); // Updated to navigate to the new chat page
   };
 
   return (
