@@ -462,7 +462,7 @@ const Chat2 = () => {
             </div>
             
             {/* Message input area - fixed at the bottom */}
-            <div className="fixed bottom-0 left-0 right-0 border-t bg-white p-4 z-10 shadow-md">
+            <div className="absolute bottom-0 left-0 right-0 border-t bg-white p-4 z-10 shadow-md">
               <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
                 <Input 
                   placeholder="Message Bamboo..." 
