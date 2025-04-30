@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
@@ -263,10 +262,8 @@ const Chat2 = () => {
           className="bg-gray-50 flex flex-col border-r"
         >
           <div className="p-4 border-b bg-white flex items-center">
-            <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy">
-              <span className="flex items-center">
-                + New task
-              </span>
+            <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy flex items-center">
+              + New task
             </Button>
           </div>
           
@@ -309,15 +306,15 @@ const Chat2 = () => {
         >
           {/* Header */}
           <div className="border-b bg-white p-4 flex items-center gap-2">
-            <h2 className="text-lg font-medium text-bamboo-navy">{selectedTask?.title || "Task"}</h2>
+            <h2 className="text-lg font-medium text-bamboo-navy flex items-center">{selectedTask?.title || "Task"}</h2>
           </div>
           
-          {/* Messages container with fixed height to accommodate the input box */}
-<div className="relative flex-grow overflow-hidden">
-  <div className="overflow-y-auto h-full pb-28" ref={mainContentRef}>
-    <div className="p-4">
-      <div className="max-w-3xl mx-auto">
-        <div className="flex flex-col gap-6">
+          {/* Messages container */}
+          <div className="relative flex-grow overflow-hidden">
+            <div className="overflow-y-auto h-full pb-24" ref={mainContentRef}>
+              <div className="p-4">
+                <div className="max-w-3xl mx-auto">
+                  <div className="flex flex-col gap-6">
                     {/* Chat messages */}
                     {messages.map((message, index) => (
                       <div key={index} className={`flex items-start gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500 ${
@@ -341,7 +338,7 @@ const Chat2 = () => {
                               {message.showChart && message.chartType === "performance" && (
                                 <Card className="mt-4">
                                   <CardHeader className="pb-2">
-                                    <CardTitle className="text-sm font-medium">Platform Conversions</CardTitle>
+                                    <CardTitle className="text-sm font-medium flex items-center">Platform Conversions</CardTitle>
                                     <CardDescription className="text-xs">TikTok is outperforming other platforms by 35% in CPA</CardDescription>
                                   </CardHeader>
                                   <CardContent>
@@ -462,27 +459,27 @@ const Chat2 = () => {
                   </div>
                 </div>
               </div>
-             </div>
+            </div>
             
-             {/* Message input area - truly fixed at the bottom */}
-  <div className="absolute bottom-0 left-0 w-full border-t bg-white p-4 z-10 shadow-md">
-    <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
-      <Input 
-        placeholder="Message Bamboo..." 
-        value={inputValue} 
-        onChange={(e) => setInputValue(e.target.value)}
-        className="flex-grow"
-      />
-      <Button 
-        type="submit" 
-        className="bg-bamboo-primary hover:bg-bamboo-secondary text-white"
-        size="icon"
-      >
-        <Send className="h-4 w-4" />
-      </Button>
-    </form>
-  </div>
-</div>
+            {/* Message input area - fixed at the bottom */}
+            <div className="fixed bottom-0 left-0 right-0 border-t bg-white p-4 z-10 shadow-md">
+              <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
+                <Input 
+                  placeholder="Message Bamboo..." 
+                  value={inputValue} 
+                  onChange={(e) => setInputValue(e.target.value)}
+                  className="flex-grow"
+                />
+                <Button 
+                  type="submit" 
+                  className="bg-bamboo-primary hover:bg-bamboo-secondary text-white"
+                  size="icon"
+                >
+                  <Send className="h-4 w-4" />
+                </Button>
+              </form>
+            </div>
+          </div>
         </ResizablePanel>
         
         {!rightPanelCollapsed && <ResizableHandle withHandle />}
@@ -530,7 +527,7 @@ const Chat2 = () => {
                 <div className="space-y-6">
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-base">Platform Conversions</CardTitle>
+                      <CardTitle className="text-base flex items-center">Platform Conversions</CardTitle>
                       <CardDescription className="text-xs">Overall performance across platforms</CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -562,7 +559,7 @@ const Chat2 = () => {
                   
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-base">Platform Performance Summary</CardTitle>
+                      <CardTitle className="text-base flex items-center">Platform Performance Summary</CardTitle>
                       <CardDescription className="text-xs">Detailed metrics by platform</CardDescription>
                     </CardHeader>
                     <CardContent className="px-0">
@@ -606,37 +603,6 @@ const Chat2 = () => {
                 <pre className="text-xs text-gray-800 font-mono">
 {`import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-
-const Hero = () => {
-  return (
-    <div className="relative pt-32 pb-20 px-4 overflow-hidden">
-      <div className="backdrop-blur-sm w-full h-full">
-        <img 
-          src="/Hero banner 4.svg" 
-          alt="Decorative bamboo background" 
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <div className="absolute inset-0 bg-white bg-opacity-50"></div>
-      <div className="container mx-auto flex flex-col items-center text-center relative z-10">
-        <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
-          The <span className="bg-gradient-to-r from-[#00D1A1] to-[#5995ED] text-transparent bg-clip-text">AI Ad Agency</span> built for Small and Medium Size Business
-        </h1>
-        <p className="text-xl md:text-2xl text-gray-600 mb-8">
-          Launch ads and grow your business today. No technical marketing knowledge required. No waiting around for overpriced freelancer.
-        </p>
-        <div className="flex justify-center gap-4">
-          <Button 
-            className="bg-bamboo-primary hover:bg-bamboo-secondary text-white font-medium rounded-md text-lg px-8 py-6 shadow-sm flex items-center"
-          >
-            Get Started
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export default Hero;`}
                 </pre>
