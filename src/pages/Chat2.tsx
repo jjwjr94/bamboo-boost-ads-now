@@ -1,10 +1,9 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar } from "@/components/ui/avatar";
 import { Send, Link, ChevronLeft, ChevronRight, BarChart2, Code, Github, BrainCircuit } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -301,16 +300,16 @@ const Chat2 = () => {
         <ResizablePanel 
           defaultSize={rightPanelCollapsed ? 80 : 50}
           minSize={30}
-          className="flex flex-col h-full overflow-hidden"
+          className="flex flex-col h-full relative overflow-hidden"
         >
           {/* Header */}
-          <div className="border-b bg-white p-4 flex items-center gap-2 h-16 flex-shrink-0">
+          <div className="border-b bg-white p-4 flex items-center gap-2 h-16">
             <h2 className="text-lg font-medium text-bamboo-navy flex items-center">{selectedTask?.title || "Task"}</h2>
           </div>
           
           {/* Messages container */}
-          <div className="flex-grow overflow-y-auto" ref={mainContentRef}>
-            <div className="p-4">
+          <div className="relative flex-grow overflow-hidden">
+            <div className="overflow-y-auto h-full pb-24" ref={mainContentRef}>
               <div className="p-4">
                 <div className="max-w-3xl mx-auto">
                   <div className="flex flex-col gap-6">
@@ -321,18 +320,16 @@ const Chat2 = () => {
                       }`}>
                         {message.type === "assistant" ? (
                           <>
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Avatar className="h-10 w-10 border bg-zinc-900 text-white flex items-center justify-center overflow-hidden">
-                                    <AvatarImage src="/lovable-uploads/ee7f1b89-e60e-4121-8fb6-dba324f20c21.png" alt="Bamboo" />
-                                  </Avatar>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Avatar className="h-10 w-10 border bg-zinc-900 text-white flex items-center justify-center">
+                                  <div className="text-sm">M</div>
+                                </Avatar>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
+                              </TooltipContent>
+                            </Tooltip>
                             <div className="bg-white p-4 rounded-lg rounded-tl-none max-w-[80%] shadow-sm border border-gray-100">
                               {renderMessageText(message)}
                               
@@ -443,18 +440,16 @@ const Chat2 = () => {
                             <div className="bg-white p-4 rounded-lg rounded-tr-none max-w-[80%] shadow-sm border border-gray-100">
                               <p className="text-bamboo-navy">{message.text}</p>
                             </div>
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Avatar className="h-10 w-10 bg-bamboo-secondary text-white flex items-center justify-center">
-                                    <div className="text-lg font-medium">U</div>
-                                  </Avatar>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Avatar className="h-10 w-10 bg-bamboo-secondary text-white flex items-center justify-center">
+                                  <div className="text-lg font-medium">U</div>
+                                </Avatar>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
+                              </TooltipContent>
+                            </Tooltip>
                           </>
                         ) : null}
                       </div>
@@ -464,8 +459,8 @@ const Chat2 = () => {
               </div>
             </div>
             
-            {/* Message input area */}
-            <div className="border-t bg-white p-4 z-10 shadow-md flex-shrink-0">
+            {/* Message input area - fixed at the bottom */}
+            <div className="absolute bottom-0 left-0 right-0 border-t bg-white p-4 z-10 shadow-md">
               <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
                 <Input 
                   placeholder="Message Bamboo..." 
