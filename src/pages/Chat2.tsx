@@ -29,6 +29,15 @@ import {
   ResizableHandle
 } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface Task {
   id: number;
@@ -158,38 +167,16 @@ const Chat2 = () => {
     setSelectedTaskId(taskId);
     setRightPanelCollapsed(true); // Always collapse right panel when changing tasks
     
-    // Clear messages when switching tasks
+    // Update messages when switching tasks
     if (taskId === 1) {
       setMessages([
         { 
-          text: "🎉 Congrats! Your TikTok campaign is live! 🚀\nYou're now reaching thousands of potential customers across TikTok, Meta, and Google.", 
-          type: "assistant",
-          timestamp: new Date()
-        },
-        { 
-          text: "Here's your weekly performance [report] 📊\n\n📈 Overall Campaign Performance\n(based on last 7 days)", 
+          text: "Here's your weekly performance [report] 📊", 
           type: "assistant",
           timestamp: new Date(),
           showChart: true,
           chartType: "performance",
           hasReportLink: true
-        },
-        { 
-          text: "📊 Performance Summary by Platform", 
-          type: "assistant",
-          timestamp: new Date(),
-          showChart: true,
-          chartType: "table"
-        },
-        { 
-          text: "To improve efficiency, I've shifted $200 from Meta to TikTok, where your CPA is 24% lower and conversions are higher. This will help maximize ROAS.", 
-          type: "assistant",
-          timestamp: new Date()
-        },
-        { 
-          text: "Would you like to do a performance deep dive?\n\n🔍 Audience\n\n🌍 Geography\n\n🎨 Creative", 
-          type: "assistant",
-          timestamp: new Date()
         }
       ]);
     } else {
@@ -365,74 +352,6 @@ const Chat2 = () => {
                                       </ChartContainer>
                                     </CardContent>
                                   </Card>
-                                )}
-                                
-                                {message.showChart && message.chartType === "table" && (
-                                  <>
-                                    {message.text?.includes("Platform") ? (
-                                      <div className="mt-4 overflow-x-auto">
-                                        <table className="w-full border-collapse text-sm">
-                                          <thead>
-                                            <tr className="bg-gray-50">
-                                              <th className="border px-4 py-2 text-left">Platform</th>
-                                              <th className="border px-4 py-2 text-left">Spend</th>
-                                              <th className="border px-4 py-2 text-left">CPA</th>
-                                              <th className="border px-4 py-2 text-left">Conversions</th>
-                                              <th className="border px-4 py-2 text-left">CPM</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                            {tableData.map((row, i) => (
-                                              <tr key={i} className={row.platform === 'Total' ? 'font-medium bg-gray-50' : ''}>
-                                                <td className="border px-4 py-2">{row.platform}</td>
-                                                <td className="border px-4 py-2">${row.spend}</td>
-                                                <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
-                                                <td className="border px-4 py-2">{row.conversions}</td>
-                                                <td className="border px-4 py-2">{typeof row.cpm === 'number' ? `$${row.cpm.toFixed(2)}` : row.cpm}</td>
-                                              </tr>
-                                            ))}
-                                          </tbody>
-                                        </table>
-                                      </div>
-                                    ) : (
-                                      <div className="mt-4 overflow-x-auto">
-                                        <table className="w-full border-collapse text-sm">
-                                          <thead>
-                                            <tr className="bg-gray-50">
-                                              <th className="border px-4 py-2 text-left">Creative Type</th>
-                                              <th className="border px-4 py-2 text-left">Asset</th>
-                                              <th className="border px-4 py-2 text-left">Spend</th>
-                                              <th className="border px-4 py-2 text-left">CPA</th>
-                                              <th className="border px-4 py-2 text-left">Conversions</th>
-                                              <th className="border px-4 py-2 text-left">CPM</th>
-                                              <th className="border px-4 py-2 text-left">CTR</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                            {creativeData.map((row, i) => (
-                                              <tr key={i}>
-                                                <td className="border px-4 py-2">{row.type}</td>
-                                                <td className="border px-4 py-2">{row.asset}</td>
-                                                <td className="border px-4 py-2">${row.spend}</td>
-                                                <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
-                                                <td className="border px-4 py-2">{row.conversions}</td>
-                                                <td className="border px-4 py-2">${row.cpm.toFixed(2)}</td>
-                                                <td className="border px-4 py-2">{row.ctr}%</td>
-                                              </tr>
-                                            ))}
-                                          </tbody>
-                                        </table>
-                                      </div>
-                                    )}
-                                  </>
-                                )}
-                                
-                                {message.showCalendly && (
-                                  <Button 
-                                    className="mt-2 bg-bamboo-primary hover:bg-bamboo-secondary text-white"
-                                  >
-                                    Book a Meeting
-                                  </Button>
                                 )}
                               </div>
                             </>
