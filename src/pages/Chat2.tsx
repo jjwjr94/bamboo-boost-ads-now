@@ -226,19 +226,19 @@ const Chat2 = () => {
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navigation />
         
-        <div className="flex flex-grow pt-16 overflow-hidden">
+        <div className="flex flex-grow pt-16 overflow-hidden min-h-0">
           
           {/* Left Sidebar - Tasks List */}
-          <div className="w-96 flex-shrink-0 bg-gray-50 flex flex-col overflow-hidden border-r">
+          {/* Left Sidebar - Tasks List */}
+          <div className="w-96 flex-shrink-0 bg-gray-50 flex flex-col overflow-hidden border-r min-h-0">
             <div className="h-16 px-4 border-b bg-white flex items-center">
-  <Button
-    variant="ghost"
-    className="w-full h-10 py-0 flex items-center justify-start text-left text-bamboo-navy leading-none"
-  >
-    + New task
-  </Button>
-</div>
-
+              <Button
+                variant="ghost"
+                className="w-full h-10 py-0 flex items-center justify-start text-left text-bamboo-navy leading-none"
+              >
+                + New task
+              </Button>
+            </div>
             
             <ScrollArea className="flex-grow overflow-y-auto pb-24">
               {tasks.map(task => (
@@ -259,7 +259,7 @@ const Chat2 = () => {
                       <h3 className="text-sm font-medium text-bamboo-navy truncate">{task.title}</h3>
                       <p className="text-xs text-gray-500 truncate">{task.description}</p>
                     </div>
-                    <div className="text-xs text-gray-400 flex-shrink-0">{task.date}</div>
+                    <div className="text-xs text-gray-500 flex-shrink-0">{task.date}</div>
                   </div>
                 </div>
               ))}
@@ -267,14 +267,14 @@ const Chat2 = () => {
           </div>
           
           {/* Middle Content - Chat (Flexible Width) */}
-          <div className="flex-grow flex flex-col h-full relative overflow-hidden">
+          <div className="flex-grow flex flex-col relative overflow-hidden min-h-0">
             {/* Header */}
             <div className="border-b bg-white p-4 flex items-center gap-2 h-16">
               <h2 className="text-lg font-medium text-bamboo-navy flex items-center">{selectedTask?.title || "Task"}</h2>
             </div>
             
             {/* Messages container - Modified to accommodate fixed footer */}
-            <div className="flex-grow flex flex-col overflow-hidden">
+            <div className="flex-grow flex flex-col overflow-hidden min-h-0">
               {/* ScrollArea takes all available space except for fixed input area */}
               <ScrollArea className="flex-grow" viewportRef={mainContentRef}>
                 <div className="p-4">
@@ -449,7 +449,7 @@ const Chat2 = () => {
           
           {/* Right Sidebar - Report Panel */}
           {!rightPanelCollapsed && (
-            <div className="w-144 flex-shrink-0 bg-white overflow-hidden flex flex-col border-l">
+            <div className="w-144 flex-shrink-0 bg-white overflow-hidden flex flex-col border-l min-h-0">
               <div className="p-4 border-b flex items-center justify-between h-16">
                 <div className="flex items-center gap-2">
                   <div className="text-bamboo-primary">
