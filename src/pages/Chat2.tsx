@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
-import { Send, Link, ChevronLeft, ChevronRight } from "lucide-react";
+import { Send, Link, ChevronLeft, ChevronRight, BarChart2, Code, Github, BrainCircuit } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
@@ -261,7 +261,7 @@ const Chat2 = () => {
           maxSize={30}
           className="bg-gray-50 flex flex-col border-r"
         >
-          <div className="p-4 border-b bg-white flex items-center">
+          <div className="p-4 border-b bg-white flex items-center h-16">
             <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy flex items-center">
               + New task
             </Button>
@@ -275,15 +275,13 @@ const Chat2 = () => {
                 onClick={() => selectTask(task.id)}
               >
                 <div className="flex gap-3 items-center">
-                  <Avatar className="h-8 w-8 border flex-shrink-0">
-                    {task.id === 1 && (
-                      <div className="bg-zinc-900 text-white w-full h-full flex items-center justify-center text-xs">M</div>
-                    )}
-                    {task.id !== 1 && (
-                      <div className={`${task.id % 2 === 0 ? 'bg-gray-200' : 'bg-bamboo-primary text-white'} w-full h-full flex items-center justify-center text-xs`}>
-                        {task.id % 2 === 0 ? '􀉖' : 'AI'}
-                      </div>
-                    )}
+                  <Avatar className="h-8 w-8 border flex-shrink-0 bg-gray-200 flex items-center justify-center">
+                    {task.id === 1 && <BarChart2 className="h-4 w-4 text-gray-600" />}
+                    {task.id === 2 && <Code className="h-4 w-4 text-gray-600" />}
+                    {task.id === 3 && <Github className="h-4 w-4 text-gray-600" />}
+                    {task.id === 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
+                    {/* Fallback for any other tasks */}
+                    {task.id > 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
                   </Avatar>
                   <div className="flex-grow min-w-0">
                     <h3 className="text-sm font-medium text-bamboo-navy truncate">{task.title}</h3>
@@ -302,16 +300,16 @@ const Chat2 = () => {
         <ResizablePanel 
           defaultSize={rightPanelCollapsed ? 80 : 50}
           minSize={30}
-          className="flex flex-col h-full relative overflow-hidden"
+          className="flex flex-col h-full overflow-hidden"
         >
           {/* Header */}
-          <div className="border-b bg-white p-4 flex items-center gap-2">
+          <div className="border-b bg-white p-4 flex items-center gap-2 h-16 flex-shrink-0">
             <h2 className="text-lg font-medium text-bamboo-navy flex items-center">{selectedTask?.title || "Task"}</h2>
           </div>
           
           {/* Messages container */}
-          <div className="relative flex-grow overflow-hidden">
-            <div className="overflow-y-auto h-full pb-24" ref={mainContentRef}>
+          <div className="flex-grow overflow-y-auto" ref={mainContentRef}>
+            <div className="p-4">
               <div className="p-4">
                 <div className="max-w-3xl mx-auto">
                   <div className="flex flex-col gap-6">
@@ -461,8 +459,8 @@ const Chat2 = () => {
               </div>
             </div>
             
-            {/* Message input area - fixed at the bottom */}
-            <div className="absolute bottom-0 left-0 right-0 border-t bg-white p-4 z-10 shadow-md">
+            {/* Message input area */}
+            <div className="border-t bg-white p-4 z-10 shadow-md flex-shrink-0">
               <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
                 <Input 
                   placeholder="Message Bamboo..." 
@@ -492,7 +490,7 @@ const Chat2 = () => {
             maxSize={50}
             className="bg-white overflow-hidden flex flex-col border-l"
           >
-            <div className="p-4 border-b flex items-center justify-between">
+            <div className="p-4 border-b flex items-center justify-between h-16">
               <div className="flex items-center gap-2">
                 <div className={rightPanelContent === "chart" ? "text-bamboo-primary" : "text-blue-500"}>
                   {rightPanelContent === "chart" ? (
