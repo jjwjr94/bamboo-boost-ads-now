@@ -243,12 +243,15 @@ const Chat2 = () => {
         <div className="flex flex-grow pt-16 overflow-hidden">
           
           {/* Left Sidebar - Tasks List */}
-          <div className="w-96 flex-shrink-0 bg-gray-50 flex flex-col overflow-hidden border-r">
-            <div className="p-4 border-b bg-white flex items-center h-16">
-              <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy flex items-center">
-                + New task
-              </Button>
-            </div>
+         <div className="h-16 px-4 border-b bg-white flex items-center">
+  <Button
+    variant="ghost"
+    className="w-full h-10 py-0 flex items-center justify-start text-left text-bamboo-navy leading-none"
+  >
+    + New task
+  </Button>
+</div>
+
             
             <ScrollArea className="flex-grow overflow-y-auto pb-24">
               {tasks.map(task => (
