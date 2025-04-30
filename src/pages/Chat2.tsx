@@ -272,7 +272,7 @@ const Chat2 = () => {
               </Button>
             </div>
             
-            <div className="flex-grow overflow-y-auto pb-24">
+            <ScrollArea className="flex-grow h-full pb-24">
               {tasks.map(task => (
                 <div 
                   key={task.id}
@@ -296,7 +296,7 @@ const Chat2 = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </ScrollArea>
           </ResizablePanel>
           
           <ResizableHandle withHandle />
@@ -314,7 +314,7 @@ const Chat2 = () => {
             
             {/* Messages container */}
             <div className="relative flex-grow overflow-hidden">
-              <div className="overflow-y-auto h-full pb-24" ref={mainContentRef}>
+              <ScrollArea className="h-full pb-24" viewportRef={mainContentRef}>
                 <div className="p-4">
                   <div className="max-w-3xl mx-auto">
                     <div className="flex flex-col gap-6">
@@ -461,7 +461,7 @@ const Chat2 = () => {
                       ))}
                     </div>
                   </div>
-                </div>
+                </ScrollArea>
               </div>
               
               {/* Message input area - fixed at the bottom */}
@@ -516,7 +516,7 @@ const Chat2 = () => {
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
-              <div className="p-4 overflow-y-auto flex-grow bg-gray-50">
+              <ScrollArea className="p-4 flex-grow bg-gray-50">
                 <div className="space-y-6">
                   <Card>
                     <CardHeader>
@@ -592,7 +592,7 @@ const Chat2 = () => {
                     </ul>
                   </div>
                 </div>
-              </div>
+              </ScrollArea>
             </ResizablePanel>
           )}
         </ResizablePanelGroup>
