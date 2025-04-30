@@ -437,7 +437,7 @@ const Chat2 = () => {
               </ScrollArea>
               
               {/* Message input area - Now a sibling to ScrollArea, not nested inside it */}
-              <div className="border-t bg-white p-4 z-10 shadow-md">
+              <div className="border-t bg-white p-4 z-10 shadow-md flex-shrink-0">
                 <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
                   <Input 
                     placeholder="Message Bamboo..." 
