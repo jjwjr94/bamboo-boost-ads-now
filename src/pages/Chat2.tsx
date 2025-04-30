@@ -284,8 +284,8 @@ const Chat2 = () => {
                     {task.id > 4 && <BrainCircuit className="h-4 w-4 text-gray-600" />}
                   </Avatar>
                   <div className="flex-grow min-w-0">
-                    <h3 className="text-sm font-medium text-bamboo-navy truncate">{task.title}</h3>
-                    <p className="text-xs text-gray-500 truncate">{task.description}</p>
+                    <h3 className="text-sm font-medium text-bamboo-navy truncate overflow-hidden">{task.title}</h3>
+                    <p className="text-xs text-gray-500 truncate overflow-hidden">{task.description}</p>
                   </div>
                   <div className="text-xs text-gray-400 flex-shrink-0">{task.date}</div>
                 </div>
