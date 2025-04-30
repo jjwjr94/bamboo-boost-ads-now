@@ -172,7 +172,7 @@ const Chat = () => {
         <div className="container mx-auto max-w-3xl">
           <form onSubmit={handleSendMessage} className="flex gap-2">
             <Input 
-              placeholder="Ask Lovable..." 
+              placeholder="Ask Bamboo..." 
               value={inputValue} 
               onChange={(e) => setInputValue(e.target.value)}
               className="flex-grow"
