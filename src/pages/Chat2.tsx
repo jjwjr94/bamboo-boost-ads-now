@@ -328,16 +328,18 @@ const Chat2 = () => {
                         }`}>
                           {message.type === "assistant" ? (
                             <>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Avatar className="h-10 w-10 border bg-zinc-900 text-white flex items-center justify-center">
-                                    <div className="text-sm">M</div>
-                                  </Avatar>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
-                                </TooltipContent>
-                              </Tooltip>
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Avatar className="h-10 w-10 border bg-zinc-900 text-white flex items-center justify-center">
+                                      <div className="text-sm">M</div>
+                                    </Avatar>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
                               <div className="bg-white p-4 rounded-lg rounded-tl-none max-w-[80%] shadow-sm border border-gray-100">
                                 {renderMessageText(message)}
                                 
@@ -448,16 +450,18 @@ const Chat2 = () => {
                               <div className="bg-white p-4 rounded-lg rounded-tr-none max-w-[80%] shadow-sm border border-gray-100">
                                 <p className="text-bamboo-navy">{message.text}</p>
                               </div>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Avatar className="h-10 w-10 bg-bamboo-secondary text-white flex items-center justify-center">
-                                    <div className="text-lg font-medium">U</div>
-                                  </Avatar>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
-                                </TooltipContent>
-                              </Tooltip>
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Avatar className="h-10 w-10 bg-bamboo-secondary text-white flex items-center justify-center">
+                                      <div className="text-lg font-medium">U</div>
+                                    </Avatar>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
                             </>
                           ) : null}
                         </div>
