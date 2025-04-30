@@ -1,15 +1,22 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Container } from "@/components/ui/container";
 import { Menu, X } from "lucide-react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const location = useLocation();
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+  
+  // Helper function to create section links
+  const getSectionLink = (section: string) => {
+    // If we're on the home page, use hash links; otherwise navigate to home with hash
+    return location.pathname === '/' ? `#${section}` : `/#${section}`;
   };
 
   return (
@@ -37,15 +44,15 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex gap-4 items-center">
-            <a href="#about" className="inline-block">
+            <Link to={getSectionLink("about")} className="inline-block">
               <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">About</Button>
-            </a>
-            <a href="#solution" className="inline-block">
+            </Link>
+            <Link to={getSectionLink("solution")} className="inline-block">
               <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Features</Button>
-            </a>
-            <a href="#pricing" className="inline-block">
+            </Link>
+            <Link to={getSectionLink("pricing")} className="inline-block">
               <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Pricing</Button>
-            </a>
+            </Link>
           </div>
           
           {/* Desktop Right Navigation */}
@@ -63,15 +70,15 @@ const Navigation = () => {
         {isMenuOpen && (
           <div className="lg:hidden bg-white flex flex-col w-full py-4 animate-fade-in">
             <div className="flex flex-col gap-2">
-              <a href="#about" className="inline-block" onClick={toggleMenu}>
+              <Link to={getSectionLink("about")} onClick={toggleMenu}>
                 <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">About</Button>
-              </a>
-              <a href="#solution" className="inline-block" onClick={toggleMenu}>
+              </Link>
+              <Link to={getSectionLink("solution")} onClick={toggleMenu}>
                 <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">Features</Button>
-              </a>
-              <a href="#pricing" className="inline-block" onClick={toggleMenu}>
+              </Link>
+              <Link to={getSectionLink("pricing")} onClick={toggleMenu}>
                 <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">Pricing</Button>
-              </a>
+              </Link>
               <Link to="/chat" onClick={toggleMenu}>
                 <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">App</Button>
               </Link>
