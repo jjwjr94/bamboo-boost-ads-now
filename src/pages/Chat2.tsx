@@ -23,7 +23,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-// Removed Resizable components import
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Task {
@@ -241,11 +240,9 @@ const Chat2 = () => {
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navigation />
         
-        {/* Replaced ResizablePanelGroup with a standard div using flex */}
         <div className="flex flex-grow pt-16 overflow-hidden">
           
-          {/* Left Sidebar - Tasks List (Increased width from w-64 to w-96, which is 1.5x wider) */}
-          {/* Replaced ResizablePanel with div, removed size props, kept overflow-hidden */}
+          {/* Left Sidebar - Tasks List */}
           <div className="w-96 flex-shrink-0 bg-gray-50 flex flex-col overflow-hidden border-r">
             <div className="p-4 border-b bg-white flex items-center h-16">
               <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy flex items-center">
@@ -253,7 +250,6 @@ const Chat2 = () => {
               </Button>
             </div>
             
-            {/* Kept ScrollArea with updated classes for independent scroll */}
             <ScrollArea className="flex-grow overflow-y-auto pb-24">
               {tasks.map(task => (
                 <div 
@@ -280,20 +276,17 @@ const Chat2 = () => {
             </ScrollArea>
           </div>
           
-          {/* Removed ResizableHandle */}
-          
           {/* Middle Content - Chat (Flexible Width) */}
-          {/* Replaced ResizablePanel with div, used flex-grow, kept overflow-hidden */}
           <div className="flex-grow flex flex-col h-full relative overflow-hidden">
             {/* Header */}
             <div className="border-b bg-white p-4 flex items-center gap-2 h-16">
               <h2 className="text-lg font-medium text-bamboo-navy flex items-center">{selectedTask?.title || "Task"}</h2>
             </div>
             
-            {/* Messages container */}
-            <div className="relative flex-grow overflow-hidden">
-              {/* Kept ScrollArea with updated classes for independent scroll */}
-              <ScrollArea className="flex-grow overflow-y-auto pb-24" viewportRef={mainContentRef}>
+            {/* Messages container - Modified to accommodate fixed footer */}
+            <div className="flex-grow flex flex-col overflow-hidden">
+              {/* ScrollArea takes all available space except for fixed input area */}
+              <ScrollArea className="flex-grow" viewportRef={mainContentRef}>
                 <div className="p-4">
                   <div className="max-w-3xl mx-auto">
                     <div className="flex flex-col gap-6">
@@ -443,8 +436,8 @@ const Chat2 = () => {
                 </div>
               </ScrollArea>
               
-              {/* Message input area - fixed at the bottom */}
-              <div className="absolute bottom-0 left-0 right-0 border-t bg-white p-4 z-10 shadow-md">
+              {/* Message input area - Now a sibling to ScrollArea, not nested inside it */}
+              <div className="border-t bg-white p-4 z-10 shadow-md">
                 <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
                   <Input 
                     placeholder="Message Bamboo..." 
@@ -464,10 +457,7 @@ const Chat2 = () => {
             </div>
           </div>
           
-          {/* Removed ResizableHandle */}
-          
-          {/* Right Sidebar - Report Panel (Increased width from w-96 to w-144, which is 1.5x wider) */}
-          {/* Replaced ResizablePanel with div, removed size props, kept overflow-hidden */}
+          {/* Right Sidebar - Report Panel */}
           {!rightPanelCollapsed && (
             <div className="w-144 flex-shrink-0 bg-white overflow-hidden flex flex-col border-l">
               <div className="p-4 border-b flex items-center justify-between h-16">
@@ -491,7 +481,6 @@ const Chat2 = () => {
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
-              {/* Kept ScrollArea with updated classes for independent scroll */}
               <ScrollArea className="flex-grow overflow-y-auto p-4 bg-gray-50">
                 <div className="space-y-6">
                   <Card>
