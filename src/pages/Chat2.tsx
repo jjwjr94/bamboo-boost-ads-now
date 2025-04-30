@@ -244,9 +244,9 @@ const Chat2 = () => {
         {/* Replaced ResizablePanelGroup with a standard div using flex */}
         <div className="flex flex-grow pt-16 overflow-hidden">
           
-          {/* Left Sidebar - Tasks List (Fixed Width) */}
+          {/* Left Sidebar - Tasks List (Increased width from w-64 to w-96, which is 1.5x wider) */}
           {/* Replaced ResizablePanel with div, removed size props, kept overflow-hidden */}
-          <div className="w-64 flex-shrink-0 bg-gray-50 flex flex-col overflow-hidden border-r">
+          <div className="w-96 flex-shrink-0 bg-gray-50 flex flex-col overflow-hidden border-r">
             <div className="p-4 border-b bg-white flex items-center h-16">
               <Button variant="ghost" className="w-full justify-start text-left text-bamboo-navy flex items-center">
                 + New task
@@ -466,10 +466,10 @@ const Chat2 = () => {
           
           {/* Removed ResizableHandle */}
           
-          {/* Right Sidebar - Report Panel (Fixed Width, Conditionally Rendered) */}
+          {/* Right Sidebar - Report Panel (Increased width from w-96 to w-144, which is 1.5x wider) */}
           {/* Replaced ResizablePanel with div, removed size props, kept overflow-hidden */}
           {!rightPanelCollapsed && (
-            <div className="w-96 flex-shrink-0 bg-white overflow-hidden flex flex-col border-l">
+            <div className="w-144 flex-shrink-0 bg-white overflow-hidden flex flex-col border-l">
               <div className="p-4 border-b flex items-center justify-between h-16">
                 <div className="flex items-center gap-2">
                   <div className="text-bamboo-primary">
@@ -578,4 +578,3 @@ const Chat2 = () => {
 };
 
 export default Chat2;
-

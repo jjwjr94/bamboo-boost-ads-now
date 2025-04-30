@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -19,6 +18,9 @@ export default {
       },
     },
     extend: {
+      width: {
+        '144': '36rem', // Adding custom width for 1.5x of w-96 (24rem)
+      },
       colors: {
         bamboo: {
           primary: "#00D1A1",
