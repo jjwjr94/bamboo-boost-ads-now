@@ -267,7 +267,7 @@ const Chat2 = () => {
             </Button>
           </div>
           
-          <ScrollArea className="h-full pb-24" viewportRef={mainContentRef}>
+          <div className="flex-grow overflow-y-auto pb-24">
             {tasks.map(task => (
               <div 
                 key={task.id}
@@ -291,7 +291,7 @@ const Chat2 = () => {
                 </div>
               </div>
             ))}
-          </ScrollArea>
+          </div>
         </ResizablePanel>
         
         <ResizableHandle withHandle />
