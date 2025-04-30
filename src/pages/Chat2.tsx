@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
@@ -461,8 +460,8 @@ const Chat2 = () => {
                       ))}
                     </div>
                   </div>
-                </ScrollArea>
-              </div>
+                </div>
+              </ScrollArea>
               
               {/* Message input area - fixed at the bottom */}
               <div className="absolute bottom-0 left-0 right-0 border-t bg-white p-4 z-10 shadow-md">
