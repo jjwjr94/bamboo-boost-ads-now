@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
@@ -170,7 +171,7 @@ const Chat2 = () => {
           text: "Woohoo!! 🎉", 
           type: "user",
           timestamp: new Date()
-        }
+        },
         { 
           text: "Here's your weekly performance [report] 📊\n\n📈 Overall Campaign Performance\n(based on last 7 days)", 
           type: "assistant",
@@ -189,7 +190,7 @@ const Chat2 = () => {
           type: "assistant",
           timestamp: new Date()
         },
-                { 
+        { 
           text: "🎨 Creative", 
           type: "user",
           timestamp: new Date()
