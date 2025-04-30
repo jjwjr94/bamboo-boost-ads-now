@@ -314,7 +314,7 @@ const Chat2 = () => {
           
           {/* Messages container with fixed height to accommodate the input box */}
 <div className="relative flex-grow overflow-hidden">
-  <ScrollArea className="pb-28" viewportRef={mainContentRef}>
+  <div className="overflow-y-auto h-full pb-28" ref={mainContentRef}>
     <div className="p-4">
       <div className="max-w-3xl mx-auto">
         <div className="flex flex-col gap-6">
@@ -462,7 +462,7 @@ const Chat2 = () => {
                   </div>
                 </div>
               </div>
-            </ScrollArea>
+             </div>
             
              {/* Message input area - truly fixed at the bottom */}
   <div className="absolute bottom-0 left-0 w-full border-t bg-white p-4 z-10 shadow-md">
