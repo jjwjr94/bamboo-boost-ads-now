@@ -261,7 +261,7 @@ const Chat2 = () => {
                   className={`p-4 cursor-pointer hover:bg-gray-100 ${selectedTaskId === task.id ? 'bg-bamboo-primary/5 border-l-4 border-l-bamboo-primary' : 'border-b border-gray-100'}`}
                   onClick={() => selectTask(task.id)}
                 >
-                  <div className="flex gap-3 items-center">
+                  <div className="flex gap-3 items-center min-w-0">
                     <Avatar className="h-8 w-8 border flex-shrink-0 bg-gray-200 flex items-center justify-center">
                       {task.id === 1 && <BarChart2 className="h-4 w-4 text-gray-600" />}
                       {task.id === 2 && <Code className="h-4 w-4 text-gray-600" />}
