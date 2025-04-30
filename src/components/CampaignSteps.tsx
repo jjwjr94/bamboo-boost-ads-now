@@ -34,7 +34,7 @@ const CampaignSteps = () => {
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-bamboo-navy mb-12">
-          Launch Ads Today. No Waiting. 
+          Launch Ads Today. <span className="underline">No Waiting.</span>
         </h2>
         <div className="relative">
           {/* Connecting line */}
