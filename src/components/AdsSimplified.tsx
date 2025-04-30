@@ -20,8 +20,8 @@ const AdsSimplified = () => {
           
           <Card className="overflow-hidden shadow-lg border-0 rounded-xl">
             <img 
-              src="/lovable-uploads/88056b9c-0bf9-47b7-85f5-ed9218a46862.png" 
-              alt="Bamboo chat interface showing TikTok campaign report with performance metrics and insights" 
+              src="/lovable-uploads/5ef09685-f044-495c-bf04-a2fd693c37da.png" 
+              alt="Bamboo chat interface showing TikTok campaign report with performance metrics and platform comparison" 
               className="w-full h-auto"
             />
           </Card>
