@@ -1,9 +1,10 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
-import { Avatar } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Send, Link, ChevronLeft, ChevronRight, BarChart2, Code, Github, BrainCircuit } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -320,16 +321,18 @@ const Chat2 = () => {
                       }`}>
                         {message.type === "assistant" ? (
                           <>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Avatar className="h-10 w-10 border bg-zinc-900 text-white flex items-center justify-center">
-                                  <div className="text-sm">M</div>
-                                </Avatar>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
-                              </TooltipContent>
-                            </Tooltip>
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Avatar className="h-10 w-10 border bg-zinc-900 text-white flex items-center justify-center overflow-hidden">
+                                    <AvatarImage src="/lovable-uploads/ee7f1b89-e60e-4121-8fb6-dba324f20c21.png" alt="Bamboo" />
+                                  </Avatar>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
                             <div className="bg-white p-4 rounded-lg rounded-tl-none max-w-[80%] shadow-sm border border-gray-100">
                               {renderMessageText(message)}
                               
@@ -440,16 +443,18 @@ const Chat2 = () => {
                             <div className="bg-white p-4 rounded-lg rounded-tr-none max-w-[80%] shadow-sm border border-gray-100">
                               <p className="text-bamboo-navy">{message.text}</p>
                             </div>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Avatar className="h-10 w-10 bg-bamboo-secondary text-white flex items-center justify-center">
-                                  <div className="text-lg font-medium">U</div>
-                                </Avatar>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
-                              </TooltipContent>
-                            </Tooltip>
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Avatar className="h-10 w-10 bg-bamboo-secondary text-white flex items-center justify-center">
+                                    <div className="text-lg font-medium">U</div>
+                                  </Avatar>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
                           </>
                         ) : null}
                       </div>
