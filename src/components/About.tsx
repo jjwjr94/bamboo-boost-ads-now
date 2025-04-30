@@ -4,7 +4,7 @@ import { Linkedin, Twitter } from "lucide-react";
 
 const About = () => {
   return (
-    <div className="py-24 px-4 bg-gray-50">
+    <div className="py-24 px-4 bg-white">
       <div className="container mx-auto max-w-5xl">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="w-full md:w-1/4 flex flex-col items-center">
