@@ -96,7 +96,7 @@ const ToolLogo = ({ name, logo, className }: ToolProps) => (
 
 const AiTools = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-bamboo-navy mb-12">
           All AI Ads Tools from One Source
