@@ -19,12 +19,16 @@ const Index = () => {
         <Container bordered>
           <Hero />
           <Problem />
-          <Solution />
-          <AdsSimplified />
-          <AiTools />
-          <CampaignSteps />
-          <Features />
-          <Pricing />
+          <div id="solution">
+            <Solution />
+            <AdsSimplified />
+            <AiTools />
+            <CampaignSteps />
+            <Features />
+          </div>
+          <div id="pricing">
+            <Pricing />
+          </div>
           <div id="about">
             <About />
           </div>
@@ -35,3 +39,4 @@ const Index = () => {
 };
 
 export default Index;
+

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { Container } from "@/components/ui/container";
@@ -12,6 +12,26 @@ const Navigation = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  
+  // Handle hash navigation scrolling
+  useEffect(() => {
+    // Check if there's a hash in the URL
+    if (location.hash) {
+      // Remove the # character and find the element
+      const elementId = location.hash.replace('#', '');
+      const element = document.getElementById(elementId);
+      
+      if (element) {
+        // Wait a bit for DOM to be ready
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    } else if (location.pathname === '/') {
+      // If we're on the home page without a hash, scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [location]);
   
   // Helper function to create section links
   const getSectionLink = (section: string) => {
@@ -94,3 +114,4 @@ const Navigation = () => {
 };
 
 export default Navigation;
+
