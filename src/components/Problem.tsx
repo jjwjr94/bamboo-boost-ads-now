@@ -157,7 +157,7 @@ const Problem = () => {
           <div className="text-center mb-12">
             <p className="text-bamboo-primary font-medium uppercase tracking-wider text-sm mb-4">The Problem</p>
             <h2 className="text-3xl md:text-4xl font-bold text-bamboo-navy mb-8">
-              Growing Your Small Business is Hard
+              Growing Your Business Shouldn't Be So Hard
             </h2>
           </div>
 

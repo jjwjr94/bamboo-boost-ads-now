@@ -44,10 +44,10 @@ const Hero = () => {
                 </linearGradient>
               </defs>
             </svg>
-          </span> built for Small and Medium Size Business
+          </span> for Small and Medium Size Business
         </h1>
         <p className="text-xl md:text-2xl text-bamboo-navy mb-8">
-          <strong>Launch ads</strong> and <strong>grow</strong> your business today. No technical marketing knowledge required.
+          Let AI do the work for you. No technical marketing knowledge required.
         </p>
         <div className="flex justify-center gap-4">
           <Button 
