@@ -267,7 +267,7 @@ const Chat2 = () => {
             </Button>
           </div>
           
-          <ScrollArea className="flex-grow">
+          <ScrollArea className="h-full pb-24" viewportRef={mainContentRef}>
             {tasks.map(task => (
               <div 
                 key={task.id}
