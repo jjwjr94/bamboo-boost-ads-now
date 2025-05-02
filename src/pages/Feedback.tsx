@@ -14,6 +14,7 @@ import { Container } from "@/components/ui/container";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 // Define the form schema with Zod
 const formSchema = z.object({
@@ -27,6 +28,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 const Feedback = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   // Initialize the form with React Hook Form
   const form = useForm<FormValues>({
@@ -40,18 +42,64 @@ const Feedback = () => {
   });
 
   // Handle form submission
-  const onSubmit = (values: FormValues) => {
+  const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
+    setEmailError(null);
     
-    // Simulate API call with timeout
-    setTimeout(() => {
-      console.log("Form submitted:", values);
+    try {
+      // Prepare email data
+      const emailData = {
+        from: "Bamboo AI Feedback <feedback@bamboo-ai.com>",
+        to: "jay@ado-ai.com",
+        subject: `Feedback from ${values.name}`,
+        text: `
+Name: ${values.name}
+Email: ${values.email}
+Contact Consent: ${values.contactConsent ? "Yes" : "No"}
+
+Feedback:
+${values.feedback}
+        `,
+        api_key: "re_dSmEYUSm_MxGLj64xsYZovsKqMdL8S2tr"
+      };
+      
+      // Send the email using Resend API
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${emailData.api_key}`
+        },
+        body: JSON.stringify({
+          from: emailData.from,
+          to: emailData.to,
+          subject: emailData.subject,
+          text: emailData.text,
+        })
+      });
+      
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to send email");
+      }
+      
+      console.log("Email sent successfully:", result);
+      
       toast.success("Thank you for your feedback!", {
         description: "We appreciate your input and will review it shortly.",
       });
+      
       form.reset();
+    } catch (error) {
+      console.error("Error sending feedback email:", error);
+      setEmailError("We couldn't send your feedback. Please try again later.");
+      toast.error("Failed to submit feedback", {
+        description: "Please try again later or contact support.",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -69,6 +117,12 @@ const Feedback = () => {
             </CardHeader>
 
             <CardContent>
+              {emailError && (
+                <Alert variant="destructive" className="mb-6">
+                  <AlertDescription>{emailError}</AlertDescription>
+                </Alert>
+              )}
+              
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
