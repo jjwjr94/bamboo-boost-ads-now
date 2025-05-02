@@ -21,7 +21,7 @@ const Footer = () => {
 <Button variant="ghost" className="rounded-full p-0 w-20 h-20">
   <HelpCircle
     className="text-bamboo-navy"
-    style={{ width: "48px", height: "48px" }} // forces icon size
+    style={{ width: "24px", height: "24px" }} // forces icon size
   />
   <span className="sr-only">Feedback</span>
 </Button>
