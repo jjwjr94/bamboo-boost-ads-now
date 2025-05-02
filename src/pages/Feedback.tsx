@@ -16,6 +16,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { supabase } from "@/integrations/supabase/client";
 
 // Define the form schema with Zod
 const formSchema = z.object({
@@ -50,19 +51,19 @@ const Feedback = () => {
     setSubmitSuccess(false);
     
     try {
-      // Since the direct API call is failing, let's simulate a successful submission
-      // In a real application, this would be replaced with a working API endpoint
-      // or a server-side solution using Edge Functions if using Supabase
-      
-      console.log("Feedback submission data:", {
-        name: values.name,
-        email: values.email,
-        feedback: values.feedback,
-        contactConsent: values.contactConsent
+      // Call the Supabase Edge Function to send the feedback email
+      const { data, error } = await supabase.functions.invoke('send-feedback', {
+        body: {
+          name: values.name,
+          email: values.email,
+          feedback: values.feedback,
+          contactConsent: values.contactConsent
+        }
       });
       
-      // Simulate successful submission after a short delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      if (error) {
+        throw new Error(error.message || "Failed to send feedback");
+      }
       
       setSubmitSuccess(true);
       
@@ -73,7 +74,7 @@ const Feedback = () => {
       form.reset();
     } catch (error) {
       console.error("Error processing feedback:", error);
-      setEmailError("We couldn't process your feedback. Please try again later.");
+      setEmailError("We couldn't send your feedback. Please try again later.");
       toast.error("Failed to submit feedback", {
         description: "Please try again later or contact support directly.",
       });
