@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Question } from "lucide-react";
+import { HelpCircle } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -19,7 +19,7 @@ const Footer = () => {
                 <TooltipTrigger asChild>
                   <Link to="/feedback">
                     <Button variant="ghost" size="icon" className="rounded-full">
-                      <Question className="h-5 w-5" />
+                      <HelpCircle className="h-5 w-5" />
                       <span className="sr-only">Feedback</span>
                     </Button>
                   </Link>
