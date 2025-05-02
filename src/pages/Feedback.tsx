@@ -65,6 +65,7 @@ const Feedback = () => {
         throw new Error(error.message || "Failed to send feedback");
       }
       
+      // Even if there's a warning about email delivery, we consider the feedback submission successful
       setSubmitSuccess(true);
       
       toast.success("Thank you for your feedback!", {
