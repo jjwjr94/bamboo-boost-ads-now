@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Container } from "@/components/ui/container";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -205,6 +205,8 @@ ${values.feedback}
           </Card>
         </div>
       </Container>
+      
+      <Footer />
     </div>
   );
 };

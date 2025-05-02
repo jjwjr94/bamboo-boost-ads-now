@@ -73,9 +73,6 @@ const Navigation = () => {
             <Link to={getSectionLink("pricing")} className="inline-block">
               <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Pricing</Button>
             </Link>
-            <Link to="/feedback" className="inline-block">
-              <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Feedback</Button>
-            </Link>
           </div>
           
           {/* Desktop Right Navigation */}
@@ -101,9 +98,6 @@ const Navigation = () => {
               </Link>
               <Link to={getSectionLink("pricing")} onClick={toggleMenu}>
                 <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">Pricing</Button>
-              </Link>
-              <Link to="/feedback" onClick={toggleMenu}>
-                <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">Feedback</Button>
               </Link>
               <Link to="/chat" onClick={toggleMenu}>
                 <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">App</Button>

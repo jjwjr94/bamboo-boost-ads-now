@@ -9,13 +9,14 @@ import CampaignSteps from "../components/CampaignSteps";
 import Features from "../components/Features";
 import About from "../components/About";
 import Pricing from "../components/Pricing";
+import Footer from "../components/Footer";
 import { Container } from "../components/ui/container";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navigation />
-      <div className="pt-16">
+      <div className="pt-16 flex-1">
         <Container bordered>
           <Hero />
           <Problem />
@@ -34,9 +35,9 @@ const Index = () => {
           </div>
         </Container>
       </div>
+      <Footer />
     </div>
   );
 };
 
 export default Index;
-
