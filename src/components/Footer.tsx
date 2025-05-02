@@ -18,11 +18,10 @@ const Footer = () => {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link to="/feedback">
-                    <Button variant="ghost" className="rounded-full p-0 w-20 h-20">
-  <HelpCircle size={72} />
+    <Button variant="ghost" className="rounded-full p-0 w-20 h-20">
+  <HelpCircle className="w-12 h-12" />
   <span className="sr-only">Feedback</span>
 </Button>
-
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent>
