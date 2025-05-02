@@ -105,7 +105,9 @@ const Feedback = () => {
               
               {submitSuccess ? (
                 <div className="text-center py-8">
-                  <h3 className="text-2xl font-semibold text-green-600 mb-4">Feedback Submitted!</h3>
+     <h3 className="text-2xl font-semibold mb-4" style={{ color: "#00D1A1" }}>
+  Feedback Submitted!
+</h3>
                   <p className="text-muted-foreground">
                     Thank you for taking the time to share your thoughts with us.
                     We appreciate your feedback and will use it to improve our services.
@@ -118,7 +120,7 @@ const Feedback = () => {
                     variant="outline"
                     className="mt-6"
                   >
-                    Submit Another Feedback
+                    Submit More Feedback
                   </Button>
                 </div>
               ) : (
