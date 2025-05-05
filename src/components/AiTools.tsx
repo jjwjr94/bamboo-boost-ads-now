@@ -112,9 +112,9 @@ const AiTools = () => {
         <h2 className="text-3xl font-bold text-center text-bamboo-navy mb-12">
           All the Best AI Tools, Unified
         </h2>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
-              Stop paying for dozens of tools. Get the best from one place.
-            </p>
+            <p className="text-lg text-gray-600 mx-auto mb-10 text-center">
+  Stop paying for dozens of tools. Get the best from one place.
+</p>
         <TooltipProvider>
           <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 gap-2 sm:gap-4">
             {tools.map((tool) => (
