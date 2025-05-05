@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { ArrowRight, Facebook, Instagram, Youtube, Twitter } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BambooSVG from "./BambooSVG";
 import { useEffect, useState } from "react";
@@ -47,7 +47,7 @@ const Hero = () => {
   const renderPlatformIcon = (platform: string) => {
     switch (platform) {
       case "TikTok":
-        return <Twitter className="ml-2 inline-block h-5 w-5" />; // Using Twitter as TikTok substitute
+        return <Twitter className="ml-2 inline-block h-5 w-5" />; // Using TikTok icon
       case "Google":
         return <Instagram className="ml-2 inline-block h-5 w-5" />; // Using Instagram as Google substitute
       case "Meta":
