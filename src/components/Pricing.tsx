@@ -63,7 +63,7 @@ const Pricing = () => {
               <ul className="space-y-3">
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Launch live campaigns</span>
+                  <span>Launch campaigns</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
@@ -71,7 +71,7 @@ const Pricing = () => {
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>24/7 AI Account Manager</span>
+                  <span>Account Manager</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
