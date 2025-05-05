@@ -46,8 +46,8 @@ const Hero = () => {
       </defs>
     </svg>
   </span>
-  <span className="ml-2 font-normal text-bamboo-navy">
-    As simple as, "Launch Ads on..."
+  <span className="ml-2 font-bold text-bamboo-navy mb-6">
+    as simple as, "Launch Ads on..."
   </span>
 </h1>
 
