@@ -91,7 +91,7 @@ const Hero = () => {
           <span className="block font-bold text-bamboo-navy mt-2">
             as, "Launch Ads on..." 
           </span>
-          <span className="block">
+          <span className="block py-3"> {/* Added padding above and below */}
             <span 
               className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} ${getPlatformColor(platforms[currentPlatform])}`}
             >
