@@ -13,93 +13,57 @@ const Pricing = () => {
         <div className="max-w-5xl mx-auto text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-bamboo-navy mb-6">Pricing</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Start for free. Upgrade to get the capacity that exactly matches your business needs.
+            Start for free with creative and campaign setup. Contact us for pricing to activate campaigns.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Free Plan */}
           <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col">
             <CardHeader className="p-6">
-              <h3 className="text-xl font-bold mb-2">Free</h3>
+              <h3 className="text-xl font-bold mb-2">Start For Free</h3>
               <div className="flex items-baseline">
                 <span className="text-4xl font-bold">$0</span>
-                <span className="text-gray-500 ml-1">/mo</span>
               </div>
-              <p className="text-gray-600 mt-2">For getting started</p>
+              <p className="text-gray-600 mt-2">Creative & Campaign Setup</p>
             </CardHeader>
             <CardContent className="px-6 py-2 flex-grow">
               <ul className="space-y-3">
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>See mock creatives</span>
+                  <span>Create ad creative mockups</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Setup your first campaign</span>
-                </li>
-              </ul>
-            </CardContent>
-            <CardFooter className="p-6 pt-4 mt-auto">
-              <Button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800" asChild>
-                <Link to="/chat">Get Started</Link>
-              </Button>
-            </CardFooter>
-          </Card>
-
-          {/* Standard Plan */}
-          <Card className="border border-bamboo-primary shadow-md hover:shadow-lg transition-shadow relative flex flex-col">
-            <div className="absolute -top-3 left-0 right-0 flex justify-center">
-              <span className="bg-blue-500 text-white text-sm font-medium px-4 py-1 rounded-full">
-                POPULAR
-              </span>
-            </div>
-            <CardHeader className="p-6">
-              <h3 className="text-xl font-bold mb-2">Standard</h3>
-              <div className="flex items-baseline">
-                <span className="text-4xl font-bold">$100</span>
-                <span className="text-gray-500 ml-1">/month</span>
-              </div>
-              <p className="text-gray-600 mt-2">Launch campaigns</p>
-            </CardHeader>
-            <CardContent className="px-6 py-2 flex-grow">
-              <ul className="space-y-3">
-                <li className="flex items-center">
-                  <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Tag your website to measure actions</span>
+                  <span>Setup your campaign strategy</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Launch campaigns</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>24/7 AI Account Manager and Data Analyst</span>
+                  <span>Access to AI creative tools</span>
                 </li>
               </ul>
             </CardContent>
             <CardFooter className="p-6 pt-4 mt-auto">
               <Button className="w-full bg-bamboo-primary hover:bg-bamboo-secondary text-white" asChild>
-                <Link to="/chat">Upgrade</Link>
+                <Link to="/chat">Get Started</Link>
               </Button>
             </CardFooter>
           </Card>
 
-          {/* Premium Plan */}
-          <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+          {/* Contact for Pricing Plan */}
+          <Card className="border border-bamboo-primary shadow-md hover:shadow-lg transition-shadow relative flex flex-col">
             <CardHeader className="p-6">
-              <h3 className="text-xl font-bold mb-2">Premium</h3>
+              <h3 className="text-xl font-bold mb-2">Campaign Activation</h3>
               <div className="flex items-baseline">
-                <span className="text-4xl font-bold">$500</span>
-                <span className="text-gray-500 ml-1">/month</span>
+                <span className="text-4xl font-bold">Contact</span>
               </div>
-              <p className="text-gray-600 mt-2">Omni-channel</p>
+              <p className="text-gray-600 mt-2">Custom pricing for your needs</p>
             </CardHeader>
             <CardContent className="px-6 py-2 flex-grow">
               <ul className="space-y-3">
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>More creative options</span>
+                  <span>Launch live campaigns</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
@@ -107,13 +71,17 @@ const Pricing = () => {
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Unlimited messages</span>
+                  <span>24/7 AI Account Manager</span>
+                </li>
+                <li className="flex items-center">
+                  <Check className="h-5 w-5 text-bamboo-primary mr-2" />
+                  <span>Performance optimization</span>
                 </li>
               </ul>
             </CardContent>
             <CardFooter className="p-6 pt-4 mt-auto">
-              <Button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800" asChild>
-                <Link to="/chat">Contact Sales</Link>
+              <Button className="w-full bg-bamboo-primary hover:bg-bamboo-secondary text-white" asChild>
+                <Link to="/chat">Contact Us</Link>
               </Button>
             </CardFooter>
           </Card>
