@@ -113,6 +113,14 @@
   }
 }
 
+/* Platform text animation */
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 /* AI Ad Agency gradient - updated with specific colors */
 .ai-ad-agency-gradient {
   background: linear-gradient(90deg, #00D1A1 0%, #5995ED 100%);
