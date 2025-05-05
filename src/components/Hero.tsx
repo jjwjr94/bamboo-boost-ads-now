@@ -47,7 +47,7 @@ const Hero = () => {
           </span> for Businesses Big or Small.
         </h1>
         <p className="text-xl md:text-2xl text-bamboo-navy mb-8">
-          Let AI do the work for you. No technical marketing knowledge required.
+          The first ad agency you'll never want to fire. 
         </p>
         <div className="flex justify-center gap-4">
           <Button 
