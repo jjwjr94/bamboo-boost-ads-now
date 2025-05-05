@@ -44,7 +44,7 @@ const Hero = () => {
                 </linearGradient>
               </defs>
             </svg>
-          </span> for Small and Medium Size Business
+          </span> for Businesses Big or Small.
         </h1>
         <p className="text-xl md:text-2xl text-bamboo-navy mb-8">
           Let AI do the work for you. No technical marketing knowledge required.
