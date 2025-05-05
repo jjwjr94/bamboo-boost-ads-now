@@ -27,17 +27,17 @@ const Hero = () => {
     navigate("/chat"); // Updated to navigate to the new chat page
   };
 
-  // Function to get platform-specific color
+  // Function to get platform-specific color that's harmonious with site theme
   const getPlatformColor = (platform: string) => {
     switch (platform) {
       case "TikTok":
-        return "text-[#000000]"; // TikTok black
+        return "text-bamboo-navy"; // Dark navy instead of black
       case "Google":
-        return "text-[#4285F4]"; // Google blue
+        return "text-[#5995ED]"; // Using the existing gradient blue
       case "Meta":
-        return "text-[#0668E1]"; // Meta blue
+        return "text-bamboo-tertiary"; // Using bamboo-tertiary for Meta
       case "YouTube":
-        return "text-[#FF0000]"; // YouTube red
+        return "text-[#ea384c]"; // Softer red that matches the theme
       default:
         return "";
     }
