@@ -33,9 +33,9 @@ const Hero = () => {
       case "TikTok":
         return "text-bamboo-navy"; // Dark navy instead of black
       case "Google":
-        return "text-bamboo-tertiary; // Using the existing gradient blue
+        return "text-[#5995ED]"; // Using the existing gradient blue
       case "Meta":
-        return "text-[#5995ED]"; // Using bamboo-tertiary for Meta
+        return "text-bamboo-tertiary"; // Using bamboo-tertiary for Meta
       case "YouTube":
         return "text-[#ea384c]"; // Softer red that matches the theme
       default:
