@@ -68,9 +68,6 @@ const Hero = () => {
           </span>
         </h1>
 
-        <p className="text-xl md:text-2xl text-bamboo-navy mb-8">
-          Simple, fast, and built for small business and startups.
-        </p>
         <div className="flex justify-center gap-4">
           <Button 
             className="bg-[#4BD0A0] hover:bg-[#3DBB8D] text-white font-medium rounded-md text-lg px-8 py-6 shadow-sm flex items-center"
