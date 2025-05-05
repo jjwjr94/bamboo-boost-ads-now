@@ -12,11 +12,20 @@ const options = {
   api_host: posthogHost,
 }
 
+const isDevEnv = window.location.hostname.includes('lovable');
+
+const shouldEnablePostHog = !isDevEnv;
+
 createRoot(document.getElementById("root")!).render(
-  <PostHogProvider 
-    apiKey={posthogApiKey}
-    options={options}
-  >
+  shouldEnablePostHog ? (
+    <PostHogProvider
+      apiKey={posthogApiKey}
+      options={options}
+    >
+      <App />
+    </PostHogProvider>
+  ) : (
     <App />
-  </PostHogProvider>
+  )
 );
+
