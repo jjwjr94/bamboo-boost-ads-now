@@ -28,10 +28,10 @@ const Hero = () => {
 
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10 max-w-[800px]">
-        <h1 className="text-3xl md:text-5xl font-bold text-bamboo-navy mb-6">
-          The  
+        <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
+          As simple as, "Launch Ads on..." 
  <span className="relative">
-            <span className="ai-ad-agency-gradient"> Ad Agency</span> as simple as, "Launch Ads on..."
+            <span className="ai-ad-agency-gradient">Ad Agency</span>
             <svg className="absolute w-full h-3 left-0 -bottom-1 text-shimmer-stroke" viewBox="0 0 100 8" preserveAspectRatio="none">
               <path 
                 d="M0,2 Q25,6 50,2 T100,2"
