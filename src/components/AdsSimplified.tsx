@@ -13,7 +13,7 @@ const AdsSimplified = () => {
               Stop Wasting Time Learning Dozens of Tools. <span className="underline">Just Chat.</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
-              Like if ChatGPT were an ad agency. As simple as, "Launch Ads on TikTok.""
+              Like if ChatGPT were an ad agency. As simple as, "Launch Ads on TikTok."
             </p>
           </div>
 
