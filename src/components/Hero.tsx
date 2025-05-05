@@ -47,7 +47,7 @@ const Hero = () => {
         <h1 className="text-3xl md:text-5xl font-bold text-bamboo-navy mb-6">
           The 
           <span className="relative ml-2">
-            <span className="ai-ad-agency-gradient">Ad Agency</span>
+            <span className="ai-ad-agency-gradient">Ad Agency</span> as simple 
             <svg className="absolute w-full h-3 left-0 -bottom-1 text-shimmer-stroke" viewBox="0 0 100 8" preserveAspectRatio="none">
               <path 
                 d="M0,2 Q25,6 50,2 T100,2"
@@ -63,7 +63,7 @@ const Hero = () => {
             </svg>
           </span>
           <span className="block font-bold text-bamboo-navy mt-2">
-            as simple as, "Launch Ads on..." 
+            as, "Launch Ads on..." 
           </span>
           <span className="block">
             <span className={`inline-block min-w-24 transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>{platforms[currentPlatform]}</span>
