@@ -44,7 +44,7 @@ const Hero = () => {
                 </linearGradient>
               </defs>
             </svg>
-          </span> Powered by AI, That Costs Less Than a Freelancer.
+          </span> That Costs Less Than a Freelancer.
         </h1>
         <p className="text-xl md:text-2xl text-bamboo-navy mb-8">
           The first ad agency you'll never want to fire. 
