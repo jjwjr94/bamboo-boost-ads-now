@@ -28,7 +28,7 @@ const Hero = () => {
 
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10 max-w-[800px]">
-        <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
+        <h1 className="text-3xl md:text-5xl font-bold text-bamboo-navy mb-6">
           As simple as, "Launch Ads on..." 
  <span className="relative">
             <span className="ai-ad-agency-gradient">Ad Agency</span>
