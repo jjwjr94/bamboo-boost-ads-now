@@ -29,24 +29,28 @@ const Hero = () => {
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10 max-w-[800px]">
         <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
-          As simple as, "Launch Ads on..." 
- <span className="relative">
-            <span className="ai-ad-agency-gradient">Ad Agency</span>
-            <svg className="absolute w-full h-3 left-0 -bottom-1 text-shimmer-stroke" viewBox="0 0 100 8" preserveAspectRatio="none">
-              <path 
-                d="M0,2 Q25,6 50,2 T100,2"
-                fill="none"
-                strokeWidth="3"
-              />
-              <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#00D1A1" />
-                  <stop offset="100%" stopColor="#5995ED" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </span>.
-        </h1>
+  The 
+  <span className="relative ml-2">
+    <span className="ai-ad-agency-gradient">Ad Agency</span>
+    <svg className="absolute w-full h-3 left-0 -bottom-1 text-shimmer-stroke" viewBox="0 0 100 8" preserveAspectRatio="none">
+      <path 
+        d="M0,2 Q25,6 50,2 T100,2"
+        fill="none"
+        strokeWidth="3"
+      />
+      <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#00D1A1" />
+          <stop offset="100%" stopColor="#5995ED" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </span>
+  <span className="ml-2 font-normal text-bamboo-navy">
+    As simple as, "Launch Ads on..."
+  </span>
+</h1>
+
         <p className="text-xl md:text-2xl text-bamboo-navy mb-8">
           Simple, fast, and built for small business and startups.
         </p>
