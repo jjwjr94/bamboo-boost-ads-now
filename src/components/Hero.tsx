@@ -44,7 +44,7 @@ const Hero = () => {
 
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10 max-w-[800px]">
-        <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
+        <h1 className="text-3xl md:text-5xl font-bold text-bamboo-navy mb-6">
           The 
           <span className="relative ml-2">
             <span className="ai-ad-agency-gradient">Ad Agency</span>
@@ -62,9 +62,11 @@ const Hero = () => {
               </defs>
             </svg>
           </span>
-          <span className="ml-2 font-bold text-bamboo-navy mb-6">
-            as simple as, "Launch Ads on..." 
-            <span className={`inline-block min-w-24 transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>{platforms[currentPlatform]}</span>
+          <span className="block font-bold text-bamboo-navy mt-2">
+            as simple as, "Launch Ads on... 
+          </span>
+          <span className="block">
+            <span className={`inline-block min-w-24 transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>{platforms[currentPlatform]}</span>"
           </span>
         </h1>
 
