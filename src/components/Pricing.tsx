@@ -57,7 +57,7 @@ const Pricing = () => {
               <div className="flex items-baseline">
                 <span className="text-4xl font-bold">Contact</span>
               </div>
-              <p className="text-gray-600 mt-2">Custom pricing for your needs</p>
+              <p className="text-gray-600 mt-2">Custom pricing for your needs. Tell us about your freelancer + tooling costs. We'll do much better. </p>
             </CardHeader>
             <CardContent className="px-6 py-2 flex-grow">
               <ul className="space-y-3">
