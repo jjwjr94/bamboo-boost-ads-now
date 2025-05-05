@@ -7,6 +7,7 @@ import { Send, Calendar } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
+import posthog from "posthog-js";
 
 // Define the Calendly interface to fix TypeScript error
 declare global {
@@ -53,6 +54,12 @@ const Chat = () => {
   };
 
   const openCalendly = () => {
+    // Track the "Book Meeting" button click
+    posthog.capture('book_meeting_clicked', {
+      location: 'chat_page',
+      source: 'chat_message'
+    });
+    
     if (window.Calendly) {
       window.Calendly.initPopupWidget({
         url: 'https://calendly.com/jayjeffwong/bamboo-intro'
