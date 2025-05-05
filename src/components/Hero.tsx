@@ -27,6 +27,22 @@ const Hero = () => {
     navigate("/chat"); // Updated to navigate to the new chat page
   };
 
+  // Function to get platform-specific color
+  const getPlatformColor = (platform: string) => {
+    switch (platform) {
+      case "TikTok":
+        return "text-[#000000]"; // TikTok black
+      case "Google":
+        return "text-[#4285F4]"; // Google blue
+      case "Meta":
+        return "text-[#0668E1]"; // Meta blue
+      case "YouTube":
+        return "text-[#FF0000]"; // YouTube red
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className="relative pt-24 pb-16 px-4 overflow-hidden">
       
@@ -48,25 +64,12 @@ const Hero = () => {
           The 
           <span className="relative ml-2">
             <span className="ai-ad-agency-gradient">Ad Agency</span> as simple 
-            <svg className="absolute w-full h-3 left-0 -bottom-1 text-shimmer-stroke" viewBox="0 0 100 8" preserveAspectRatio="none">
-              <path 
-                d="M0,2 Q25,6 50,2 T100,2"
-                fill="none"
-                strokeWidth="3"
-              />
-              <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#00D1A1" />
-                  <stop offset="100%" stopColor="#5995ED" />
-                </linearGradient>
-              </defs>
-            </svg>
           </span>
           <span className="block font-bold text-bamboo-navy mt-2">
             as, "Launch Ads on..." 
           </span>
           <span className="block">
-            <span className={`inline-block min-w-24 transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>{platforms[currentPlatform]}</span>
+            <span className={`inline-block min-w-24 transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} ${getPlatformColor(platforms[currentPlatform])}`}>{platforms[currentPlatform]}</span>
           </span>
         </h1>
 
