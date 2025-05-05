@@ -47,13 +47,13 @@ const Hero = () => {
   const renderPlatformIcon = (platform: string) => {
     switch (platform) {
       case "TikTok":
-        return <Twitter className="ml-2 inline-block h-10 w-10" />; // Using TikTok icon
+        return <Twitter className="ml-2 inline-block h-8 w-8" />; // Using TikTok icon
       case "Google":
-        return <Instagram className="ml-2 inline-block h-10 w-10" />; // Using Instagram as Google substitute
+        return <Instagram className="ml-2 inline-block h-8 w-8" />; // Using Instagram as Google substitute
       case "Meta":
-        return <Facebook className="ml-2 inline-block h-10 w-10" />;
+        return <Facebook className="ml-2 inline-block h-8 w-8" />;
       case "YouTube":
-        return <Youtube className="ml-2 inline-block h-10 w-10" />;
+        return <Youtube className="ml-2 inline-block h-8 w-8" />;
       default:
         return null;
     }
