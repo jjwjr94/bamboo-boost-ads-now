@@ -59,7 +59,7 @@ const Hero = () => {
             <span className="inline"> as simple as:</span>
             <div className="flex justify-center items-center h-8 py-2">
               <span 
-                className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} text-bamboo-tertiary`}
+                className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} text-bamboo-navy`}
               >
                 "{phrases[currentPhrase]}"
               </span>
@@ -74,7 +74,7 @@ const Hero = () => {
             </span>
             <span className="block py-3">
               <span 
-                className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} text-bamboo-tertiary`}
+                className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} text-bamboo-navy`}
               >
                 "{phrases[currentPhrase]}"
               </span>
