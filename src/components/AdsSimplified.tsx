@@ -5,15 +5,15 @@ import { Card } from "./ui/card";
 
 const AdsSimplified = () => {
   return (
-    <section id="ads-simplified" className="py-16 bg-gray-50">
+    <section id="ads-simplified" className="py-16 bg-white">
       <Container>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-bamboo-navy mb-6">
-              Stop Wasting Time Learning Dozens of Tools. <span className="underline">Just Chat.</span>
+              Like if ChatGPT were an ad agency. <span className="underline">Just Chat.</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
-              Like if ChatGPT were an ad agency. As simple as, "Launch Ads on TikTok."
+              Stop Wasting Time Learning Dozens of Tools.
             </p>
           </div>
 
