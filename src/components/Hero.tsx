@@ -81,6 +81,11 @@ const Hero = () => {
             </span>
           </h1>
         )}
+        
+        {/* New body text */}
+        <p className="text-lg md:text-xl text-bamboo-navy mb-6 font-medium">
+          💬 Just Chat. Bamboo Handles the Rest.
+        </p>
 
         <div className="flex justify-center gap-4 mt-2 md:mt-0">
           <Button 
