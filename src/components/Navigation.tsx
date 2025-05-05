@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { Container } from "@/components/ui/container";
 import { Menu, X } from "lucide-react";
+import posthog from "posthog-js";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,6 +40,14 @@ const Navigation = () => {
     return location.pathname === '/' ? `#${section}` : `/#${section}`;
   };
 
+  const handleGetStartedClick = () => {
+    // Track the "Get Started" button click
+    posthog.capture('get_started_clicked', { 
+      location: location.pathname,
+      source: 'navigation' 
+    });
+  };
+
   return (
     <nav className="fixed w-full bg-white/90 backdrop-blur-sm z-50 border-b">
       <Container bordered={false}>
@@ -54,7 +63,7 @@ const Navigation = () => {
 
           {/* Mobile Navigation Elements */}
           <div className="flex items-center gap-2 lg:hidden">
-            <Link to="/chat">
+            <Link to="/chat" onClick={handleGetStartedClick}>
               <Button className="bg-bamboo-primary hover:bg-bamboo-secondary text-white">Get Started</Button>
             </Link>
             <Button variant="ghost" size="icon" onClick={toggleMenu}>
@@ -80,7 +89,7 @@ const Navigation = () => {
             <Link to="/chat">
               <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">App</Button>
             </Link>
-            <Link to="/chat">
+            <Link to="/chat" onClick={handleGetStartedClick}>
               <Button className="bg-bamboo-primary hover:bg-bamboo-secondary text-white">Get Started</Button>
             </Link>
           </div>
@@ -102,7 +111,7 @@ const Navigation = () => {
               <Link to="/chat" onClick={toggleMenu}>
                 <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">App</Button>
               </Link>
-              <Link to="/chat" onClick={toggleMenu}>
+              <Link to="/chat" onClick={() => { toggleMenu(); handleGetStartedClick(); }}>
                 <Button className="w-full justify-start bg-bamboo-primary hover:bg-bamboo-secondary text-white">Get Started</Button>
               </Link>
             </div>
