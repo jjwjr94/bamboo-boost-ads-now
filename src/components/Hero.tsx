@@ -1,25 +1,27 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Facebook, Instagram, Youtube } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import BambooSVG from "./BambooSVG";
 import { useEffect, useState } from "react";
-import GoogleLogo from "./GoogleLogo";
-import TikTokLogo from "./TikTokLogo";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const platforms = ["TikTok", "Google", "Meta", "YouTube"];
-  const [currentPlatform, setCurrentPlatform] = useState(0);
+  const phrases = [
+    "Launch TikTok Ads", 
+    "Show Me Last Week's Conversions", 
+    "Create Funny Video Ad Ideas", 
+    "Improve My ROAS"
+  ];
+  const [currentPhrase, setCurrentPhrase] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   
   useEffect(() => {
     const interval = setInterval(() => {
       setIsAnimating(true);
       setTimeout(() => {
-        setCurrentPlatform((prev) => (prev + 1) % platforms.length);
+        setCurrentPhrase((prev) => (prev + 1) % phrases.length);
         setIsAnimating(false);
       }, 500); // Half a second for fade out
     }, 3000); // Change every 3 seconds
@@ -28,44 +30,7 @@ const Hero = () => {
   }, []);
   
   const handleGetStarted = () => {
-    navigate("/chat"); // Updated to navigate to the new chat page
-  };
-
-  // Function to get platform-specific color that's harmonious with site theme
-  const getPlatformColor = (platform: string) => {
-    switch (platform) {
-      case "TikTok":
-        return "text-bamboo-navy"; // Dark navy instead of black
-      case "Google":
-        return "text-bamboo-tertiary"; // Swapped - Now using bamboo-tertiary for Google
-      case "Meta":
-        return "text-[#5995ED]"; // Swapped - Now using the gradient blue for Meta
-      case "YouTube":
-        return "text-[#ea384c]"; // Softer red that matches the theme
-      default:
-        return "";
-    }
-  };
-
-  // Function to render the appropriate icon for each platform
-  const renderPlatformIcon = (platform: string) => {
-    switch (platform) {
-      case "TikTok":
-        return <TikTokLogo className="ml-2 inline-block" size={isMobile ? 20 : 28} />;
-      case "Google":
-        return <GoogleLogo className="ml-2 inline-block" size={isMobile ? 20 : 28} />;
-      case "Meta":
-        return (
-          <span className="inline-flex items-center">
-            <Facebook className="ml-2 inline-block" size={isMobile ? 16 : 24} />
-            <Instagram className="ml-1 inline-block" size={isMobile ? 16 : 24} />
-          </span>
-        );
-      case "YouTube":
-        return <Youtube className="ml-2 inline-block" size={isMobile ? 18 : 28} />;
-      default:
-        return null;
-    }
+    navigate("/chat"); // Navigate to the chat page
   };
 
   return (
@@ -91,14 +56,13 @@ const Hero = () => {
             <span className="inline">The </span>
             <span className="ai-ad-agency-gradient">Ad Agency</span>
             <div className="flex justify-center items-center mt-1 mb-2">
-              <span className="whitespace-nowrap">as simple as, "Launch Ads on... </span>
+              <span className="whitespace-nowrap">as simple as, "</span>
             </div>
             <div className="flex justify-center items-center h-8 py-2">
               <span 
-                className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} ${getPlatformColor(platforms[currentPlatform])}`}
+                className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} text-bamboo-tertiary`}
               >
-                {platforms[currentPlatform]}
-                {renderPlatformIcon(platforms[currentPlatform])}
+                {phrases[currentPhrase]}
               </span>
               <span>"</span>
             </div>
@@ -111,15 +75,13 @@ const Hero = () => {
               <span className="ai-ad-agency-gradient">Ad Agency</span> as simple 
             </span>
             <span className="block font-bold text-bamboo-navy mt-2">
-              as, "Launch Ads on..." 
-            </span>
-            <span className="block py-3"> {/* Added padding above and below */}
+              as, "
               <span 
-                className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} ${getPlatformColor(platforms[currentPlatform])}`}
+                className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} text-bamboo-tertiary`}
               >
-                {platforms[currentPlatform]}
-                {renderPlatformIcon(platforms[currentPlatform])}
+                {phrases[currentPhrase]}
               </span>
+              "
             </span>
           </h1>
         )}
