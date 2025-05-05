@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BambooSVG from "./BambooSVG";
 import { useEffect, useState } from "react";
@@ -43,6 +43,22 @@ const Hero = () => {
     }
   };
 
+  // Function to render the appropriate icon for each platform
+  const renderPlatformIcon = (platform: string) => {
+    switch (platform) {
+      case "TikTok":
+        return <Twitter className="ml-2 inline-block h-5 w-5" />; // Using Twitter as TikTok substitute
+      case "Google":
+        return <Instagram className="ml-2 inline-block h-5 w-5" />; // Using Instagram as Google substitute
+      case "Meta":
+        return <Facebook className="ml-2 inline-block h-5 w-5" />;
+      case "YouTube":
+        return <Youtube className="ml-2 inline-block h-5 w-5" />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="relative pt-24 pb-16 px-4 overflow-hidden">
       
@@ -69,7 +85,12 @@ const Hero = () => {
             as, "Launch Ads on..." 
           </span>
           <span className="block">
-            <span className={`inline-block min-w-24 transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} ${getPlatformColor(platforms[currentPlatform])}`}>{platforms[currentPlatform]}</span>
+            <span 
+              className={`inline-block min-w-24 transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} ${getPlatformColor(platforms[currentPlatform])}`}
+            >
+              {platforms[currentPlatform]}
+              {renderPlatformIcon(platforms[currentPlatform])}
+            </span>
           </span>
         </h1>
 
