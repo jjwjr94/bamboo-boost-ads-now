@@ -29,7 +29,7 @@ const Hero = () => {
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10 max-w-[800px]">
         <h1 className="text-4xl md:text-6xl font-bold text-bamboo-navy mb-6">
-          The <span className="relative">
+          The Full-Service <span className="relative">
             <span className="ai-ad-agency-gradient">Ad Agency</span>
             <svg className="absolute w-full h-3 left-0 -bottom-1 text-shimmer-stroke" viewBox="0 0 100 8" preserveAspectRatio="none">
               <path 
@@ -44,7 +44,7 @@ const Hero = () => {
                 </linearGradient>
               </defs>
             </svg>
-          </span> for Businesses Big or Small.
+          </span> Powered by AI, for less than a Freelancer.
         </h1>
         <p className="text-xl md:text-2xl text-bamboo-navy mb-8">
           The first ad agency you'll never want to fire. 
