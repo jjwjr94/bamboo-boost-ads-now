@@ -63,7 +63,8 @@ const Hero = () => {
             </svg>
           </span>
           <span className="ml-2 font-bold text-bamboo-navy mb-6">
-            as simple as, "Launch Ads on <span className={`inline-block min-w-24 transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>{platforms[currentPlatform]}</span>"
+            as simple as, "Launch Ads on..." 
+            <span className={`inline-block min-w-24 transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>{platforms[currentPlatform]}</span>
           </span>
         </h1>
 
