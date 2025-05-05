@@ -1,9 +1,11 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Facebook, Instagram, Youtube, Twitter } from "lucide-react";
+import { ArrowRight, Facebook, Instagram, Youtube } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BambooSVG from "./BambooSVG";
 import { useEffect, useState } from "react";
+import GoogleLogo from "./GoogleLogo";
+import TikTokLogo from "./TikTokLogo";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -47,13 +49,18 @@ const Hero = () => {
   const renderPlatformIcon = (platform: string) => {
     switch (platform) {
       case "TikTok":
-        return <Twitter className="ml-2 inline-block h-8 w-8" />; // Using TikTok icon
+        return <TikTokLogo className="ml-2 inline-block" size={28} />;
       case "Google":
-        return <Instagram className="ml-2 inline-block h-8 w-8" />; // Using Instagram as Google substitute
+        return <GoogleLogo className="ml-2 inline-block" size={28} />;
       case "Meta":
-        return <Facebook className="ml-2 inline-block h-8 w-8" />;
+        return (
+          <span className="inline-flex items-center">
+            <Facebook className="ml-2 inline-block h-6 w-6" />
+            <Instagram className="ml-1 inline-block h-6 w-6" />
+          </span>
+        );
       case "YouTube":
-        return <Youtube className="ml-2 inline-block h-8 w-8" />;
+        return <Youtube className="ml-2 inline-block h-7 w-7" />;
       default:
         return null;
     }
@@ -86,7 +93,7 @@ const Hero = () => {
           </span>
           <span className="block">
             <span 
-              className={`inline-block min-w-24 transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} ${getPlatformColor(platforms[currentPlatform])}`}
+              className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} ${getPlatformColor(platforms[currentPlatform])}`}
             >
               {platforms[currentPlatform]}
               {renderPlatformIcon(platforms[currentPlatform])}
