@@ -86,13 +86,14 @@ const Hero = () => {
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10 max-w-[800px]">
         {isMobile ? (
-          // Mobile layout - more compact
+          // Mobile layout - improved to avoid orphaned "as,"
           <h1 className="text-2xl font-bold text-bamboo-navy mb-4">
             <span className="inline">The </span>
             <span className="ai-ad-agency-gradient">Ad Agency</span>
-            <span className="inline"> as simple as,</span>
-            <div className="flex justify-center items-center my-1 h-8">
-              <span className="whitespace-nowrap">"Launch Ads on... </span>
+            <div className="flex justify-center items-center mt-1 mb-2">
+              <span className="whitespace-nowrap">as simple as, "Launch Ads on... </span>
+            </div>
+            <div className="flex justify-center items-center h-8 py-2">
               <span 
                 className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} ${getPlatformColor(platforms[currentPlatform])}`}
               >
