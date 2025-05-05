@@ -5,7 +5,7 @@ import { Card } from "./ui/card";
 
 const AdsSimplified = () => {
   return (
-    <section id="ads-simplified" className="py-16 bg-gray-50">
+    <section id="ads-simplified" className="py-16 bg-white">
       <Container>
         <div className="max-w-5xl mx-auto">
           <Card className="overflow-hidden shadow-lg border-0 rounded-xl mb-12">
@@ -17,7 +17,7 @@ const AdsSimplified = () => {
           </Card>
 
           <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-bamboo-navy">
+            <h2 className="text-3xl md:text-4xl text-bamboo-navy">
               "Like if ChatGPT Were a Full-Service Ad Agency."
             </h2>
           </div>
