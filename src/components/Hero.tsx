@@ -44,7 +44,7 @@ const Hero = () => {
                 </linearGradient>
               </defs>
             </svg>
-          </span> Big Results, Small Price.
+          </span> . Big Results, Small Price.
         </h1>
         <p className="text-xl md:text-2xl text-bamboo-navy mb-8">
           Simple, fast, and built for small business and startups. 
