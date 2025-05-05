@@ -47,7 +47,7 @@ const Hero = () => {
           </span>. Big Results, Small Price.
         </h1>
         <p className="text-xl md:text-2xl text-bamboo-navy mb-8">
-          Simple, fast, and built for small business and startups. We work with all levels of technical knowledge.
+          Simple, fast, and built for small business and startups.
         </p>
         <div className="flex justify-center gap-4">
           <Button 
