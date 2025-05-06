@@ -33,7 +33,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative pt-16 md:pt-24 pb-12 md:pb-16 px-4 overflow-hidden">
+    <div className="relative pt-16 md:pt-24 pb-24 md:pb-28 px-4 overflow-hidden">
       
       {/* Background Image with Animation */}
       <div className="absolute inset-0 animate-slide-up">
@@ -54,7 +54,7 @@ const Hero = () => {
           <span className="relative ml-2">
             <span className="ai-ad-agency-gradient">Ad Agency</span> as simple as: 
           </span>
-          <span className="block py-3">
+          <span className="block py-3 min-h-[60px] md:min-h-[80px] flex items-center justify-center">
             <span 
               className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} text-bamboo-navy`}
             >
