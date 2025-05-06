@@ -54,7 +54,7 @@ const Hero = () => {
         <h1 className="text-3xl md:text-5xl font-bold text-bamboo-navy mb-6">
           The 
           <span className="relative ml-2">
-            <span className="ai-ad-agency-gradient">Ad Agency</span> as simple as: 
+            <span className="ai-ad-agency-gradient">AI Ad Agency</span> as simple as: 
           </span>
           <span className="block py-3 min-h-[60px] md:min-h-[80px] flex items-center justify-center">
             <span 
