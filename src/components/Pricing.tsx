@@ -69,23 +69,19 @@ const Pricing = () => {
               <ul className="space-y-3">
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>All free features included</span>
+                  <span>Creative production</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Launch campaigns on 2 platforms</span>
+                  <span>Launch campaigns</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Weekly performance reports</span>
+                  <span>Cross-channel reports</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Email support</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Creative optimization</span>
+                  <span>Performance Optimization</span>
                 </li>
               </ul>
             </CardContent>
@@ -109,19 +105,19 @@ const Pricing = () => {
               <ul className="space-y-3">
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Launch campaigns</span>
+                  <span>Pay Per Conversion</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Omni-channel activation</span>
+                  <span>Bulk Creative Production</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Account Manager</span>
+                  <span>Scaled A/B Testing</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="h-5 w-5 text-bamboo-primary mr-2" />
-                  <span>Performance optimization</span>
+                  <span>Custom Algorithms</span>
                 </li>
               </ul>
             </CardContent>
