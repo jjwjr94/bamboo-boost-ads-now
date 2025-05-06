@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -123,4 +124,56 @@ const Hero = () => {
                 <rect width="150" height="855" fill="white" transform="translate(690 7)"/>
               </clipPath>
               <clipPath id="clip2_419_97">
-                <rect width="100" height="85
+                <rect width="100" height="855" fill="white"/>
+              </clipPath>
+            </defs>
+          </svg>
+        </div>
+      )}
+
+      {/* Hero Content */}
+      <div className="flex flex-col items-center justify-center relative z-10 h-full pt-12 md:pt-16">
+        <div className="max-w-4xl text-center">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-bamboo-navy">
+            The AI-powered copilot for digital ads
+          </h1>
+          
+          <p className="text-lg md:text-xl text-bamboo-secondary mb-2">
+            Grow Your Startup or Small Business
+          </p>
+          
+          <p className="text-base md:text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            Automate your digital ads with Bamboo's AI assistant. Get expert guidance, generate ideas, and manage campaigns - all in one place.
+          </p>
+          
+          <div className="mb-6 h-16 flex items-center justify-center">
+            <div className={`transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
+              <div className="inline-flex items-center justify-center rounded-full bg-bamboo-navy/5 px-4 py-1 text-sm font-medium text-bamboo-navy ring-1 ring-inset ring-bamboo-navy/10">
+                <BambooSVG className="w-6 h-6 mr-2" />
+                <span className="font-medium">"I Need Help with {phrases[currentPhrase]}"</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              onClick={handleGetStarted}
+              className="bg-bamboo-primary hover:bg-bamboo-secondary text-white px-8 py-6 text-lg"
+            >
+              Get Started
+            </Button>
+            <Button 
+              variant="outline" 
+              className="text-bamboo-navy border-bamboo-navy hover:bg-bamboo-navy/10 px-8 py-6 text-lg" 
+              onClick={() => navigate("/#pricing")}
+            >
+              See Pricing
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Hero;
