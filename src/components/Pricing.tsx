@@ -95,11 +95,11 @@ const Pricing = () => {
           {/* Contact for Pricing Plan */}
           <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow relative flex flex-col">
             <CardHeader className="p-6">
-              <h3 className="text-xl font-bold mb-2">Omni-Channel</h3>
+              <h3 className="text-xl font-bold mb-2">Custom</h3>
               <div className="flex items-baseline">
                 <span className="text-4xl font-bold">Contact</span>
               </div>
-              <p className="text-gray-600 mt-2">Custom pricing for your needs. <span className="font-bold text-bamboo-primary">Tell us about your freelancer + tooling costs. We'll do much better.</span></p>
+              <p className="text-gray-600 mt-2">Flexible pricing for your needs.</p>
             </CardHeader>
             <CardContent className="px-6 py-2 flex-grow">
               <ul className="space-y-3">
