@@ -13,7 +13,7 @@ const Pricing = () => {
         <div className="max-w-5xl mx-auto text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-bamboo-navy mb-6">Pricing</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Custom pricing for your needs. Guaranteed less than your freelancer.
+            Custom pricing for your needs. <span className="font-bold text-xl underline">Guaranteed less than your freelancer.</span>
           </p>
         </div>
 
