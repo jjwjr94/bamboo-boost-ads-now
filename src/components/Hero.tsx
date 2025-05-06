@@ -4,9 +4,11 @@ import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BambooSVG from "./BambooSVG";
 import { useEffect, useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const phrases = [
     "Launch TikTok Ads", 
     "Last Week's Conversions", 
@@ -36,13 +38,21 @@ const Hero = () => {
   return (
     <div className="relative pt-16 md:pt-24 pb-24 md:pb-28 px-4 overflow-hidden">
       
-      {/* Background Image with Animation */}
+      {/* Background Image with Animation - Dynamic based on screen size */}
       <div className="absolute inset-0 animate-slide-up">
-        <img 
-          src="/Hero-banner-4.svg" 
-          alt="Decorative bamboo background" 
-          className="w-full h-full object-cover"
-        />
+        {isMobile ? (
+          <img 
+            src="/mobile-hero-banner.svg" 
+            alt="Decorative bamboo background for mobile" 
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <img 
+            src="/Hero-banner-4.svg" 
+            alt="Decorative bamboo background" 
+            className="w-full h-full object-cover"
+          />
+        )}
       </div>
 
       {/* Semi-transparent White Box - Full Hero Size */}
