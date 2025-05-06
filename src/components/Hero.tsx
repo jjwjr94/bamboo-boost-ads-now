@@ -63,7 +63,7 @@ const Hero = () => {
         {/* New heading above the title - now with smaller text */}
         
         <h1 className="text-3xl md:text-5xl font-bold text-bamboo-navy mb-4 md:mb-6">
-          The <span className="ai-ad-agency-gradient">AI Ad Agency</span>
+          The <span className="ai-ad-agency-gradient">Ad Agency</span>
           <span className="relative ml-2">
              as simple as: 
           </span>

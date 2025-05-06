@@ -24,7 +24,7 @@ const AdsSimplified = () => {
 
           <div className="text-center">
             <h2 className="text-xl md:text-2xl text-white italic font-normal">
-              "Like if ChatGPT Were a Full-Service Ad Agency."
+              Like if ChatGPT Were a Full-Service Ad Agency, Priced Less Than a Freelancer.
             </h2>
           </div>
         </div>
