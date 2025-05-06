@@ -11,7 +11,7 @@ const Hero = () => {
   const isMobile = useIsMobile();
   const phrases = [
     "Launch TikTok Ads", 
-    "Last Week's Conversions", 
+    "Last Week's Sales", 
     "Funny Video Ad Ideas", 
     "Improve My ROAS",
     "Add Meta Pixel to Site"
