@@ -4,11 +4,9 @@ import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BambooSVG from "./BambooSVG";
 import { useEffect, useState } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
   const phrases = [
     "Launch TikTok Ads", 
     "Show Me Last Week's Conversions", 
@@ -51,38 +49,21 @@ const Hero = () => {
 
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10 max-w-[800px]">
-        {isMobile ? (
-          // Mobile layout
-          <h1 className="text-2xl font-bold text-bamboo-navy mb-4">
-            <span className="inline">The </span>
-            <span className="ai-ad-agency-gradient">Ad Agency</span>
-            <span className="inline"> as simple as:</span>
-            <div className="flex justify-center items-center h-8 py-2">
-              <span 
-                className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} text-bamboo-navy`}
-              >
-                "{phrases[currentPhrase]}"
-              </span>
-            </div>
-          </h1>
-        ) : (
-          // Desktop layout
-          <h1 className="text-3xl md:text-5xl font-bold text-bamboo-navy mb-6">
-            The 
-            <span className="relative ml-2">
-              <span className="ai-ad-agency-gradient">Ad Agency</span> as simple as: 
+        <h1 className="text-3xl md:text-5xl font-bold text-bamboo-navy mb-6">
+          The 
+          <span className="relative ml-2">
+            <span className="ai-ad-agency-gradient">Ad Agency</span> as simple as: 
+          </span>
+          <span className="block py-3">
+            <span 
+              className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} text-bamboo-navy`}
+            >
+              "{phrases[currentPhrase]}"
             </span>
-            <span className="block py-3">
-              <span 
-                className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} text-bamboo-navy`}
-              >
-                "{phrases[currentPhrase]}"
-              </span>
-            </span>
-          </h1>
-        )}
+          </span>
+        </h1>
         
-        {/* New body text */}
+        {/* Body text */}
         <p className="text-lg md:text-xl text-bamboo-navy mb-6 font-medium">
           💬 Just Chat. Bamboo Handles the Rest.
         </p>
