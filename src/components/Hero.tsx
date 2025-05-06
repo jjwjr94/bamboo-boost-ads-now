@@ -51,9 +51,6 @@ const Hero = () => {
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10 max-w-4xl">
         {/* New heading above the title - now with smaller text */}
-        <p className="text-sm md:text-base text-bamboo-navy mb-3 font-medium">
-          Grow Your Startup or Small Business
-        </p>
         
         <h1 className="text-3xl md:text-5xl font-bold text-bamboo-navy mb-6">
           The <span className="ai-ad-agency-gradient">AI Ad Agency</span>
