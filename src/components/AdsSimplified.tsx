@@ -5,7 +5,13 @@ import { Card } from "./ui/card";
 
 const AdsSimplified = () => {
   return (
-    <section id="ads-simplified" className="py-16 bg-white">
+    <section 
+      id="ads-simplified" 
+      className="py-16"
+      style={{
+        background: "linear-gradient(90deg, #00D1A1 0%, #5995ED 100%)"
+      }}
+    >
       <Container>
         <div className="max-w-5xl mx-auto">
           <Card className="overflow-hidden shadow-lg border-0 rounded-xl mb-12">
