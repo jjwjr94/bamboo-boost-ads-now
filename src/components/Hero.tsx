@@ -67,7 +67,7 @@ const Hero = () => {
         
         {/* Body text */}
         <p className="text-lg md:text-xl text-bamboo-navy mb-6 font-medium">
-          Grow Your Startup or Small Business Like Bamboo 🌱.
+          Grow Your Startup or Small Business Like <span className="text-bamboo-primary">Bamboo</span>.
         </p>
 
         <div className="flex justify-center gap-4 mt-2 md:mt-0">
