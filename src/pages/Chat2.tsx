@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
-import { Send, Link, ChevronLeft, ChevronRight, BarChart2, Code, Github, BrainCircuit } from "lucide-react";
+import { Send, Link, ChevronLeft, ChevronRight, BarChart2, Code, Github, BrainCircuit, Menu } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
@@ -24,6 +24,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Task {
   id: number;
@@ -64,10 +65,11 @@ const Chat2 = () => {
   ]);
   
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(1);
-  // rightPanelContent state might still be useful if the content changes, but not for resizing
   const [rightPanelContent, setRightPanelContent] = useState<"chart" | null>("chart"); 
   const [rightPanelCollapsed, setRightPanelCollapsed] = useState(true);
+  const [leftSidebarVisible, setLeftSidebarVisible] = useState(false);
   const mainContentRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   
   const performanceData = [
     { platform: 'TikTok', conversions: 120, cpa: 7.08 },
@@ -125,6 +127,10 @@ const Chat2 = () => {
         }]);
       }
     }, 1000);
+    
+    if (isMobile) {
+      setLeftSidebarVisible(false);
+    }
   };
   
   const showReportInRightPanel = () => {
@@ -181,6 +187,10 @@ const Chat2 = () => {
         }
       ]);
     }
+    
+    if (isMobile) {
+      setLeftSidebarVisible(false);
+    }
   };
 
   useEffect(() => {
@@ -228,9 +238,15 @@ const Chat2 = () => {
         
         <div className="flex flex-grow pt-16 overflow-hidden min-h-0">
           
-          {/* Left Sidebar - Tasks List */}
-          {/* Left Sidebar - Tasks List */}
-          <div className="w-96 flex-shrink-0 bg-gray-50 flex flex-col overflow-hidden border-r min-h-0">
+          {/* Left Sidebar - Tasks List (Responsive) */}
+          <div 
+            className={`${
+              isMobile 
+                ? `fixed inset-0 z-40 ${leftSidebarVisible ? 'translate-x-0' : '-translate-x-full'}`
+                : 'w-96 flex-shrink-0'
+            } bg-gray-50 flex flex-col overflow-hidden border-r min-h-0 transition-transform duration-300`}
+            style={isMobile ? { width: '85%', maxWidth: '320px' } : undefined}
+          >
             <div className="h-16 px-4 border-b bg-white flex items-center">
               <Button
                 variant="ghost"
@@ -266,30 +282,47 @@ const Chat2 = () => {
             </ScrollArea>
           </div>
           
+          {/* Overlay for mobile when sidebar is open */}
+          {isMobile && leftSidebarVisible && (
+            <div 
+              className="fixed inset-0 bg-black/30 z-30"
+              onClick={() => setLeftSidebarVisible(false)}
+            />
+          )}
+          
           {/* Middle Content - Chat (Flexible Width) */}
           <div className="flex-grow flex flex-col relative overflow-hidden min-h-0">
-            {/* Header */}
+            {/* Header - Now with menu button on mobile */}
             <div className="border-b bg-white p-4 flex items-center gap-2 h-16">
+              {isMobile && (
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="mr-2"
+                  onClick={() => setLeftSidebarVisible(true)}
+                >
+                  <Menu className="h-5 w-5" />
+                </Button>
+              )}
               <h2 className="text-lg font-medium text-bamboo-navy flex items-center">{selectedTask?.title || "Task"}</h2>
             </div>
             
-            {/* Messages container - Modified to accommodate fixed footer */}
+            {/* Messages container */}
             <div className="flex-grow flex flex-col overflow-hidden min-h-0">
-              {/* ScrollArea takes all available space except for fixed input area */}
               <ScrollArea className="flex-grow" viewportRef={mainContentRef}>
-                <div className="p-4">
+                <div className="p-2 md:p-4">
                   <div className="max-w-3xl mx-auto">
-                    <div className="flex flex-col gap-6">
-                      {/* Chat messages */}
+                    <div className="flex flex-col gap-4 md:gap-6">
+                      {/* Chat messages with responsive sizing */}
                       {messages.map((message, index) => (
-                        <div key={index} className={`flex items-start gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500 ${
+                        <div key={index} className={`flex items-start gap-2 md:gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500 ${
                           message.type === "user" ? "justify-end" : "justify-start"
                         }`}>
                           {message.type === "assistant" ? (
                             <>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <Avatar className="h-10 w-10 border flex items-center justify-center">
+                                  <Avatar className="h-8 w-8 md:h-10 md:w-10 border flex items-center justify-center">
                                     <img src="/lovable-uploads/ee7f1b89-e60e-4121-8fb6-dba324f20c21.png" alt="Bamboo" className="w-full h-full object-cover" />
                                   </Avatar>
                                 </TooltipTrigger>
@@ -297,37 +330,39 @@ const Chat2 = () => {
                                   <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
                                 </TooltipContent>
                               </Tooltip>
-                              <div className="bg-white p-4 rounded-lg rounded-tl-none max-w-[80%] shadow-sm border border-gray-100">
+                              <div className="bg-white p-3 md:p-4 rounded-lg rounded-tl-none max-w-[85%] md:max-w-[80%] shadow-sm border border-gray-100">
                                 {renderMessageText(message)}
                                 
                                 {message.showChart && message.chartType === "performance" && (
                                   <Card className="mt-4">
                                     <CardHeader className="pb-2">
-                                      <CardTitle className="text-sm font-medium flex items-center">Platform Conversions</CardTitle>
+                                      <CardTitle className="text-xs md:text-sm font-medium flex items-center">Platform Conversions</CardTitle>
                                       <CardDescription className="text-xs">TikTok is outperforming other platforms by 35% in CPA</CardDescription>
                                     </CardHeader>
                                     <CardContent>
                                       <ChartContainer config={{}}>
-                                        <BarChart data={performanceData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
-                                          <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                                          <XAxis dataKey="platform" />
-                                          <YAxis />
-                                          <RechartsTooltip 
-                                            content={({ active, payload }) => {
-                                              if (active && payload && payload.length) {
-                                                return (
-                                                  <div className="bg-white p-2 border rounded shadow-sm">
-                                                    <p className="text-sm font-medium">{`${payload[0].payload.platform}`}</p>
-                                                    <p className="text-xs">{`Conversions: ${payload[0].value}`}</p>
-                                                    <p className="text-xs">{`CPA: $${payload[0].payload.cpa.toFixed(2)}`}</p>
-                                                  </div>
-                                                );
-                                              }
-                                              return null;
-                                            }}
-                                          />
-                                          <Bar dataKey="conversions" fill="#00D1A1" />
-                                        </BarChart>
+                                        <div className="h-60 w-full">
+                                          <BarChart data={performanceData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
+                                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                            <XAxis dataKey="platform" />
+                                            <YAxis />
+                                            <RechartsTooltip 
+                                              content={({ active, payload }) => {
+                                                if (active && payload && payload.length) {
+                                                  return (
+                                                    <div className="bg-white p-2 border rounded shadow-sm">
+                                                      <p className="text-sm font-medium">{`${payload[0].payload.platform}`}</p>
+                                                      <p className="text-xs">{`Conversions: ${payload[0].value}`}</p>
+                                                      <p className="text-xs">{`CPA: $${payload[0].payload.cpa.toFixed(2)}`}</p>
+                                                    </div>
+                                                  );
+                                                }
+                                                return null;
+                                              }}
+                                            />
+                                            <Bar dataKey="conversions" fill="#00D1A1" />
+                                          </BarChart>
+                                        </div>
                                       </ChartContainer>
                                     </CardContent>
                                   </Card>
@@ -337,24 +372,24 @@ const Chat2 = () => {
                                   <>
                                     {message.text?.includes("Platform") ? (
                                       <div className="mt-4 overflow-x-auto">
-                                        <table className="w-full border-collapse text-sm">
+                                        <table className="w-full border-collapse text-xs md:text-sm">
                                           <thead>
                                             <tr className="bg-gray-50">
-                                              <th className="border px-4 py-2 text-left">Platform</th>
-                                              <th className="border px-4 py-2 text-left">Spend</th>
-                                              <th className="border px-4 py-2 text-left">CPA</th>
-                                              <th className="border px-4 py-2 text-left">Conversions</th>
-                                              <th className="border px-4 py-2 text-left">CPM</th>
+                                              <th className="border px-2 py-1 md:px-4 md:py-2 text-left">Platform</th>
+                                              <th className="border px-2 py-1 md:px-4 md:py-2 text-left">Spend</th>
+                                              <th className="border px-2 py-1 md:px-4 md:py-2 text-left">CPA</th>
+                                              <th className="border px-2 py-1 md:px-4 md:py-2 text-left">Conv.</th>
+                                              <th className="border px-2 py-1 md:px-4 md:py-2 text-left">CPM</th>
                                             </tr>
                                           </thead>
                                           <tbody>
                                             {tableData.map((row, i) => (
                                               <tr key={i} className={row.platform === 'Total' ? 'font-medium bg-gray-50' : ''}>
-                                                <td className="border px-4 py-2">{row.platform}</td>
-                                                <td className="border px-4 py-2">${row.spend}</td>
-                                                <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
-                                                <td className="border px-4 py-2">{row.conversions}</td>
-                                                <td className="border px-4 py-2">{typeof row.cpm === 'number' ? `$${row.cpm.toFixed(2)}` : row.cpm}</td>
+                                                <td className="border px-2 py-1 md:px-4 md:py-2">{row.platform}</td>
+                                                <td className="border px-2 py-1 md:px-4 md:py-2">${row.spend}</td>
+                                                <td className="border px-2 py-1 md:px-4 md:py-2">${row.cpa.toFixed(2)}</td>
+                                                <td className="border px-2 py-1 md:px-4 md:py-2">{row.conversions}</td>
+                                                <td className="border px-2 py-1 md:px-4 md:py-2">{typeof row.cpm === 'number' ? `$${row.cpm.toFixed(2)}` : row.cpm}</td>
                                               </tr>
                                             ))}
                                           </tbody>
@@ -362,28 +397,28 @@ const Chat2 = () => {
                                       </div>
                                     ) : (
                                       <div className="mt-4 overflow-x-auto">
-                                        <table className="w-full border-collapse text-sm">
+                                        <table className="w-full border-collapse text-xs md:text-sm">
                                           <thead>
                                             <tr className="bg-gray-50">
-                                              <th className="border px-4 py-2 text-left">Creative Type</th>
-                                              <th className="border px-4 py-2 text-left">Asset</th>
-                                              <th className="border px-4 py-2 text-left">Spend</th>
-                                              <th className="border px-4 py-2 text-left">CPA</th>
-                                              <th className="border px-4 py-2 text-left">Conversions</th>
-                                              <th className="border px-4 py-2 text-left">CPM</th>
-                                              <th className="border px-4 py-2 text-left">CTR</th>
+                                              <th className="border px-2 py-1 md:px-4 md:py-2 text-left">Type</th>
+                                              <th className="border px-2 py-1 md:px-4 md:py-2 text-left">Asset</th>
+                                              <th className="border px-2 py-1 md:px-4 md:py-2 text-left">Spend</th>
+                                              <th className="border px-2 py-1 md:px-4 md:py-2 text-left">CPA</th>
+                                              <th className="border px-2 py-1 md:px-4 md:py-2 text-left">Conv.</th>
+                                              <th className="border px-2 py-1 md:px-4 md:py-2 text-left">CPM</th>
+                                              <th className="border px-2 py-1 md:px-4 md:py-2 text-left">CTR</th>
                                             </tr>
                                           </thead>
                                           <tbody>
                                             {creativeData.map((row, i) => (
                                               <tr key={i}>
-                                                <td className="border px-4 py-2">{row.type}</td>
-                                                <td className="border px-4 py-2">{row.asset}</td>
-                                                <td className="border px-4 py-2">${row.spend}</td>
-                                                <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
-                                                <td className="border px-4 py-2">{row.conversions}</td>
-                                                <td className="border px-4 py-2">${row.cpm.toFixed(2)}</td>
-                                                <td className="border px-4 py-2">{row.ctr}%</td>
+                                                <td className="border px-2 py-1 md:px-4 md:py-2">{row.type}</td>
+                                                <td className="border px-2 py-1 md:px-4 md:py-2">{row.asset}</td>
+                                                <td className="border px-2 py-1 md:px-4 md:py-2">${row.spend}</td>
+                                                <td className="border px-2 py-1 md:px-4 md:py-2">${row.cpa.toFixed(2)}</td>
+                                                <td className="border px-2 py-1 md:px-4 md:py-2">{row.conversions}</td>
+                                                <td className="border px-2 py-1 md:px-4 md:py-2">${row.cpm.toFixed(2)}</td>
+                                                <td className="border px-2 py-1 md:px-4 md:py-2">{row.ctr}%</td>
                                               </tr>
                                             ))}
                                           </tbody>
@@ -404,13 +439,13 @@ const Chat2 = () => {
                             </>
                           ) : message.type === "user" ? (
                             <>
-                              <div className="bg-white p-4 rounded-lg rounded-tr-none max-w-[80%] shadow-sm border border-gray-100">
-                                <p className="text-bamboo-navy">{message.text}</p>
+                              <div className="bg-white p-3 md:p-4 rounded-lg rounded-tr-none max-w-[85%] md:max-w-[80%] shadow-sm border border-gray-100">
+                                <p className="text-bamboo-navy text-sm md:text-base">{message.text}</p>
                               </div>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <Avatar className="h-10 w-10 bg-bamboo-secondary text-white flex items-center justify-center">
-                                    <div className="text-lg font-medium">U</div>
+                                  <Avatar className="h-8 w-8 md:h-10 md:w-10 bg-bamboo-secondary text-white flex items-center justify-center">
+                                    <div className="text-base md:text-lg font-medium">U</div>
                                   </Avatar>
                                 </TooltipTrigger>
                                 <TooltipContent>
@@ -426,19 +461,19 @@ const Chat2 = () => {
                 </div>
               </ScrollArea>
               
-              {/* Message input area - Now a sibling to ScrollArea, not nested inside it */}
-              <div className="border-t bg-white p-4 z-10 shadow-md flex-shrink-0">
+              {/* Message input area - Now mobile friendly */}
+              <div className="border-t bg-white p-2 md:p-4 z-10 shadow-md flex-shrink-0">
                 <form onSubmit={handleSendMessage} className="flex gap-2 max-w-3xl mx-auto">
                   <Input 
                     placeholder="Message Bamboo..." 
                     value={inputValue} 
                     onChange={(e) => setInputValue(e.target.value)}
-                    className="flex-grow"
+                    className="flex-grow text-sm md:text-base"
                   />
                   <Button 
                     type="submit" 
                     className="bg-bamboo-primary hover:bg-bamboo-secondary text-white"
-                    size="icon"
+                    size={isMobile ? "default" : "icon"}
                   >
                     <Send className="h-4 w-4" />
                   </Button>
@@ -448,7 +483,7 @@ const Chat2 = () => {
           </div>
           
           {/* Right Sidebar - Report Panel */}
-          {!rightPanelCollapsed && (
+          {!rightPanelCollapsed && !isMobile && (
             <div className="w-144 flex-shrink-0 bg-white overflow-hidden flex flex-col border-l min-h-0">
               <div className="p-4 border-b flex items-center justify-between h-16">
                 <div className="flex items-center gap-2">
@@ -479,29 +514,31 @@ const Chat2 = () => {
                       <CardDescription className="text-xs">Overall performance across platforms</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <ChartContainer config={{}}>
-                        <BarChart data={performanceData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
-                          <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                          <XAxis dataKey="platform" />
-                          <YAxis />
-                          <RechartsTooltip 
-                            content={({ active, payload }) => {
-                              if (active && payload && payload.length) {
-                                return (
-                                  <div className="bg-white p-2 border rounded shadow-sm">
-                                    <p className="text-sm font-medium">{`${payload[0].payload.platform}`}</p>
-                                    <p className="text-xs">{`Conversions: ${payload[0].value}`}</p>
-                                    <p className="text-xs">{`CPA: $${payload[0].payload.cpa.toFixed(2)}`}</p>
-                                  </div>
-                                );
-                              }
-                              return null;
-                            }}
-                          />
-                          <Legend />
-                          <Bar dataKey="conversions" fill="#00D1A1" name="Conversions" />
-                        </BarChart>
-                      </ChartContainer>
+                      <div className="h-56">
+                        <ChartContainer config={{}}>
+                          <BarChart data={performanceData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                            <XAxis dataKey="platform" />
+                            <YAxis />
+                            <RechartsTooltip 
+                              content={({ active, payload }) => {
+                                if (active && payload && payload.length) {
+                                  return (
+                                    <div className="bg-white p-2 border rounded shadow-sm">
+                                      <p className="text-sm font-medium">{`${payload[0].payload.platform}`}</p>
+                                      <p className="text-xs">{`Conversions: ${payload[0].value}`}</p>
+                                      <p className="text-xs">{`CPA: $${payload[0].payload.cpa.toFixed(2)}`}</p>
+                                    </div>
+                                  );
+                                }
+                                return null;
+                              }}
+                            />
+                            <Legend />
+                            <Bar dataKey="conversions" fill="#00D1A1" name="Conversions" />
+                          </BarChart>
+                        </ChartContainer>
+                      </div>
                     </CardContent>
                   </Card>
                   
@@ -512,24 +549,24 @@ const Chat2 = () => {
                     </CardHeader>
                     <CardContent className="px-0">
                       <div className="overflow-x-auto">
-                        <table className="w-full border-collapse text-sm">
+                        <table className="w-full border-collapse text-xs">
                           <thead>
                             <tr className="bg-gray-50">
-                              <th className="border px-4 py-2 text-left">Platform</th>
-                              <th className="border px-4 py-2 text-left">Spend</th>
-                              <th className="border px-4 py-2 text-left">CPA</th>
-                              <th className="border px-4 py-2 text-left">Conversions</th>
-                              <th className="border px-4 py-2 text-left">CPM</th>
+                              <th className="border px-2 py-1 text-left">Platform</th>
+                              <th className="border px-2 py-1 text-left">Spend</th>
+                              <th className="border px-2 py-1 text-left">CPA</th>
+                              <th className="border px-2 py-1 text-left">Conv.</th>
+                              <th className="border px-2 py-1 text-left">CPM</th>
                             </tr>
                           </thead>
                           <tbody>
                             {tableData.map((row, i) => (
                               <tr key={i} className={row.platform === 'Total' ? 'font-medium bg-gray-50' : ''}>
-                                <td className="border px-4 py-2">{row.platform}</td>
-                                <td className="border px-4 py-2">${row.spend}</td>
-                                <td className="border px-4 py-2">${row.cpa.toFixed(2)}</td>
-                                <td className="border px-4 py-2">{row.conversions}</td>
-                                <td className="border px-4 py-2">{typeof row.cpm === 'number' ? `$${row.cpm.toFixed(2)}` : row.cpm}</td>
+                                <td className="border px-2 py-1">{row.platform}</td>
+                                <td className="border px-2 py-1">${row.spend}</td>
+                                <td className="border px-2 py-1">${row.cpa.toFixed(2)}</td>
+                                <td className="border px-2 py-1">{row.conversions}</td>
+                                <td className="border px-2 py-1">{typeof row.cpm === 'number' ? `$${row.cpm.toFixed(2)}` : row.cpm}</td>
                               </tr>
                             ))}
                           </tbody>
@@ -540,7 +577,113 @@ const Chat2 = () => {
                   
                   <div className="text-gray-700">
                     <p className="font-medium mb-2">Key Insights:</p>
-                    <ul className="list-disc pl-5 space-y-1">
+                    <ul className="list-disc pl-5 space-y-1 text-sm">
+                      <li>TikTok is outperforming Meta by 24% in CPA efficiency</li>
+                      <li>Google has the highest CPA at $10.00</li>
+                      <li>Overall campaign ROAS is positive at 2.4x</li>
+                    </ul>
+                  </div>
+                </div>
+              </ScrollArea>
+            </div>
+          )}
+          
+          {/* Fullscreen Mobile Report Panel */}
+          {!rightPanelCollapsed && isMobile && (
+            <div className="fixed inset-0 z-50 bg-white flex flex-col">
+              <div className="p-4 border-b flex items-center justify-between h-16">
+                <div className="flex items-center gap-2">
+                  <div className="text-bamboo-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 3v18h18"></path>
+                      <path d="M18 17V9"></path>
+                      <path d="M13 17V5"></path>
+                      <path d="M8 17v-3"></path>
+                    </svg>
+                  </div>
+                  <span className="text-sm">Performance Report</span>
+                </div>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  onClick={() => setRightPanelCollapsed(true)}
+                  className="h-8 w-8"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+              <ScrollArea className="flex-grow overflow-y-auto p-4 bg-gray-50">
+                <div className="space-y-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base flex items-center">Platform Conversions</CardTitle>
+                      <CardDescription className="text-xs">Overall performance across platforms</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="h-56">
+                        <ChartContainer config={{}}>
+                          <BarChart data={performanceData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                            <XAxis dataKey="platform" />
+                            <YAxis />
+                            <RechartsTooltip 
+                              content={({ active, payload }) => {
+                                if (active && payload && payload.length) {
+                                  return (
+                                    <div className="bg-white p-2 border rounded shadow-sm">
+                                      <p className="text-sm font-medium">{`${payload[0].payload.platform}`}</p>
+                                      <p className="text-xs">{`Conversions: ${payload[0].value}`}</p>
+                                      <p className="text-xs">{`CPA: $${payload[0].payload.cpa.toFixed(2)}`}</p>
+                                    </div>
+                                  );
+                                }
+                                return null;
+                              }}
+                            />
+                            <Legend />
+                            <Bar dataKey="conversions" fill="#00D1A1" name="Conversions" />
+                          </BarChart>
+                        </ChartContainer>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base flex items-center">Platform Performance Summary</CardTitle>
+                      <CardDescription className="text-xs">Detailed metrics by platform</CardDescription>
+                    </CardHeader>
+                    <CardContent className="px-0">
+                      <div className="overflow-x-auto">
+                        <table className="w-full border-collapse text-xs">
+                          <thead>
+                            <tr className="bg-gray-50">
+                              <th className="border px-2 py-1 text-left">Platform</th>
+                              <th className="border px-2 py-1 text-left">Spend</th>
+                              <th className="border px-2 py-1 text-left">CPA</th>
+                              <th className="border px-2 py-1 text-left">Conv.</th>
+                              <th className="border px-2 py-1 text-left">CPM</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {tableData.map((row, i) => (
+                              <tr key={i} className={row.platform === 'Total' ? 'font-medium bg-gray-50' : ''}>
+                                <td className="border px-2 py-1">{row.platform}</td>
+                                <td className="border px-2 py-1">${row.spend}</td>
+                                <td className="border px-2 py-1">${row.cpa.toFixed(2)}</td>
+                                <td className="border px-2 py-1">{row.conversions}</td>
+                                <td className="border px-2 py-1">{typeof row.cpm === 'number' ? `$${row.cpm.toFixed(2)}` : row.cpm}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <div className="text-gray-700">
+                    <p className="font-medium mb-2">Key Insights:</p>
+                    <ul className="list-disc pl-5 space-y-1 text-sm">
                       <li>TikTok is outperforming Meta by 24% in CPA efficiency</li>
                       <li>Google has the highest CPA at $10.00</li>
                       <li>Overall campaign ROAS is positive at 2.4x</li>
