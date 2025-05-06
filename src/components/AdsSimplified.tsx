@@ -23,7 +23,7 @@ const AdsSimplified = () => {
           </Card>
 
           <div className="text-center">
-            <h2 className="text-xl md:text-2xl text-bamboo-navy italic font-normal">
+            <h2 className="text-xl md:text-2xl text-white italic font-normal">
               "Like if ChatGPT Were a Full-Service Ad Agency."
             </h2>
           </div>
