@@ -13,7 +13,7 @@ const Pricing = () => {
         <div className="max-w-5xl mx-auto text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-bamboo-navy mb-6">Pricing</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Start for free with creative and campaign setup. Contact us for pricing to activate campaigns.
+            Custom pricing for your needs. Guaranteed less than your freelancer.
           </p>
         </div>
 
@@ -53,7 +53,7 @@ const Pricing = () => {
           {/* Contact for Pricing Plan */}
           <Card className="border border-bamboo-primary shadow-md hover:shadow-lg transition-shadow relative flex flex-col">
             <CardHeader className="p-6">
-              <h3 className="text-xl font-bold mb-2">Campaign Activation</h3>
+              <h3 className="text-xl font-bold mb-2">Omni-Channel</h3>
               <div className="flex items-baseline">
                 <span className="text-4xl font-bold">Contact</span>
               </div>
