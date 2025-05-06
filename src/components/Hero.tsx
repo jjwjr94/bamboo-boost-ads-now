@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -49,6 +48,11 @@ const Hero = () => {
 
       {/* Foreground Content */}
       <div className="container mx-auto flex flex-col items-center text-center relative z-10 max-w-[800px]">
+        {/* New heading above the title */}
+        <h2 className="text-xl md:text-2xl font-medium text-bamboo-primary mb-4">
+          Grow Your Startup or Small Business
+        </h2>
+        
         <h1 className="text-3xl md:text-5xl font-bold text-bamboo-navy mb-6">
           The 
           <span className="relative ml-2">
