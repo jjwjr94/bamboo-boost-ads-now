@@ -9,9 +9,10 @@ const Hero = () => {
   const navigate = useNavigate();
   const phrases = [
     "Launch TikTok Ads", 
-    "Show Me Last Week's Conversions", 
-    "Create Funny Video Ad Ideas", 
-    "Improve My ROAS"
+    "Last Week's Conversions", 
+    "Funny Video Ad Ideas", 
+    "Improve My ROAS",
+    "Add Meta Pixel to Site"
   ];
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
