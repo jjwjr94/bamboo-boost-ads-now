@@ -47,7 +47,7 @@ const About = () => {
                 I've spent the past decade in advertising product and operations, responsible for billions in ad spend across channels. Before Bamboo, I was Ad Product Lead at Roku and spent five years at a top agency working with Fortune 100 clients.
               </p>
               <p>
-                I built Bamboo to level the playing field — using AI to give small and medium-sized businesses access to the same growth resources that were once out of reach due to cost, complexity, and technical barriers.
+                I built Bamboo to level the playing field — using AI to give startups and small businesses access to the same growth resources that were once out of reach due to cost, complexity, and technical barriers.
               </p>
               <p>
                 Bamboo is your AI-powered ad agency, making it incredibly simple to strategize, create, launch, and measure ad campaigns — so any business decision-maker can grow like the best.
