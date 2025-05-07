@@ -12,7 +12,7 @@ const Solution = () => {
             <span className="text-bamboo-primary">Bamboo:</span> The World Class Agency, Powered by AI, For Less Than a Freelancer.
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            We Redesigned the "Agency" Concept From Scratch With AI at the Center Make Advertising Truly Turnkey and Affordable.
+            We Redesigned the "Agency" Concept From Scratch, with AI at the Center, to Make Advertising Truly Turnkey and Affordable. No Technical Knowledge Required.
           </p>
         </div>
       </Container>
