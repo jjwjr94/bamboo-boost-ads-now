@@ -2,6 +2,7 @@
 import Navigation from "../components/Navigation";
 import Hero from "../components/Hero";
 import Problem from "../components/Problem";
+import AffordableGrowth from "../components/AffordableGrowth";
 import Solution from "../components/Solution";
 import AdsSimplified from "../components/AdsSimplified";
 import AiTools from "../components/AiTools";
@@ -21,6 +22,7 @@ const Index = () => {
           <Hero />
           <AdsSimplified />
           <Problem />
+          <AffordableGrowth />
           <div id="solution">
             <Solution />
             <AiTools />
