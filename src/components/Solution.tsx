@@ -12,7 +12,7 @@ const Solution = () => {
             <span className="text-bamboo-primary">Bamboo:</span> The Small Team of Expert Marketers Using AI to 10x Our Output and Speed.
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Don't Let Other Agencies Tell You, "You Get What You Pay For".
+            The full-service agency, powered by AI, for less than a freelancer.
           </p>
         </div>
       </Container>
