@@ -10,9 +10,24 @@ const Schedule = () => {
     script.async = true;
     document.body.appendChild(script);
 
+    // Set up Calendly event listener for when an event is scheduled
+    window.addEventListener('message', (e) => {
+      if (e.data.event && e.data.event.indexOf('calendly') === 0) {
+        if (e.data.event === 'calendly.event_scheduled') {
+          // Get the event data and redirect to confirmation page
+          const eventData = e.data.payload;
+          const startTime = eventData.event.start_time;
+          if (startTime) {
+            window.location.href = `/meeting-confirmation?event_start_time=${encodeURIComponent(startTime)}`;
+          }
+        }
+      }
+    });
+
     return () => {
       // Clean up script when component unmounts
       document.body.removeChild(script);
+      window.removeEventListener('message', () => {});
     };
   }, []);
 

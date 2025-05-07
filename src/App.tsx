@@ -9,6 +9,7 @@ import Schedule from "./pages/Schedule";
 import Chat from "./pages/Chat";
 import Chat2 from "./pages/Chat2";
 import Feedback from "./pages/Feedback";
+import MeetingConfirmation from "./pages/MeetingConfirmation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/chat" element={<Chat />} />
           <Route path="/chat2" element={<Chat2 />} />
           <Route path="/feedback" element={<Feedback />} />
+          <Route path="/meeting-confirmation" element={<MeetingConfirmation />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
