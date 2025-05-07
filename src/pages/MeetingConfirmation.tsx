@@ -32,7 +32,7 @@ const formatted = parsedDate
     const timer = setTimeout(() => {
       const confirmation: Message = {
         text: formatted
-          ? `Thanks for booking your meeting on ${formatted}. You'll receive an email shortly in prep for that meeting. Talk soon!`
+          ? `Thanks for booking your meeting on ${formatted}. You'll receive an email shortly. Talk soon!`
           : `Thanks for booking your meeting. You'll receive an email shortly. Talk soon!`,
         type: "assistant",
         timestamp: new Date(),
