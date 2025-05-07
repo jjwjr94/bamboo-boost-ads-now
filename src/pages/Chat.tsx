@@ -78,7 +78,7 @@ const Chat = () => {
     // Display second message after 1.5 seconds
     const timer1 = setTimeout(() => {
       setMessages(prev => [...prev, { 
-        text: "Congrats! You've unlocked one month of Bamboo for free.", 
+        text: "Congrats! You've unlocked <u>one month of Bamboo for free<u>.", 
         type: "assistant",
         timestamp: new Date() 
       }]);
