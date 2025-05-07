@@ -247,12 +247,12 @@ const Problem = () => {
           <div className="mt-16">
             <div className="text-center mb-10">
               <h2 className="text-xl md:text-2xl font-bold text-bamboo-navy mb-6">
-                There's no affordable way for startups and small businesses to grow through advertising
+                There's no truly turnkey and affordable way for startups and small businesses to grow through advertising.
               </h2>
             </div>
             <div className="mt-8 text-center">
               <p className="text-lg text-gray-700">
-                Marketers are convinced you just "get what you pay for".
+                Marketers are convinced you just, "Get what you pay for".
               </p>
             </div>
 
