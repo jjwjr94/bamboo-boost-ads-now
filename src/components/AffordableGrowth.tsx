@@ -9,7 +9,7 @@ const AffordableGrowth = () => {
       <Container>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl text-bamboo-navy mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-bamboo-navy mb-6">
               There's no affordable way for startups and small businesses to grow through advertising
             </h2>
           </div>
