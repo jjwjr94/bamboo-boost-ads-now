@@ -3,11 +3,11 @@ import Navigation from "../components/Navigation";
 import Hero from "../components/Hero";
 import Problem from "../components/Problem";
 import Solution from "../components/Solution";
-import AdsSimplified from "../components/AdsSimplified";
+import About from "../components/About";
 import AiTools from "../components/AiTools";
+import AdsSimplified from "../components/AdsSimplified";
 import CampaignSteps from "../components/CampaignSteps";
 import Features from "../components/Features";
-import About from "../components/About";
 import Pricing from "../components/Pricing";
 import Footer from "../components/Footer";
 import { Container } from "../components/ui/container";
@@ -22,7 +22,9 @@ const Index = () => {
           <Problem />
           <div id="solution">
             <Solution />
-            <About />
+            <div id="about">
+              <About />
+            </div>
             <AiTools />
             <AdsSimplified />
             <CampaignSteps />
