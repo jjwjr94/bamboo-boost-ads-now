@@ -45,7 +45,7 @@ const Hero = () => {
         
         {/* Body text */}
         <p className="text-lg md:text-xl text-bamboo-navy mb-4 md:mb-6 font-medium">
-          Grow Like the Best With <span className="text-bamboo-primary">Bamboo</span>. A Team of World Class Marketer Supercharged by AI.
+        A Team of World Class Marketers Supercharged by AI.
         </p>
 
         <div className="flex justify-center gap-4 mt-2 md:mt-0">
