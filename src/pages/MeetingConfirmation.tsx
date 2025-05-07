@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 import { Avatar } from "@/components/ui/avatar";
@@ -29,9 +28,9 @@ const MeetingConfirmation = () => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
-    if (!eventDate) return;
-
-    const formatted = format(eventDate, "MMMM d, yyyy 'at' h:mm a");
+    const formatted = eventDate
+      ? format(eventDate, "MMMM d, yyyy 'at' h:mm a")
+      : null;
 
     const baseMessages: Message[] = [
       {
@@ -52,7 +51,9 @@ const MeetingConfirmation = () => {
       setMessages(prev => [
         ...prev,
         {
-          text: `Thanks for booking your meeting on ${formatted}. You'll receive an email shortly in prep for that meeting. Talk soon!`,
+          text: formatted
+            ? `Thanks for booking your meeting on ${formatted}. You'll receive an email shortly. Talk soon!`
+            : `Thanks for booking your meeting. You'll receive an email shortly. Talk soon!`,
           type: "assistant",
           timestamp: new Date(),
         },
