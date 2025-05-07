@@ -4,6 +4,7 @@ import { Container } from "./ui/container";
 import { Rocket, UserRound, Compass, Brush, Settings, Tag } from "lucide-react";
 import { Progress } from "./ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Card } from "./ui/card";
 
 const Problem = () => {
   const [cost, setCost] = useState(10000);
@@ -240,6 +241,28 @@ const Problem = () => {
               </div>
               <h3 className="text-xl font-semibold text-center mt-4">Freelancers are <span className="text-bamboo-primary">too limited</span></h3>
             </div>
+          </div>
+          
+          {/* AffordableGrowth content moved here */}
+          <div className="mt-16">
+            <div className="text-center mb-10">
+              <h2 className="text-xl md:text-2xl font-bold text-bamboo-navy mb-6">
+                There's no affordable way for startups and small businesses to grow through advertising
+              </h2>
+            </div>
+            <div className="mt-8 text-center">
+              <p className="text-lg text-gray-700">
+                Marketers are convinced you just "get what you pay for".
+              </p>
+            </div>
+
+            <Card className="overflow-hidden border-0 rounded-xl mt-8 bg-transparent shadow-none">
+              <img 
+                src="/lovable-uploads/20005810-1787-4152-90d5-7ef6f5e45a50.png" 
+                alt="Social media discussion showing 'you get what you pay for' comments about marketing agencies and freelancers" 
+                className="w-full h-auto"
+              />
+            </Card>
           </div>
         </div>
       </Container>
