@@ -40,15 +40,12 @@ const Hero = () => {
         {/* New heading above the title - now with smaller text */}
         
         <h1 className="text-3xl md:text-5xl font-bold text-bamboo-navy mb-4 md:mb-6">
-          The <span className="ai-ad-agency-gradient">Ad Agency</span>
-          <span className="relative ml-2">
-             as simple as: 
-          </span>
+          The <span className="ai-ad-agency-gradient">Ad Agency</span> Built for Startups and Small Business.
         </h1>
         
         {/* Body text */}
         <p className="text-lg md:text-xl text-bamboo-navy mb-4 md:mb-6 font-medium">
-          Grow Your Startup or Small Business With <span className="text-bamboo-primary">Bamboo</span>.
+          Grow Like the Best With <span className="text-bamboo-primary">Bamboo</span>. A Team of World Class Marketer Supercharged by AI.
         </p>
 
         <div className="flex justify-center gap-4 mt-2 md:mt-0">
