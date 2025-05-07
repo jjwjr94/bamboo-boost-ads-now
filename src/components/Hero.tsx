@@ -2,34 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import BambooSVG from "./BambooSVG";
-import { useEffect, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const phrases = [
-    "Launch TikTok Ads",  
-    "Improve My ROAS",
-    "Add Meta Pixel to Site",
-    "Last Week's Sales", 
-    "Funny Video Ad Ideas"
-  ];
-  const [currentPhrase, setCurrentPhrase] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setCurrentPhrase((prev) => (prev + 1) % phrases.length);
-        setIsAnimating(false);
-      }, 500); // Half a second for fade out
-    }, 3000); // Change every 3 seconds
-    
-    return () => clearInterval(interval);
-  }, []);
   
   const handleGetStarted = () => {
     navigate("/chat"); // Navigate to the chat page
@@ -66,13 +43,6 @@ const Hero = () => {
           The <span className="ai-ad-agency-gradient">Ad Agency</span>
           <span className="relative ml-2">
              as simple as: 
-          </span>
-          <span className="block py-3 min-h-[60px] md:min-h-[80px] flex items-center justify-center">
-            <span 
-              className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'} text-bamboo-navy`}
-            >
-              "{phrases[currentPhrase]}"
-            </span>
           </span>
         </h1>
         
