@@ -11,25 +11,17 @@ interface Message {
   timestamp: Date;
 }
 
-const getEventStartTime = (search: string) => {
-  const params = new URLSearchParams(search);
-  const iso = params.get("event_start_time");
-  if (!iso) return null;
-  try {
-    return parseISO(decodeURIComponent(iso));
-  } catch {
-    return null;
-  }
-};
-
 const MeetingConfirmation = () => {
   const location = useLocation();
-  const eventDate = getEventStartTime(location.search);
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
-    const formatted = eventDate
-      ? format(eventDate, "MMMM d, yyyy 'at' h:mm a")
+    const params = new URLSearchParams(location.search);
+    const rawTime = params.get("event_start_time");
+    const parsedDate = rawTime ? parseISO(decodeURIComponent(rawTime)) : null;
+
+    const formatted = parsedDate
+      ? format(parsedDate, "MMMM d, yyyy 'at' h:mm a")
       : null;
 
     const baseMessages: Message[] = [
@@ -48,20 +40,19 @@ const MeetingConfirmation = () => {
     setMessages(baseMessages);
 
     const timer = setTimeout(() => {
-      setMessages(prev => [
-        ...prev,
-        {
-          text: formatted
-            ? `Thanks for booking your meeting on ${formatted}. You'll receive an email shortly. Talk soon!`
-            : `Thanks for booking your meeting. You'll receive an email shortly. Talk soon!`,
-          type: "assistant",
-          timestamp: new Date(),
-        },
-      ]);
+      const confirmation: Message = {
+        text: formatted
+          ? `Thanks for booking your meeting on ${formatted}. You'll receive an email shortly in prep for that meeting. Talk soon!`
+          : `Thanks for booking your meeting. You'll receive an email shortly. Talk soon!`,
+        type: "assistant",
+        timestamp: new Date(),
+      };
+
+      setMessages(prev => [...prev, confirmation]);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [eventDate]);
+  }, [location.search]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
