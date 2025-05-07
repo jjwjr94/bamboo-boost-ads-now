@@ -19,12 +19,12 @@ const Index = () => {
       <div className="pt-16 flex-1">
         <Container bordered>
           <Hero />
-          <AdsSimplified />
           <Problem />
           <div id="solution">
             <Solution />
             <About />
             <AiTools />
+            <AdsSimplified />
             <CampaignSteps />
             <Features />
           </div>
