@@ -78,7 +78,7 @@ const Chat = () => {
     // Display second message after 1.5 seconds
     const timer1 = setTimeout(() => {
       setMessages(prev => [...prev, { 
-        text: "It's really important to me to learn about your business so your first campaign is a success. To get started, please book a 30-minute slot for us to chat.", 
+        text: "Congrats! You've unlocked one month of Bamboo for free.", 
         type: "assistant",
         timestamp: new Date() 
       }]);
@@ -87,12 +87,21 @@ const Chat = () => {
     // Display schedule button message after 3 seconds
     const timer2 = setTimeout(() => {
       setMessages(prev => [...prev, { 
+        text: "Even before entering your credit card, please book an intro call. It's really important to me to learn about your business so your first campaign is a success.", 
+        type: "assistant",
+        timestamp: new Date() 
+      }]);
+    }, 3000);
+
+    // Display schedule button message after 4.5 seconds
+    const timer3 = setTimeout(() => {
+      setMessages(prev => [...prev, { 
         text: "", 
         type: "assistant", 
         showCalendly: true,
         timestamp: new Date()
       }]);
-    }, 3000);
+    }, 4500);
     
     // Load Calendly widget
     const link = document.createElement("link");
@@ -108,6 +117,7 @@ const Chat = () => {
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
+      clearTimeout(timer3);
       // Clean up scripts when component unmounts
       document.head.removeChild(link);
       if (document.body.contains(script)) {
