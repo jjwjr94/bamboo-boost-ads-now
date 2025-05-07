@@ -250,11 +250,6 @@ const Problem = () => {
                 There's no truly turnkey and affordable way for startups and small businesses to grow through advertising.
               </h2>
             </div>
-            <div className="mt-8 text-center">
-              <p className="text-lg text-gray-700">
-                Marketers are convinced you just, "Get what you pay for".
-              </p>
-            </div>
 
             <Card className="overflow-hidden border-0 rounded-xl mt-8 bg-transparent shadow-none">
               <img 
