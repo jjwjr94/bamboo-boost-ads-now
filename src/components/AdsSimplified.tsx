@@ -28,7 +28,7 @@ const AdsSimplified = () => {
 
           <div className="text-center">
             <h3 className="text-xl md:text-2xl text-white italic font-normal">
-              Like if ChatGPT Were a Full-Service Ad Agency, Priced Less Than a Freelancer.
+              Like if ChatGPT Were the Best Full-Service Ad Agency.
             </h3>
           </div>
         </div>
