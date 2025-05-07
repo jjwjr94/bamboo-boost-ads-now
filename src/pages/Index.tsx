@@ -23,15 +23,13 @@ const Index = () => {
           <Problem />
           <div id="solution">
             <Solution />
+            <About />
             <AiTools />
             <CampaignSteps />
             <Features />
           </div>
           <div id="pricing">
             <Pricing />
-          </div>
-          <div id="about">
-            <About />
           </div>
         </Container>
       </div>
