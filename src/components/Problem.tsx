@@ -253,7 +253,7 @@ const Problem = () => {
 
             <Card className="overflow-hidden border-0 rounded-xl mt-8 bg-transparent shadow-none">
               <img 
-                src="/lovable-uploads/7b6d72de-ac5a-4d7b-84b0-ee7b931f44b9.png" 
+                src="/lovable-uploads/4aae355d-6e65-4962-bc7e-9695b6430ace.png" 
                 alt="Social media discussion showing 'you get what you pay for' comments about marketing agencies and freelancers" 
                 className="w-full h-auto"
               />
