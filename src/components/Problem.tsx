@@ -247,7 +247,7 @@ const Problem = () => {
           <div className="mt-16">
             <div className="text-center mb-10">
               <h3 className="text-xl md:text-xl font-bold text-bamboo-navy mb-6">
-                There's no truly turnkey and affordable way for startups and small businesses to grow through advertising.
+                There's no truly turnkey way to grow through advertising without breaking the bank, leaving startups and small businesses groaing - "You get what you pay for."
               </h3>
             </div>
 
