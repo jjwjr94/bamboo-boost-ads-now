@@ -16,7 +16,7 @@ const AffordableGrowth = () => {
 
           <Card className="overflow-hidden shadow-lg border-0 rounded-xl">
             <img 
-              src="/lovable-uploads/e402c208-b5ba-4c25-a01e-7fed9891396c.png" 
+              src="/lovable-uploads/20005810-1787-4152-90d5-7ef6f5e45a50.png" 
               alt="Social media discussion showing 'you get what you pay for' comments about marketing agencies and freelancers" 
               className="w-full h-auto"
             />
