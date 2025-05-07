@@ -41,7 +41,7 @@ const AdsSimplified = () => {
           </h2>
           
           <div className="text-center mb-8">
-            <p className="text-xl md:text-2xl text-white">
+            <p className="text-3xl md:text-4xl font-bold text-white text-center mb-4">
               <span 
                 className={`inline-flex items-center transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}
               >
