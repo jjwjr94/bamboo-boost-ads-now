@@ -20,9 +20,14 @@ const MeetingConfirmation = () => {
     const rawTime = params.get("event_start_time");
     const parsedDate = rawTime ? parseISO(decodeURIComponent(rawTime)) : null;
 
-    const formatted = parsedDate
-      ? format(parsedDate, "MMMM d, yyyy 'at' h:mm a")
-      : null;
+const formatted = parsedDate
+  ? new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/New_York",
+      dateStyle: "long",
+      timeStyle: "short",
+    }).format(parsedDate) + " ET"
+  : null;
+
 
     const timer = setTimeout(() => {
       const confirmation: Message = {
