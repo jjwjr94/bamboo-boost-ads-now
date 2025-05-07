@@ -157,7 +157,7 @@ const Problem = () => {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-bamboo-primary font-medium uppercase tracking-wider text-sm mb-4">The Problem</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-bamboo-navy mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-bamboo-navy mb-8">
               Growing Your Business Shouldn't Be So Hard
             </h2>
           </div>
@@ -190,7 +190,7 @@ const Problem = () => {
               <h3 className="text-xl font-semibold text-center mt-4">Advertising is <span className="text-bamboo-primary">too complicated</span> to juggle alone</h3>
             </div>
 
-            {/* Card 2 - Removed ChartBarIncreasing icon */}
+            {/* Card 2 */}
             <div 
               ref={card2Ref}
               className={`bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-700 ease-out transform flex flex-col justify-between h-64 ${
@@ -243,17 +243,17 @@ const Problem = () => {
             </div>
           </div>
           
-          {/* AffordableGrowth content moved here */}
+          {/* AffordableGrowth content */}
           <div className="mt-16">
             <div className="text-center mb-10">
-              <h2 className="text-xl md:text-2xl font-bold text-bamboo-navy mb-6">
+              <h3 className="text-xl md:text-xl font-bold text-bamboo-navy mb-6">
                 There's no truly turnkey and affordable way for startups and small businesses to grow through advertising.
-              </h2>
+              </h3>
             </div>
 
             <Card className="overflow-hidden border-0 rounded-xl mt-8 bg-transparent shadow-none">
               <img 
-                src="/lovable-uploads/20005810-1787-4152-90d5-7ef6f5e45a50.png" 
+                src="/lovable-uploads/7b6d72de-ac5a-4d7b-84b0-ee7b931f44b9.png" 
                 alt="Social media discussion showing 'you get what you pay for' comments about marketing agencies and freelancers" 
                 className="w-full h-auto"
               />
