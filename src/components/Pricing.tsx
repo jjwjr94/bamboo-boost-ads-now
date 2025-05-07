@@ -21,11 +21,12 @@ const Pricing = () => {
           {/* Free Plan */}
           <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col">
             <CardHeader className="p-6">
-              <h3 className="text-xl font-bold mb-2">Start For Free</h3>
-              <div className="flex items-baseline">
-                <span className="text-4xl font-bold">$0</span>
+              <h3 className="text-xl font-bold mb-2">Basic</h3>
+                <div className="flex items-baseline">
+                <span className="text-4xl font-bold">$300</span>
+                <span className="text-gray-600 ml-1">/month</span>
               </div>
-              <p className="text-gray-600 mt-2">Creative & Campaign Setup</p>
+              <p className="text-gray-600 mt-2">After 1st Month Free</p>
             </CardHeader>
             <CardContent className="px-6 py-2 flex-grow">
               <ul className="space-y-3">
@@ -45,7 +46,7 @@ const Pricing = () => {
             </CardContent>
             <CardFooter className="p-6 pt-4 mt-auto">
               <Button className="w-full bg-bamboo-primary hover:bg-bamboo-secondary text-white" asChild>
-                <Link to="/chat">Get Started</Link>
+                <Link to="/chat">Start Free Trial</Link>
               </Button>
             </CardFooter>
           </Card>
@@ -63,7 +64,7 @@ const Pricing = () => {
                 <span className="text-4xl font-bold">$300</span>
                 <span className="text-gray-600 ml-1">/month</span>
               </div>
-              <p className="text-gray-600 mt-2">Essential marketing toolkit</p>
+              <p className="text-gray-600 mt-2">After 1st Month Free</p>
             </CardHeader>
             <CardContent className="px-6 py-2 flex-grow">
               <ul className="space-y-3">
@@ -87,7 +88,7 @@ const Pricing = () => {
             </CardContent>
             <CardFooter className="p-6 pt-4 mt-auto">
               <Button className="w-full bg-bamboo-primary hover:bg-bamboo-secondary text-white" asChild>
-                <Link to="/chat">Select Plan</Link>
+                <Link to="/chat">Start Free Trial</Link>
               </Button>
             </CardFooter>
           </Card>
