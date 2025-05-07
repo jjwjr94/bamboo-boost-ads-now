@@ -9,10 +9,10 @@ const Solution = () => {
         <div className="max-w-5xl mx-auto text-center">
           <p className="text-bamboo-primary font-medium uppercase tracking-wider text-sm mb-4">The Solution</p>
           <h2 className="text-3xl md:text-4xl font-bold text-bamboo-navy mb-6">
-            <span className="text-bamboo-primary">Bamboo:</span> The Small Team of Expert Marketers Using AI to 10x Our Output and Speed.
+            <span className="text-bamboo-primary">Bamboo:</span> The World Class Agency, Powered by AI, For Less Than a Freelancer.
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            The full-service agency, powered by AI, for less than a freelancer.
+            We Redesigned the "Agency" Concept From Scratch With AI at the Center Make Advertising Truly Turnkey and Affordable.
           </p>
         </div>
       </Container>
