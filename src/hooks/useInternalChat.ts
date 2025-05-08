@@ -264,6 +264,123 @@ export const useInternalChat = () => {
     return emailRegex.test(email);
   };
   
+  // Website validation function
+  const isValidWebsite = async (website: string): Promise<boolean> => {
+    try {
+      // Add http:// if not present
+      let url = website;
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = `https://${url}`;
+      }
+      
+      // Try to fetch the website
+      const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+      const data = await response.json();
+      
+      // If we get content, website exists
+      return data && data.contents && !data.error;
+    } catch (error) {
+      console.error("Error validating website:", error);
+      return false;
+    }
+  };
+  
+  // Get marketing insights from OpenAI
+  const getMarketingInsights = async (website: string): Promise<string> => {
+    try {
+      let websiteUrl = website;
+      if (!websiteUrl.startsWith('http://') && !websiteUrl.startsWith('https://')) {
+        websiteUrl = `https://${websiteUrl}`;
+      }
+      
+      // Make request to OpenAI API
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer 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'
+        },
+        body: JSON.stringify({
+          model: "gpt-4o",
+          messages: [
+            {
+              role: "system",
+              content: `You're a marketing strategist and research bot helping ad agencies understand new client websites.`
+            },
+            {
+              role: "user",
+              content: `We have a new prospective client with website, ${websiteUrl}
+
+Based on their website, generate the following structured data:
+
+Business Description — 2-3 sentence summary of what the business does.
+
+Product List — A simple bulleted list of products or services they offer.
+
+Marketing Objective — Choose one or two words to represent the key goal(s) for their campaign. (Examples: store visits, leads, website purchases). Use discretion in terms of how many objectives to prioritize. I.e. an e-commerce only business should just be "website purchases".
+
+Top 3 Audiences — A prioritized list of ideal customer segments to target.
+
+Channel Prioritization — Recommend how to sequence marketing activation across the following channels, from most to least important: Google PPC, YouTube, Meta, TikTok.
+
+Output the result as structured JSON like this:
+{
+  "description": "....",
+  "products": ["...", "..."],
+  "objectives": ["...", "...", "..."]
+  "audiences": ["...", "...", "..."],
+  "channel_priority": ["...", "...", "...", "..."]
+}`
+            }
+          ]
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
+        try {
+          // Try to parse the JSON response
+          const jsonResponse = JSON.parse(data.choices[0].message.content);
+          
+          // Format the data into readable text
+          let insightsText = `Based on my analysis of your website, here's what I think would work for your first campaign:\n\n`;
+          
+          insightsText += `**Your Business**: ${jsonResponse.description}\n\n`;
+          
+          insightsText += `**Your Products/Services**:\n`;
+          jsonResponse.products.forEach((product: string) => {
+            insightsText += `• ${product}\n`;
+          });
+          insightsText += `\n`;
+          
+          insightsText += `**Campaign Objectives**: ${jsonResponse.objectives.join(', ')}\n\n`;
+          
+          insightsText += `**Target Audiences**:\n`;
+          jsonResponse.audiences.forEach((audience: string, index: number) => {
+            insightsText += `${index + 1}. ${audience}\n`;
+          });
+          insightsText += `\n`;
+          
+          insightsText += `**Recommended Channel Strategy** (in order of priority):\n`;
+          jsonResponse.channel_priority.forEach((channel: string, index: number) => {
+            insightsText += `${index + 1}. ${channel}\n`;
+          });
+          
+          return insightsText;
+        } catch (error) {
+          // If can't parse JSON, return the raw text
+          return data.choices[0].message.content;
+        }
+      } else {
+        return "I couldn't analyze your website properly. Let's continue anyway - can you tell me more about your business?";
+      }
+    } catch (error) {
+      console.error("Error getting marketing insights:", error);
+      return "I couldn't analyze your website properly. Let's continue anyway - can you tell me more about your business?";
+    }
+  };
+  
   const handleSendMessage = async (inputValue: string) => {
     // Add user message
     const userMessage = {
@@ -323,20 +440,80 @@ export const useInternalChat = () => {
         }, 1500);
       }
     } else if (currentQuestion === "website") {
-      // Handle website response (keep existing functionality)
+      // Show loading state
       setTimeout(async () => {
-        const nextQuestion = {
-          text: "Great! What's your business name?",
+        const loadingMessage = {
+          text: "Checking your website...",
           type: "assistant" as const,
           timestamp: new Date()
         };
         
-        setMessages(prev => [...prev, nextQuestion]);
-        setCurrentQuestion("business");
+        setMessages(prev => [...prev, loadingMessage]);
+        await logMessage(loadingMessage.text || "", "assistant");
         
-        // Log next question to Supabase
-        await logMessage(nextQuestion.text || "", "assistant");
-      }, 1500);
+        // Validate website
+        const isValid = await isValidWebsite(inputValue);
+        
+        if (isValid) {
+          // Show thinking message
+          const thinkingMessage = {
+            text: "Perfect. Here are some basic thoughts I have about your first campaign. Let me analyze your website...",
+            type: "assistant" as const,
+            timestamp: new Date()
+          };
+          
+          setMessages(prev => [...prev, thinkingMessage]);
+          await logMessage(thinkingMessage.text || "", "assistant");
+          
+          // Get marketing insights
+          const insights = await getMarketingInsights(inputValue);
+          
+          // Show insights
+          setTimeout(async () => {
+            const insightsMessage = {
+              text: insights,
+              type: "assistant" as const,
+              timestamp: new Date()
+            };
+            
+            setMessages(prev => [...prev, insightsMessage]);
+            setCurrentQuestion("business");
+            
+            // Log insights to Supabase
+            await logMessage(insights, "assistant");
+            
+            // Ask for business name after showing insights
+            setTimeout(async () => {
+              const nextQuestion = {
+                text: "What's your business name?",
+                type: "assistant" as const,
+                timestamp: new Date()
+              };
+              
+              setMessages(prev => [...prev, nextQuestion]);
+              setCurrentQuestion("complete");
+              
+              // Log next question to Supabase
+              await logMessage(nextQuestion.text || "", "assistant");
+            }, 2000);
+          }, 2000);
+        } else {
+          // Invalid website
+          setTimeout(async () => {
+            const errorMessage = {
+              text: "That website doesn't quite look right. Can you try again?",
+              type: "assistant" as const,
+              timestamp: new Date()
+            };
+            
+            setMessages(prev => [...prev, errorMessage]);
+            // Keep currentQuestion as "website" since we still need a valid website
+            
+            // Log error message to Supabase
+            await logMessage(errorMessage.text || "", "assistant");
+          }, 1500);
+        }
+      }, 1000);
     } else {
       // Handle other questions (keep existing functionality for future questions)
       setTimeout(async () => {
