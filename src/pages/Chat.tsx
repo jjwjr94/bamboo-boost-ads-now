@@ -1,9 +1,11 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Navigation from "../components/Navigation";
 import ChatMessage from "@/components/chat/ChatMessage";
 import ChatInput from "@/components/chat/ChatInput";
 import { useChat } from "@/hooks/useChat";
+import { toast } from "@/components/ui/use-toast";
+import { useLocation } from "react-router-dom";
 
 // Define the Calendly interface to fix TypeScript error
 declare global {
@@ -16,8 +18,44 @@ declare global {
 
 const Chat = () => {
   const { messages, isLoading, handleSendMessage } = useChat();
+  const location = useLocation();
+  
+  // Deduplicate messages to handle potential issues when returning to the tab
+  const uniqueMessages = useMemo(() => {
+    // Create a map to store unique messages by their content or ID
+    const uniqueMap = new Map();
+    
+    messages.forEach((message) => {
+      // Use message ID or text+timestamp as a unique key
+      const key = message.id || `${message.type}-${message.text}-${message.timestamp.getTime()}`;
+      if (!uniqueMap.has(key)) {
+        uniqueMap.set(key, message);
+      }
+    });
+    
+    // Convert the map back to an array and ensure it's sorted by timestamp
+    return Array.from(uniqueMap.values())
+      .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+  }, [messages]);
   
   useEffect(() => {
+    // Check if this is a return from Calendly
+    const params = new URLSearchParams(window.location.search);
+    const fromCalendly = params.get('calendly_scheduled') === 'true';
+    
+    if (fromCalendly) {
+      // Clean URL by removing the calendly_scheduled parameter
+      const url = new URL(window.location.href);
+      url.searchParams.delete('calendly_scheduled');
+      window.history.replaceState({}, document.title, url.toString());
+      
+      // Show a toast notification
+      toast({
+        title: "Meeting scheduled",
+        description: "Your meeting has been scheduled successfully. We'll send you an email confirmation shortly.",
+      });
+    }
+    
     // Load Calendly widget
     const link = document.createElement("link");
     link.href = "https://assets.calendly.com/assets/external/widget.css";
@@ -31,12 +69,14 @@ const Chat = () => {
     
     return () => {
       // Clean up scripts when component unmounts
-      document.head.removeChild(link);
+      if (document.head.contains(link)) {
+        document.head.removeChild(link);
+      }
       if (document.body.contains(script)) {
         document.body.removeChild(script);
       }
     };
-  }, []);
+  }, [location]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -51,8 +91,8 @@ const Chat = () => {
             </div>
           ) : (
             <div className="flex flex-col gap-6">
-              {messages.map((message, index) => (
-                <ChatMessage key={index} message={message} />
+              {uniqueMessages.map((message, index) => (
+                <ChatMessage key={message.id || index} message={message} />
               ))}
             </div>
           )}

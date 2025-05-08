@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { v4 as uuidv4 } from "uuid";
 
@@ -21,6 +21,7 @@ export const useChat = (options: UseChatOptions = {}) => {
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userHasResponded, setUserHasResponded] = useState(false);
+  const initialized = useRef(false);
   
   // Generate or retrieve device ID
   const getDeviceId = () => {
@@ -119,7 +120,7 @@ export const useChat = (options: UseChatOptions = {}) => {
       
       if (error) {
         console.error("Error loading messages:", error);
-        initializeConversation();
+        await initializeConversation();
         return;
       }
       
@@ -139,15 +140,15 @@ export const useChat = (options: UseChatOptions = {}) => {
         }));
         
         // Always show the initial conversation messages first
-        initializeConversation(loadedMessages);
+        await initializeConversation(loadedMessages);
       } else {
         // If no messages, start with initial greeting
-        initializeConversation();
+        await initializeConversation();
       }
     } catch (error) {
       console.error("Error loading messages:", error);
       // Fall back to initial conversation
-      initializeConversation();
+      await initializeConversation();
     }
   };
   
@@ -382,7 +383,7 @@ export const useChat = (options: UseChatOptions = {}) => {
         setUserHasResponded(false);
         
         // Reinitialize conversation with welcome messages
-        initializeConversation();
+        await initializeConversation();
         
         return true;
       }
@@ -393,10 +394,52 @@ export const useChat = (options: UseChatOptions = {}) => {
     }
   };
   
+  // Use a ref to ensure initialization only happens once
   useEffect(() => {
     // Set up the initial conversation when component mounts
-    findOrCreateConversation();
-  }, []);
+    if (!initialized.current) {
+      initialized.current = true;
+      findOrCreateConversation();
+    }
+    
+    // Add visibility change listener to refresh messages when tab becomes visible
+    const handleVisibilityChange = async () => {
+      if (document.visibilityState === 'visible' && conversationId) {
+        console.log("Tab became visible, refreshing messages");
+        // Refresh messages from the database to ensure we have the latest state
+        const { data, error } = await supabase
+          .from('chat_messages')
+          .select('*')
+          .eq('conversation_id', conversationId)
+          .order('timestamp', { ascending: true });
+          
+        if (!error && data && data.length > 0) {
+          // User has previously responded if there's at least one user message
+          const hasUserMessage = data.some(msg => msg.sender === 'user');
+          setUserHasResponded(hasUserMessage);
+          
+          // Convert database messages to UI messages
+          const refreshedMessages: Message[] = data.map(msg => ({
+            text: msg.message,
+            type: msg.sender as "assistant" | "user",
+            timestamp: new Date(msg.timestamp || new Date()),
+            showCalendly: msg.message.includes('book a kickoff call'),
+            id: msg.id,
+            isLogged: true // Mark as already logged in database
+          }));
+          
+          // Update messages state with refreshed data
+          setMessages(refreshedMessages);
+        }
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [conversationId]);
   
   return {
     messages,
