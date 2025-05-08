@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { supabase, SUPABASE_ANON_KEY } from "@/integrations/supabase/client";
+import { supabase, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/client";
 import { v4 as uuidv4 } from "uuid";
 
 export interface Message {
@@ -278,7 +278,7 @@ export const useInternalChat = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`
         },
         body: JSON.stringify({ website: formattedWebsite })
       });
@@ -307,7 +307,7 @@ export const useInternalChat = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`
         },
         body: JSON.stringify({ website: formattedWebsite })
       });
