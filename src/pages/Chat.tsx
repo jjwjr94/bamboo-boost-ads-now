@@ -22,12 +22,12 @@ const Chat = () => {
   
   // Deduplicate messages to handle potential issues when returning to the tab
   const uniqueMessages = useMemo(() => {
-    // Create a map to store unique messages by their content or ID
+    // Create a map to store unique messages by their content or timestamp
     const uniqueMap = new Map();
     
     messages.forEach((message) => {
-      // Use message ID or text+timestamp as a unique key
-      const key = message.id || `${message.type}-${message.text}-${message.timestamp.getTime()}`;
+      // Use message text+timestamp as a unique key since id doesn't exist in Message type
+      const key = `${message.type}-${message.text || ''}-${message.timestamp.getTime()}`;
       if (!uniqueMap.has(key)) {
         uniqueMap.set(key, message);
       }
@@ -92,7 +92,7 @@ const Chat = () => {
           ) : (
             <div className="flex flex-col gap-6">
               {uniqueMessages.map((message, index) => (
-                <ChatMessage key={message.id || index} message={message} />
+                <ChatMessage key={index} message={message} />
               ))}
             </div>
           )}
