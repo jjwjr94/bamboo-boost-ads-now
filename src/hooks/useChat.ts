@@ -228,7 +228,7 @@ export const useChat = (options: UseChatOptions = {}) => {
     // Add the intro call message only if not skipped and not internal chat
     else if (!options.skipIntroCallMessage) {
       initialMessages.push({
-        text: "Even before entering your credit card, please book a 15-minute intro call. It's really important to me to learn about your business so your first campaign is a success.",
+        text: "To redeem and get started, let's chat. Just 15-minutes to start on the right foot. It's really important to me to learn about your business so your first campaign is a success.",
         type: "assistant" as const,
         timestamp: new Date(),
         isLogged: userHasResponded
