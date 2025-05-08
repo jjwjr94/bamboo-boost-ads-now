@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 import ChatMessage from "@/components/chat/ChatMessage";
 import ChatInput from "@/components/chat/ChatInput";
@@ -8,6 +8,13 @@ import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import { useLocation } from "react-router-dom";
+import { 
+  Dialog, 
+  DialogContent,
+  DialogDescription, 
+  DialogHeader,
+  DialogTitle 
+} from "@/components/ui/dialog";
 
 // Define the Calendly interface to fix TypeScript error
 declare global {
@@ -20,8 +27,24 @@ declare global {
 
 const InternalChat = () => {
   const location = useLocation();
+  const [marketingData, setMarketingData] = useState<string | null>(null);
+  const [showMarketingDialog, setShowMarketingDialog] = useState(false);
+  
   // Use the internal chat hook
   const { messages, isLoading, handleSendMessage, clearConversation } = useInternalChat();
+  
+  // Monitor messages for marketing insights
+  useEffect(() => {
+    const marketingInsight = messages.find(msg => 
+      msg.type === "assistant" && 
+      msg.text && 
+      msg.text.includes("Based on my analysis of your website")
+    );
+    
+    if (marketingInsight && marketingInsight.text) {
+      setMarketingData(marketingInsight.text);
+    }
+  }, [messages]);
   
   useEffect(() => {
     // Check if this is a return from Calendly
@@ -80,6 +103,10 @@ const InternalChat = () => {
       });
     }
   };
+  
+  const handleViewMarketingInsights = () => {
+    setShowMarketingDialog(true);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -112,6 +139,17 @@ const InternalChat = () => {
               {messages.map((message, index) => (
                 <ChatMessage key={index} message={message} />
               ))}
+              
+              {marketingData && (
+                <div className="flex justify-center my-4">
+                  <Button 
+                    onClick={handleViewMarketingInsights}
+                    className="bg-bamboo-primary hover:bg-bamboo-secondary text-white"
+                  >
+                    View Marketing Insights
+                  </Button>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -123,6 +161,28 @@ const InternalChat = () => {
           <ChatInput onSendMessage={handleSendMessage} />
         </div>
       </div>
+      
+      {/* Marketing Insights Dialog */}
+      <Dialog open={showMarketingDialog} onOpenChange={setShowMarketingDialog}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-bamboo-primary">
+              Marketing Insights Report
+            </DialogTitle>
+            <DialogDescription className="text-gray-500">
+              AI-generated marketing analysis for your website
+            </DialogDescription>
+          </DialogHeader>
+          
+          {marketingData && (
+            <div className="prose max-w-none">
+              <div dangerouslySetInnerHTML={{ 
+                __html: marketingData.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br />') 
+              }} />
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

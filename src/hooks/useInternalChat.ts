@@ -267,81 +267,43 @@ export const useInternalChat = () => {
   // Website validation function
   const isValidWebsite = async (website: string): Promise<boolean> => {
     try {
-      // Add http:// if not present
-      let url = website;
-      if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        url = `https://${url}`;
-      }
+      // Try to call our edge function to analyze the website
+      const response = await fetch(`https://ncuidluikeknatuqiazj.supabase.co/functions/v1/analyze-website`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ website })
+      });
       
-      // Try to fetch the website
-      const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
       const data = await response.json();
       
-      // If we get content, website exists
-      return data && data.contents && !data.error;
+      // If we get a response with no error, website exists
+      return response.ok && !data.error;
     } catch (error) {
       console.error("Error validating website:", error);
       return false;
     }
   };
   
-  // Get marketing insights from OpenAI
+  // Get marketing insights from website
   const getMarketingInsights = async (website: string): Promise<string> => {
     try {
-      let websiteUrl = website;
-      if (!websiteUrl.startsWith('http://') && !websiteUrl.startsWith('https://')) {
-        websiteUrl = `https://${websiteUrl}`;
-      }
-      
-      // Make request to OpenAI API
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      // Make request to our edge function
+      const response = await fetch(`https://ncuidluikeknatuqiazj.supabase.co/functions/v1/analyze-website`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer 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'
         },
-        body: JSON.stringify({
-          model: "gpt-4o",
-          messages: [
-            {
-              role: "system",
-              content: `You're a marketing strategist and research bot helping ad agencies understand new client websites.`
-            },
-            {
-              role: "user",
-              content: `We have a new prospective client with website, ${websiteUrl}
-
-Based on their website, generate the following structured data:
-
-Business Description — 2-3 sentence summary of what the business does.
-
-Product List — A simple bulleted list of products or services they offer.
-
-Marketing Objective — Choose one or two words to represent the key goal(s) for their campaign. (Examples: store visits, leads, website purchases). Use discretion in terms of how many objectives to prioritize. I.e. an e-commerce only business should just be "website purchases".
-
-Top 3 Audiences — A prioritized list of ideal customer segments to target.
-
-Channel Prioritization — Recommend how to sequence marketing activation across the following channels, from most to least important: Google PPC, YouTube, Meta, TikTok.
-
-Output the result as structured JSON like this:
-{
-  "description": "....",
-  "products": ["...", "..."],
-  "objectives": ["...", "...", "..."]
-  "audiences": ["...", "...", "..."],
-  "channel_priority": ["...", "...", "...", "..."]
-}`
-            }
-          ]
-        })
+        body: JSON.stringify({ website })
       });
       
       const data = await response.json();
       
-      if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
+      if (response.ok && data.success && data.data) {
         try {
           // Try to parse the JSON response
-          const jsonResponse = JSON.parse(data.choices[0].message.content);
+          const jsonResponse = JSON.parse(data.data);
           
           // Format the data into readable text
           let insightsText = `Based on my analysis of your website, here's what I think would work for your first campaign:\n\n`;
@@ -370,7 +332,7 @@ Output the result as structured JSON like this:
           return insightsText;
         } catch (error) {
           // If can't parse JSON, return the raw text
-          return data.choices[0].message.content;
+          return data.data;
         }
       } else {
         return "I couldn't analyze your website properly. Let's continue anyway - can you tell me more about your business?";
