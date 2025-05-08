@@ -15,7 +15,10 @@ declare global {
 }
 
 const InternalChat = () => {
-  const { messages, isLoading, handleSendMessage } = useChat();
+  // Pass option to skip the intro call message
+  const { messages, isLoading, handleSendMessage } = useChat({
+    skipIntroCallMessage: true
+  });
   
   useEffect(() => {
     // Load Calendly widget
