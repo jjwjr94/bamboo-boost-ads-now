@@ -215,8 +215,7 @@ export const useInternalChat = () => {
         text: "I just have a few quick questions to get started. If you'd rather chat live, you can book a quick meeting with me:",
         type: "assistant" as const,
         timestamp: new Date(),
-        isLogged: userHasResponded,
-        timestamp: new Date()
+        isLogged: userHasResponded
       };
       
       setMessages(prev => [...prev, secondMessage]);
