@@ -8,6 +8,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
 import posthog from "posthog-js";
+import { supabase } from "@/integrations/supabase/client";
 
 // Define the Calendly interface to fix TypeScript error
 declare global {
@@ -28,28 +29,99 @@ interface Message {
 const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
+  const [conversationId, setConversationId] = useState<string | null>(null);
   
-  const handleSendMessage = (e: React.FormEvent) => {
+  const createConversation = async () => {
+    try {
+      const userAgent = navigator.userAgent;
+      
+      const { data, error } = await supabase
+        .from('chat_conversations')
+        .insert([{ user_agent: userAgent }])
+        .select();
+      
+      if (error) {
+        console.error("Error creating conversation:", error);
+        return null;
+      }
+      
+      if (data && data.length > 0) {
+        return data[0].id;
+      }
+    } catch (error) {
+      console.error("Error creating conversation:", error);
+    }
+    return null;
+  };
+  
+  const logMessage = async (message: string, sender: string) => {
+    try {
+      // Ensure we have a conversation ID
+      let convId = conversationId;
+      if (!convId) {
+        convId = await createConversation();
+        setConversationId(convId);
+      }
+      
+      if (!convId) {
+        console.error("Failed to create conversation");
+        return;
+      }
+      
+      // Update last_message_at in conversation
+      await supabase
+        .from('chat_conversations')
+        .update({ last_message_at: new Date().toISOString() })
+        .eq('id', convId);
+      
+      // Insert message
+      const { error } = await supabase
+        .from('chat_messages')
+        .insert([{
+          conversation_id: convId,
+          message: message,
+          sender: sender
+        }]);
+      
+      if (error) {
+        console.error("Error logging message:", error);
+      }
+    } catch (error) {
+      console.error("Error logging message:", error);
+    }
+  };
+  
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
     
     // Add user message
-    setMessages(prev => [...prev, { 
-      text: inputValue, 
-      type: "user",
+    const userMessage = {
+      text: inputValue,
+      type: "user" as const,
       timestamp: new Date()
-    }]);
+    };
+    
+    setMessages(prev => [...prev, userMessage]);
+    
+    // Log user message to Supabase
+    await logMessage(inputValue, "user");
     
     // Clear input
     setInputValue("");
     
     // Simulate AI response after a delay
-    setTimeout(() => {
-      setMessages(prev => [...prev, { 
-        text: "Thanks for your message! To get started, please book a kickoff call.", 
-        type: "assistant",
+    setTimeout(async () => {
+      const assistantMessage = {
+        text: "Thanks for your message! To get started, please book a kickoff call.",
+        type: "assistant" as const,
         timestamp: new Date()
-      }]);
+      };
+      
+      setMessages(prev => [...prev, assistantMessage]);
+      
+      // Log assistant message to Supabase
+      await logMessage(assistantMessage.text || "", "assistant");
     }, 1000);
   };
 
@@ -68,39 +140,66 @@ const Chat = () => {
   };
 
   useEffect(() => {
+    // Set up the initial conversation when component mounts
+    const initConversation = async () => {
+      const convId = await createConversation();
+      setConversationId(convId);
+    };
+    
+    initConversation();
+    
     // Display first message immediately
-    setMessages([{ 
-      text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency.", 
-      type: "assistant",
-      timestamp: new Date() 
-    }]);
+    const initialMessage = {
+      text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency.",
+      type: "assistant" as const,
+      timestamp: new Date()
+    };
+    
+    setMessages([initialMessage]);
+    
+    // Log initial message
+    if (conversationId) {
+      logMessage(initialMessage.text || "", "assistant");
+    }
     
     // Display second message after 1.5 seconds
-    const timer1 = setTimeout(() => {
-      setMessages(prev => [...prev, { 
-        text: "Congrats! 🎉 You've unlocked one month of Bamboo for free. 🤑", 
-        type: "assistant",
-        timestamp: new Date() 
-      }]);
+    const timer1 = setTimeout(async () => {
+      const secondMessage = {
+        text: "Congrats! 🎉 You've unlocked one month of Bamboo for free. 🤑",
+        type: "assistant" as const,
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, secondMessage]);
+      
+      // Log message
+      await logMessage(secondMessage.text || "", "assistant");
     }, 1500);
     
     // Display schedule button message after 3 seconds
-    const timer2 = setTimeout(() => {
-      setMessages(prev => [...prev, { 
-        text: "Even before entering your credit card, please book a 15-minute intro call. It's really important to me to learn about your business so your first campaign is a success.", 
-        type: "assistant",
-        timestamp: new Date() 
-      }]);
+    const timer2 = setTimeout(async () => {
+      const thirdMessage = {
+        text: "Even before entering your credit card, please book a 15-minute intro call. It's really important to me to learn about your business so your first campaign is a success.",
+        type: "assistant" as const,
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, thirdMessage]);
+      
+      // Log message
+      await logMessage(thirdMessage.text || "", "assistant");
     }, 3000);
 
     // Display schedule button message after 4.5 seconds
-    const timer3 = setTimeout(() => {
-      setMessages(prev => [...prev, { 
-        text: "", 
-        type: "assistant", 
+    const timer3 = setTimeout(async () => {
+      const buttonMessage = {
+        text: "",
+        type: "assistant" as const,
         showCalendly: true,
         timestamp: new Date()
-      }]);
+      };
+      
+      setMessages(prev => [...prev, buttonMessage]);
     }, 4500);
     
     // Load Calendly widget
