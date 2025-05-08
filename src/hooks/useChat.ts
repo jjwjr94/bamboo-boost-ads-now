@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { v4 as uuidv4 } from "uuid";
@@ -210,8 +209,24 @@ export const useChat = (options: UseChatOptions = {}) => {
       }
     ];
     
-    // Add the intro call message only if not skipped
-    if (!options.skipIntroCallMessage) {
+    // For internal chat, add follow-up message right after the first two
+    if (options.skipIntroCallMessage) {
+      initialMessages.push({
+        text: "Thanks for sharing! Is there anything else you'd like to tell me about your business?",
+        type: "assistant" as const,
+        timestamp: new Date(),
+        isLogged: userHasResponded
+      },
+      {
+        text: "",
+        type: "assistant" as const,
+        showCalendly: true,
+        timestamp: new Date(),
+        isLogged: userHasResponded
+      });
+    }
+    // Add the intro call message only if not skipped and not internal chat
+    else if (!options.skipIntroCallMessage) {
       initialMessages.push({
         text: "Even before entering your credit card, please book a 15-minute intro call. It's really important to me to learn about your business so your first campaign is a success.",
         type: "assistant" as const,
@@ -236,7 +251,8 @@ export const useChat = (options: UseChatOptions = {}) => {
           (
             msg.text?.includes("Hey! I'm Jay") ||
             msg.text?.includes("Congrats! 🎉") ||
-            msg.text?.includes("book a 15-minute intro call")
+            msg.text?.includes("book a 15-minute intro call") ||
+            msg.text?.includes("I just have a few quick questions to get started")
           )
         );
       });
@@ -287,7 +303,7 @@ export const useChat = (options: UseChatOptions = {}) => {
     setTimeout(async () => {
       // Modified response for internal chat
       const responseText = options.skipIntroCallMessage ? 
-        "I just have a few quick questions to get started. If you'd rather chat live, you can book a quick live meeting with me:" :
+        "Thanks for sharing! Is there anything else you'd like to tell me about your business?" :
         "Thanks for your message! To get started, please book a kickoff call.";
         
       const assistantMessage = {
@@ -301,17 +317,19 @@ export const useChat = (options: UseChatOptions = {}) => {
       // Log assistant message to Supabase since user has responded
       const assistantMessageId = await logMessage(assistantMessage.text || "", "assistant");
       
-      // Add calendar booking option
-      setTimeout(async () => {
-        const buttonMessage = {
-          text: "",
-          type: "assistant" as const,
-          showCalendly: true,
-          timestamp: new Date()
-        };
-        
-        setMessages(prev => [...prev, buttonMessage]);
-      }, 1000);
+      // Add calendar booking option for regular chat or if user asks for more info in internal chat
+      if (!options.skipIntroCallMessage) {
+        setTimeout(async () => {
+          const buttonMessage = {
+            text: "",
+            type: "assistant" as const,
+            showCalendly: true,
+            timestamp: new Date()
+          };
+          
+          setMessages(prev => [...prev, buttonMessage]);
+        }, 1000);
+      }
       
     }, 1000);
   };
