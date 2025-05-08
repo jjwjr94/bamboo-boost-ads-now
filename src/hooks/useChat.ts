@@ -1,12 +1,11 @@
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 export interface Message {
   text?: string;
-  type: "assistant" | "action" | "user";
+  type: "assistant" | "user";
   timestamp: Date;
   showCalendly?: boolean;
-  id?: string;
 }
 
 interface UseChatOptions {
@@ -14,75 +13,59 @@ interface UseChatOptions {
 }
 
 export const useChat = (options: UseChatOptions = {}) => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [userHasResponded, setUserHasResponded] = useState(false);
-  const initialized = useRef(false);
-  
-  // Helper function to add messages with a delay
-  const addMessageWithDelay = (message: Message, delay: number) => {
-    return new Promise<void>(resolve => {
-      setTimeout(() => {
-        setMessages(prev => [...prev, message]);
-        resolve();
-      }, delay);
-    });
-  };
-  
-  const initializeConversation = async () => {
-    setIsLoading(true);
-    
-    // Initial welcome messages - this will always be the same 3 messages sequence
+  const [messages, setMessages] = useState<Message[]>(() => {
+    // Initialize with the first welcome message immediately
     const initialMessages: Message[] = [
       {
         text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency. Congrats! 🎉 You've unlocked one month FREE. 🤑",
-        type: "assistant" as const,
+        type: "assistant",
         timestamp: new Date()
       }
     ];
     
-    // Add follow-up messages based on chat type
-    const followUpMessages: Message[] = [];
-    
-    if (!options.skipIntroCallMessage) {
-      followUpMessages.push({
-        text: "To redeem and get started, let's chat. Just 15-minutes to start on the right foot. It's really important to me to learn about your business so your first campaign is a success.",
-        type: "assistant" as const,
-        timestamp: new Date()
-      },
-      {
-        text: "",
-        type: "assistant" as const,
-        showCalendly: true,
-        timestamp: new Date()
-      });
-    } else {
-      followUpMessages.push({
-        text: "Thanks for sharing! Is there anything else you'd like to tell me about your business?",
-        type: "assistant" as const,
-        timestamp: new Date()
-      },
-      {
-        text: "",
-        type: "assistant" as const,
-        showCalendly: true,
-        timestamp: new Date()
-      });
-    }
-    
-    // Clear any existing messages and start with the initial welcome message
-    setMessages([initialMessages[0]]);
-    
-    // Add each follow-up message with a delay for a staged appearance
-    for (let i = 0; i < followUpMessages.length; i++) {
-      await addMessageWithDelay(followUpMessages[i], 1500);
-    }
-    
-    setIsLoading(false);
-  };
+    return initialMessages;
+  });
   
-  const handleSendMessage = async (inputValue: string) => {
-    // Add user message
+  const [isLoading, setIsLoading] = useState(false);
+  const [userHasResponded, setUserHasResponded] = useState(false);
+  
+  // Load the follow-up messages immediately after component mounts
+  useState(() => {
+    // Add a small delay to simulate typing
+    const timer1 = setTimeout(() => {
+      setMessages(prev => [
+        ...prev,
+        {
+          text: options.skipIntroCallMessage 
+            ? "Thanks for sharing! Is there anything else you'd like to tell me about your business?" 
+            : "To redeem and get started, let's chat. Just 15-minutes to start on the right foot. It's really important to me to learn about your business so your first campaign is a success.",
+          type: "assistant",
+          timestamp: new Date()
+        }
+      ]);
+      
+      // Add the third message (calendly button) after another small delay
+      const timer2 = setTimeout(() => {
+        setMessages(prev => [
+          ...prev,
+          {
+            text: "",
+            type: "assistant",
+            showCalendly: true,
+            timestamp: new Date()
+          }
+        ]);
+        setIsLoading(false);
+      }, 800);
+      
+      return () => clearTimeout(timer2);
+    }, 800);
+    
+    return () => clearTimeout(timer1);
+  });
+  
+  const handleSendMessage = (inputValue: string) => {
+    // Add user message immediately
     const userMessage = {
       text: inputValue,
       type: "user" as const,
@@ -90,74 +73,79 @@ export const useChat = (options: UseChatOptions = {}) => {
     };
     
     setMessages(prev => [...prev, userMessage]);
-    
-    // Set user has responded flag
     setUserHasResponded(true);
     
-    // Sequence assistant responses with delays
-    const responseText = options.skipIntroCallMessage ? 
-      "Thanks for sharing! Is there anything else you'd like to tell me about your business?" :
-      "Thanks for your message! To get started, please book a kickoff call.";
-    
-    const assistantMessage = {
-      text: responseText,
-      type: "assistant" as const,
-      timestamp: new Date()
-    };
-    
-    // Add first response after delay
-    await addMessageWithDelay(assistantMessage, 1500);
-    
-    // Add calendar booking option for regular chat or if user asks for more info in internal chat
-    if (!options.skipIntroCallMessage) {
-      // Add calendar button after another delay
-      const buttonMessage = {
-        text: "",
-        type: "assistant" as const,
-        showCalendly: true,
-        timestamp: new Date()
-      };
+    // Add assistant response after a short delay
+    setTimeout(() => {
+      const responseText = options.skipIntroCallMessage ? 
+        "Thanks for sharing! Is there anything else you'd like to tell me about your business?" :
+        "Thanks for your message! To get started, please book a kickoff call.";
       
-      await addMessageWithDelay(buttonMessage, 1500);
-    }
+      setMessages(prev => [
+        ...prev,
+        {
+          text: responseText,
+          type: "assistant",
+          timestamp: new Date()
+        }
+      ]);
+      
+      // Add calendly button after another short delay
+      if (!options.skipIntroCallMessage) {
+        setTimeout(() => {
+          setMessages(prev => [
+            ...prev,
+            {
+              text: "",
+              type: "assistant",
+              showCalendly: true,
+              timestamp: new Date()
+            }
+          ]);
+        }, 800);
+      }
+    }, 800);
   };
   
-  const clearConversation = async () => {
-    // Reset the conversation state
-    setMessages([]);
+  const clearConversation = () => {
+    // Reset conversation to initial state
+    setMessages([
+      {
+        text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency. Congrats! 🎉 You've unlocked one month FREE. 🤑",
+        type: "assistant",
+        timestamp: new Date()
+      }
+    ]);
     setUserHasResponded(false);
     
-    // Reinitialize conversation with welcome messages
-    await initializeConversation();
+    // Add follow-up messages with slight delays
+    setTimeout(() => {
+      setMessages(prev => [
+        ...prev,
+        {
+          text: options.skipIntroCallMessage 
+            ? "Thanks for sharing! Is there anything else you'd like to tell me about your business?" 
+            : "To redeem and get started, let's chat. Just 15-minutes to start on the right foot. It's really important to me to learn about your business so your first campaign is a success.",
+          type: "assistant",
+          timestamp: new Date()
+        }
+      ]);
+      
+      setTimeout(() => {
+        setMessages(prev => [
+          ...prev,
+          {
+            text: "",
+            type: "assistant",
+            showCalendly: true,
+            timestamp: new Date()
+          }
+        ]);
+      }, 800);
+    }, 800);
     
     return true;
   };
-  
-  // Use a ref to ensure initialization only happens once per component mount
-  useEffect(() => {
-    // Set up the initial conversation when component mounts
-    if (!initialized.current) {
-      initialized.current = true;
-      initializeConversation();
-    }
-    
-    // Add visibility change listener to refresh messages when tab becomes visible
-    const handleVisibilityChange = async () => {
-      if (document.visibilityState === 'visible' && !initialized.current) {
-        console.log("Tab became visible, refreshing messages");
-        // If not initialized or we've somehow lost state, reinitialize
-        initialized.current = true;
-        initializeConversation();
-      }
-    };
-    
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      initialized.current = false;
-    };
-  }, []);
   
   return {
     messages,
