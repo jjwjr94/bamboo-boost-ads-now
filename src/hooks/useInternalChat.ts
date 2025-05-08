@@ -189,57 +189,71 @@ export const useInternalChat = () => {
   };
   
   const initializeConversation = (existingMessages: Message[] = []) => {
-    // Only the essential welcome messages for internal chat
+    // If existing messages, use them (existing conversation)
+    if (existingMessages.length > 0) {
+      setMessages(existingMessages);
+      return;
+    }
+    
+    // For new conversations, we'll add the welcome messages with delay
     const initialMessages: Message[] = [
       {
         text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency. Congrats! 🎉 You've unlocked one month FREE. 🤑",
         type: "assistant" as const,
         timestamp: new Date(),
         isLogged: userHasResponded
-      },
-      {
+      }
+    ];
+    
+    // Set first message immediately
+    setMessages(initialMessages);
+    
+    // Add second message after delay
+    setTimeout(() => {
+      const secondMessage = {
         text: "I just have a few quick questions to get started. If you'd rather chat live, you can book a quick live meeting with me:",
         type: "assistant" as const,
         timestamp: new Date(),
         isLogged: userHasResponded
-      },
-      {
-        text: "",
-        type: "assistant" as const,
-        showCalendly: true,
-        timestamp: new Date(),
-        isLogged: userHasResponded
-      },
-            {
-        text: "First, what's the best email to contact you?",
-        type: "assistant" as const,
-        timestamp: new Date(),
-        isLogged: userHasResponded
-      },
-                  {
-        text: "What's your business's website?",
-        type: "assistant" as const,
-        timestamp: new Date(),
-        isLogged: userHasResponded
-      },
-    ];
-    
-    // If existing messages, filter out welcome messages to avoid duplicates
-    if (existingMessages.length > 0) {
-      setMessages(existingMessages);
-    } else {
-      // If no existing messages, just use the initial ones
-      setMessages(initialMessages);
+      };
       
-      // Log initial messages to database if the user has already responded in a previous session
-      if (userHasResponded && conversationId) {
-        initialMessages.forEach(async (message) => {
-          if (message.text) {
-            await logMessage(message.text, "assistant");
+      setMessages(prev => [...prev, secondMessage]);
+      
+      // Add calendly widget after another delay
+      setTimeout(() => {
+        const calendlyMessage = {
+          text: "",
+          type: "assistant" as const,
+          showCalendly: true,
+          timestamp: new Date(),
+          isLogged: userHasResponded
+        };
+        
+        setMessages(prev => [...prev, calendlyMessage]);
+        
+        // Add fourth message after another delay
+        setTimeout(() => {
+          const fourthMessage = {
+            text: "First, what's the best email to contact you?",
+            type: "assistant" as const,
+            timestamp: new Date(),
+            isLogged: userHasResponded
+          };
+          
+          setMessages(prev => [...prev, fourthMessage]);
+          
+          // Log initial messages to database if the user has already responded in a previous session
+          if (userHasResponded && conversationId) {
+            // Log the first four messages
+            if (initialMessages[0].text) {
+              logMessage(initialMessages[0].text, "assistant");
+            }
+            logMessage(secondMessage.text || "", "assistant");
+            logMessage(fourthMessage.text || "", "assistant");
           }
-        });
-      }
-    }
+        }, 1500);
+      }, 1500);
+    }, 1500);
   };
   
   const handleSendMessage = async (inputValue: string) => {
@@ -267,18 +281,18 @@ export const useInternalChat = () => {
       }
     }
     
-    // Simulate AI response after a delay
+    // Only send the fifth message after user has responded
     setTimeout(async () => {
-      const assistantMessage = {
-        text: "Thanks for sharing! Is there anything else you'd like to tell me about your business?",
+      const fifthMessage = {
+        text: "What's your business's website?",
         type: "assistant" as const,
         timestamp: new Date()
       };
       
-      setMessages(prev => [...prev, assistantMessage]);
+      setMessages(prev => [...prev, fifthMessage]);
       
-      // Log assistant message to Supabase since user has responded
-      const assistantMessageId = await logMessage(assistantMessage.text || "", "assistant");
+      // Log fifth message to Supabase
+      await logMessage(fifthMessage.text || "", "assistant");
     }, 1000);
   };
   
