@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { v4 as uuidv4 } from "uuid";
@@ -12,11 +11,7 @@ export interface Message {
   isLogged?: boolean;
 }
 
-interface UseChatOptions {
-  skipIntroCallMessage?: boolean;
-}
-
-export const useChat = (options: UseChatOptions = {}) => {
+export const useChat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -195,7 +190,7 @@ export const useChat = (options: UseChatOptions = {}) => {
   
   const initializeConversation = (existingMessages: Message[] = []) => {
     // Initial welcome messages
-    const initialMessages: Message[] = [
+    const initialMessages = [
       {
         text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency.",
         type: "assistant" as const,
@@ -207,12 +202,8 @@ export const useChat = (options: UseChatOptions = {}) => {
         type: "assistant" as const,
         timestamp: new Date(),
         isLogged: userHasResponded
-      }
-    ];
-    
-    // Add the intro call message only if not skipped
-    if (!options.skipIntroCallMessage) {
-      initialMessages.push({
+      },
+      {
         text: "Even before entering your credit card, please book a 15-minute intro call. It's really important to me to learn about your business so your first campaign is a success.",
         type: "assistant" as const,
         timestamp: new Date(),
@@ -224,8 +215,8 @@ export const useChat = (options: UseChatOptions = {}) => {
         showCalendly: true,
         timestamp: new Date(),
         isLogged: userHasResponded
-      });
-    }
+      }
+    ];
     
     // Always start with the initial welcome messages, then add existing messages if any
     if (existingMessages.length > 0) {
