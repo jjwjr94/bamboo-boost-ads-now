@@ -207,13 +207,7 @@ export const useChat = (options: UseChatOptions = {}) => {
     // Initial welcome messages
     const initialMessages: Message[] = [
       {
-        text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency.",
-        type: "assistant" as const,
-        timestamp: new Date(),
-        isLogged: userHasResponded
-      },
-      {
-        text: "Congrats! 🎉 You've unlocked one month FREE. 🤑",
+        text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency. Congrats! 🎉 You've unlocked one month FREE. 🤑",
         type: "assistant" as const,
         timestamp: new Date(),
         isLogged: userHasResponded
