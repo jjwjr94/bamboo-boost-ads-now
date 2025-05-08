@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { v4 as uuidv4 } from "uuid";
@@ -264,7 +265,7 @@ export const useInternalChat = () => {
     return emailRegex.test(email);
   };
   
-  // Updated Website validation function to handle missing protocol
+  // Updated Website validation function to handle missing protocol and fix auth
   const isValidWebsite = async (website: string): Promise<boolean> => {
     try {
       // Format website URL if missing protocol
@@ -278,7 +279,8 @@ export const useInternalChat = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY || ''}`
+          // Use the supabase client's anon key instead of process.env
+          'Authorization': `Bearer ${supabase.auth.anon_key}`
         },
         body: JSON.stringify({ website: formattedWebsite })
       });
@@ -293,7 +295,7 @@ export const useInternalChat = () => {
     }
   };
   
-  // Get marketing insights from website
+  // Get marketing insights from website with fixed auth
   const getMarketingInsights = async (website: string): Promise<string> => {
     try {
       // Format website URL if missing protocol
@@ -307,7 +309,8 @@ export const useInternalChat = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY || ''}`
+          // Use the supabase client's anon key instead of process.env
+          'Authorization': `Bearer ${supabase.auth.anon_key}`
         },
         body: JSON.stringify({ website: formattedWebsite })
       });
