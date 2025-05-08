@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { v4 as uuidv4 } from "uuid";
@@ -192,7 +193,17 @@ export const useChat = (options: UseChatOptions = {}) => {
     }
   };
   
-  const initializeConversation = (existingMessages: Message[] = []) => {
+  // Helper function to add messages with a delay
+  const addMessageWithDelay = (message: Message, delay: number) => {
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        setMessages(prev => [...prev, message]);
+        resolve();
+      }, delay);
+    });
+  };
+  
+  const initializeConversation = async (existingMessages: Message[] = []) => {
     // Initial welcome messages
     const initialMessages: Message[] = [
       {
@@ -209,9 +220,12 @@ export const useChat = (options: UseChatOptions = {}) => {
       }
     ];
     
+    // Add follow-up messages based on chat type
+    const followUpMessages: Message[] = [];
+    
     // For internal chat, add follow-up message right after the first two
     if (options.skipIntroCallMessage) {
-      initialMessages.push({
+      followUpMessages.push({
         text: "Thanks for sharing! Is there anything else you'd like to tell me about your business?",
         type: "assistant" as const,
         timestamp: new Date(),
@@ -227,7 +241,7 @@ export const useChat = (options: UseChatOptions = {}) => {
     }
     // Add the intro call message only if not skipped and not internal chat
     else if (!options.skipIntroCallMessage) {
-      initialMessages.push({
+      followUpMessages.push({
         text: "To redeem and get started, let's chat. Just 15-minutes to start on the right foot. It's really important to me to learn about your business so your first campaign is a success.",
         type: "assistant" as const,
         timestamp: new Date(),
@@ -257,15 +271,40 @@ export const useChat = (options: UseChatOptions = {}) => {
         );
       });
       
-      // Combine initial messages with filtered existing messages
-      setMessages([...initialMessages, ...nonWelcomeMessages]);
+      // Start with the initial messages
+      setMessages(initialMessages);
+      
+      // If there are existing messages, sequence them with delays
+      if (nonWelcomeMessages.length > 0) {
+        // Add each non-welcome message with a delay
+        for (let i = 0; i < nonWelcomeMessages.length; i++) {
+          await addMessageWithDelay(nonWelcomeMessages[i], 1500);
+        }
+      } else {
+        // If no existing messages, add follow-up messages with delays
+        for (let i = 0; i < followUpMessages.length; i++) {
+          await addMessageWithDelay(followUpMessages[i], 1500);
+        }
+      }
     } else {
       // If no existing messages, just use the initial ones
       setMessages(initialMessages);
       
+      // Add follow-up messages with delays
+      for (let i = 0; i < followUpMessages.length; i++) {
+        await addMessageWithDelay(followUpMessages[i], 1500);
+      }
+      
       // Log initial messages to database if the user has already responded in a previous session
       if (userHasResponded && conversationId) {
         initialMessages.forEach(async (message) => {
+          if (message.text) {
+            await logMessage(message.text, "assistant");
+          }
+        });
+        
+        // Also log follow-up messages
+        followUpMessages.forEach(async (message) => {
           if (message.text) {
             await logMessage(message.text, "assistant");
           }
@@ -299,39 +338,35 @@ export const useChat = (options: UseChatOptions = {}) => {
       }
     }
     
-    // Simulate AI response after a delay
-    setTimeout(async () => {
-      // Modified response for internal chat
-      const responseText = options.skipIntroCallMessage ? 
-        "Thanks for sharing! Is there anything else you'd like to tell me about your business?" :
-        "Thanks for your message! To get started, please book a kickoff call.";
-        
-      const assistantMessage = {
-        text: responseText,
+    // Sequence assistant responses with delays
+    const responseText = options.skipIntroCallMessage ? 
+      "Thanks for sharing! Is there anything else you'd like to tell me about your business?" :
+      "Thanks for your message! To get started, please book a kickoff call.";
+    
+    const assistantMessage = {
+      text: responseText,
+      type: "assistant" as const,
+      timestamp: new Date()
+    };
+    
+    // Add first response after delay
+    await addMessageWithDelay(assistantMessage, 1500);
+    
+    // Log assistant message to Supabase since user has responded
+    const assistantMessageId = await logMessage(assistantMessage.text || "", "assistant");
+    
+    // Add calendar booking option for regular chat or if user asks for more info in internal chat
+    if (!options.skipIntroCallMessage) {
+      // Add calendar button after another delay
+      const buttonMessage = {
+        text: "",
         type: "assistant" as const,
+        showCalendly: true,
         timestamp: new Date()
       };
       
-      setMessages(prev => [...prev, assistantMessage]);
-      
-      // Log assistant message to Supabase since user has responded
-      const assistantMessageId = await logMessage(assistantMessage.text || "", "assistant");
-      
-      // Add calendar booking option for regular chat or if user asks for more info in internal chat
-      if (!options.skipIntroCallMessage) {
-        setTimeout(async () => {
-          const buttonMessage = {
-            text: "",
-            type: "assistant" as const,
-            showCalendly: true,
-            timestamp: new Date()
-          };
-          
-          setMessages(prev => [...prev, buttonMessage]);
-        }, 1000);
-      }
-      
-    }, 1000);
+      await addMessageWithDelay(buttonMessage, 1500);
+    }
   };
   
   const clearConversation = async () => {
