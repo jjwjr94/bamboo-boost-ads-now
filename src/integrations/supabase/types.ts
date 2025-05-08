@@ -15,6 +15,7 @@ export type Database = {
           ip_address: string | null
           last_message_at: string | null
           started_at: string | null
+          url_chat_id: string | null
           user_agent: string | null
         }
         Insert: {
@@ -22,6 +23,7 @@ export type Database = {
           ip_address?: string | null
           last_message_at?: string | null
           started_at?: string | null
+          url_chat_id?: string | null
           user_agent?: string | null
         }
         Update: {
@@ -29,6 +31,7 @@ export type Database = {
           ip_address?: string | null
           last_message_at?: string | null
           started_at?: string | null
+          url_chat_id?: string | null
           user_agent?: string | null
         }
         Relationships: []

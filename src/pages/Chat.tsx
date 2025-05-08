@@ -34,10 +34,11 @@ const Chat = () => {
   const createConversation = async () => {
     try {
       const userAgent = navigator.userAgent;
+      const urlChatId = new URLSearchParams(window.location.search).get('id') || 'main';
       
       const { data, error } = await supabase
         .from('chat_conversations')
-        .insert([{ user_agent: userAgent }])
+        .insert([{ user_agent: userAgent, url_chat_id: urlChatId }])
         .select();
       
       if (error) {
