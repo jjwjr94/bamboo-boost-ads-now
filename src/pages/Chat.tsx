@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import Navigation from "../components/Navigation";
 import ChatMessage from "@/components/chat/ChatMessage";
 import ChatInput from "@/components/chat/ChatInput";
@@ -38,7 +38,7 @@ const Chat = () => {
       .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
   }, [messages]);
   
-  useEffect(() => {
+  React.useEffect(() => {
     // Check if this is a return from Calendly
     const params = new URLSearchParams(window.location.search);
     const fromCalendly = params.get('calendly_scheduled') === 'true';
