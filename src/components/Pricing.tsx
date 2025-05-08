@@ -26,7 +26,7 @@ const Pricing = () => {
                 <span className="text-4xl font-bold">$100</span>
                 <span className="text-gray-600 ml-1">/month</span>
               </div>
-              <p className="text-gray-600 mt-2">1ST MONTH FREE</p>
+              <p className="text-gray-600 font-bold mt-2">1ST MONTH FREE</p>
             </CardHeader>
             <CardContent className="px-6 py-2 flex-grow">
               <ul className="space-y-3">
@@ -64,7 +64,7 @@ const Pricing = () => {
                 <span className="text-4xl font-bold">$300</span>
                 <span className="text-gray-600 ml-1">/month</span>
               </div>
-              <p className="text-gray-600 mt-2">1ST MONTH FREE</p>
+              <p className="text-gray-600 font-bold mt-2">1ST MONTH FREE</p>
             </CardHeader>
             <CardContent className="px-6 py-2 flex-grow">
               <ul className="space-y-3">
