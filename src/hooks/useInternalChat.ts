@@ -264,16 +264,23 @@ export const useInternalChat = () => {
     return emailRegex.test(email);
   };
   
-  // Website validation function
+  // Updated Website validation function to handle missing protocol
   const isValidWebsite = async (website: string): Promise<boolean> => {
     try {
+      // Format website URL if missing protocol
+      let formattedWebsite = website.trim();
+      if (!formattedWebsite.startsWith('http://') && !formattedWebsite.startsWith('https://')) {
+        formattedWebsite = `https://${formattedWebsite}`;
+      }
+      
       // Try to call our edge function to analyze the website
       const response = await fetch(`https://ncuidluikeknatuqiazj.supabase.co/functions/v1/analyze-website`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY || ''}`
         },
-        body: JSON.stringify({ website })
+        body: JSON.stringify({ website: formattedWebsite })
       });
       
       const data = await response.json();
@@ -289,13 +296,20 @@ export const useInternalChat = () => {
   // Get marketing insights from website
   const getMarketingInsights = async (website: string): Promise<string> => {
     try {
+      // Format website URL if missing protocol
+      let formattedWebsite = website.trim();
+      if (!formattedWebsite.startsWith('http://') && !formattedWebsite.startsWith('https://')) {
+        formattedWebsite = `https://${formattedWebsite}`;
+      }
+      
       // Make request to our edge function
       const response = await fetch(`https://ncuidluikeknatuqiazj.supabase.co/functions/v1/analyze-website`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY || ''}`
         },
-        body: JSON.stringify({ website })
+        body: JSON.stringify({ website: formattedWebsite })
       });
       
       const data = await response.json();
@@ -413,8 +427,14 @@ export const useInternalChat = () => {
         setMessages(prev => [...prev, loadingMessage]);
         await logMessage(loadingMessage.text || "", "assistant");
         
+        // Format website URL if missing protocol
+        let formattedWebsite = inputValue.trim();
+        if (!formattedWebsite.startsWith('http://') && !formattedWebsite.startsWith('https://')) {
+          formattedWebsite = `https://${formattedWebsite}`;
+        }
+        
         // Validate website
-        const isValid = await isValidWebsite(inputValue);
+        const isValid = await isValidWebsite(formattedWebsite);
         
         if (isValid) {
           // Show thinking message
@@ -428,7 +448,7 @@ export const useInternalChat = () => {
           await logMessage(thinkingMessage.text || "", "assistant");
           
           // Get marketing insights
-          const insights = await getMarketingInsights(inputValue);
+          const insights = await getMarketingInsights(formattedWebsite);
           
           // Show insights
           setTimeout(async () => {
@@ -463,7 +483,7 @@ export const useInternalChat = () => {
           // Invalid website
           setTimeout(async () => {
             const errorMessage = {
-              text: "That website doesn't quite look right. Can you try again?",
+              text: "That website doesn't quite look right. Can you try again? Make sure it's a valid website address (e.g., example.com).",
               type: "assistant" as const,
               timestamp: new Date()
             };

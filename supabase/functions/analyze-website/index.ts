@@ -78,7 +78,7 @@ Output the result as structured JSON like this:
 {
   "description": "....",
   "products": ["...", "..."],
-  "objectives": ["...", "..."]
+  "objectives": ["...", "..."],
   "audiences": ["...", "...", "..."],
   "channel_priority": ["...", "...", "...", "..."]
 }`
