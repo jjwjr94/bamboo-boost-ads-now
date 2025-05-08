@@ -211,7 +211,7 @@ export const useInternalChat = () => {
     // Add second message after delay
     setTimeout(() => {
       const secondMessage = {
-        text: "I just have a few quick questions to get started. If you'd rather chat live, you can book a quick live meeting with me:",
+        text: "I just have a few quick questions to get started. If you'd rather chat live, you can book a quick meeting with me:",
         type: "assistant" as const,
         timestamp: new Date(),
         isLogged: userHasResponded
