@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
@@ -59,7 +58,7 @@ const Chat = () => {
         .from('chat_conversations')
         .select('id, last_message_at')
         .eq('user_agent', deviceId)
-        .eq('url_chat_id', urlChatId)
+        .eq('conversation_id', urlChatId) // Updated from url_chat_id to conversation_id
         .order('last_message_at', { ascending: false })
         .limit(1);
       
@@ -80,7 +79,7 @@ const Chat = () => {
       
       const { data, error } = await supabase
         .from('chat_conversations')
-        .insert([{ user_agent: userAgent, url_chat_id: urlChatId }])
+        .insert([{ user_agent: userAgent, conversation_id: urlChatId }]) // Updated from url_chat_id to conversation_id
         .select();
       
       if (error) {

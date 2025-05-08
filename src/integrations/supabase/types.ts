@@ -11,27 +11,27 @@ export type Database = {
     Tables: {
       chat_conversations: {
         Row: {
+          conversation_id: string | null
           id: string
           ip_address: string | null
           last_message_at: string | null
           started_at: string | null
-          url_chat_id: string | null
           user_agent: string | null
         }
         Insert: {
+          conversation_id?: string | null
           id?: string
           ip_address?: string | null
           last_message_at?: string | null
           started_at?: string | null
-          url_chat_id?: string | null
           user_agent?: string | null
         }
         Update: {
+          conversation_id?: string | null
           id?: string
           ip_address?: string | null
           last_message_at?: string | null
           started_at?: string | null
-          url_chat_id?: string | null
           user_agent?: string | null
         }
         Relationships: []
