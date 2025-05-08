@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Schedule from "./pages/Schedule";
 import Chat from "./pages/Chat";
 import Chat2 from "./pages/Chat2";
+import InternalChat from "./pages/InternalChat";
 import Feedback from "./pages/Feedback";
 import MeetingConfirmation from "./pages/MeetingConfirmation";
 import NotFound from "./pages/NotFound";
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/chat2" element={<Chat2 />} />
+          <Route path="/internal-chat" element={<InternalChat />} />
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/meeting-confirmation" element={<MeetingConfirmation />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
