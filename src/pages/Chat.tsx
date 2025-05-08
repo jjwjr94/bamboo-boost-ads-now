@@ -87,7 +87,7 @@ const Chat = () => {
     // Display schedule button message after 3 seconds
     const timer2 = setTimeout(() => {
       setMessages(prev => [...prev, { 
-        text: "Even before entering your credit card, please book an intro call. It's really important to me to learn about your business so your first campaign is a success.", 
+        text: "Even before entering your credit card, please book a 15-minute intro call. It's really important to me to learn about your business so your first campaign is a success.", 
         type: "assistant",
         timestamp: new Date() 
       }]);
