@@ -42,15 +42,17 @@ export const useInternalChat = () => {
             const hasUserMessage = data.some(msg => msg.sender === 'user');
             setUserHasResponded(hasUserMessage);
             
-            // Convert database messages to UI messages
-            const loadedMessages: Message[] = data.map(msg => ({
-              text: msg.message,
-              type: msg.sender as "assistant" | "user",
-              timestamp: new Date(msg.timestamp || new Date()),
-              showCalendly: msg.message.includes('book a quick live meeting with me'),
-              id: msg.id,
-              isLogged: true // Mark as already logged in database
-            }));
+            // Convert database messages to UI messages and ensure they're sorted by timestamp
+            const loadedMessages: Message[] = data
+              .map(msg => ({
+                text: msg.message,
+                type: msg.sender as "assistant" | "user",
+                timestamp: new Date(msg.timestamp || new Date()),
+                showCalendly: msg.message.includes('book a quick live meeting with me'),
+                id: msg.id,
+                isLogged: true // Mark as already logged in database
+              }))
+              .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime()); // Ensure chronological order
             
             // Initialize message manager with existing messages
             const manager = new MessageManager(loadedMessages, convId, hasUserMessage);

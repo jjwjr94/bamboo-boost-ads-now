@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 
 export const findOrCreateConversation = async (deviceId: string, conversationId: string) => {
@@ -42,6 +43,7 @@ export const findOrCreateConversation = async (deviceId: string, conversationId:
 
 export const loadMessagesForConversation = async (conversationId: string) => {
   try {
+    // Explicitly specify order by timestamp ascending to ensure chronological order
     const { data, error } = await supabase
       .from('chat_messages')
       .select('*')
