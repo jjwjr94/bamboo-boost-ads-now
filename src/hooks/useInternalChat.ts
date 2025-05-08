@@ -16,6 +16,7 @@ export const useInternalChat = () => {
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userHasResponded, setUserHasResponded] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState<string>("email");
   
   // Generate or retrieve device ID
   const getDeviceId = () => {
@@ -214,7 +215,8 @@ export const useInternalChat = () => {
         text: "I just have a few quick questions to get started. If you'd rather chat live, you can book a quick meeting with me:",
         type: "assistant" as const,
         timestamp: new Date(),
-        isLogged: userHasResponded
+        isLogged: userHasResponded,
+        timestamp: new Date()
       };
       
       setMessages(prev => [...prev, secondMessage]);
@@ -241,6 +243,7 @@ export const useInternalChat = () => {
           };
           
           setMessages(prev => [...prev, fourthMessage]);
+          setCurrentQuestion("email");
           
           // Log initial messages to database if the user has already responded in a previous session
           if (userHasResponded && conversationId) {
@@ -254,6 +257,12 @@ export const useInternalChat = () => {
         }, 1500);
       }, 1500);
     }, 1500);
+  };
+  
+  // Email validation function
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
   
   const handleSendMessage = async (inputValue: string) => {
@@ -280,20 +289,71 @@ export const useInternalChat = () => {
         await logMessage(msg.text, "assistant");
       }
     }
-    
-    // Only send the fifth message after user has responded
-    setTimeout(async () => {
-      const fifthMessage = {
-        text: "What's your business's website?",
-        type: "assistant" as const,
-        timestamp: new Date()
-      };
-      
-      setMessages(prev => [...prev, fifthMessage]);
-      
-      // Log fifth message to Supabase
-      await logMessage(fifthMessage.text || "", "assistant");
-    }, 1000);
+
+    // Check if we need to validate an email
+    if (currentQuestion === "email") {
+      if (isValidEmail(inputValue)) {
+        // Valid email, proceed to next question
+        setTimeout(async () => {
+          const nextMessage = {
+            text: "Thanks. Next, what's your business's website?",
+            type: "assistant" as const,
+            timestamp: new Date()
+          };
+          
+          setMessages(prev => [...prev, nextMessage]);
+          setCurrentQuestion("website");
+          
+          // Log next message to Supabase
+          await logMessage(nextMessage.text || "", "assistant");
+        }, 1500);
+      } else {
+        // Invalid email, ask for it again
+        setTimeout(async () => {
+          const errorMessage = {
+            text: "Whoops, that doesn't look like a valid email address. Can you try again?",
+            type: "assistant" as const,
+            timestamp: new Date()
+          };
+          
+          setMessages(prev => [...prev, errorMessage]);
+          // Keep currentQuestion as "email" since we still need a valid email
+          
+          // Log error message to Supabase
+          await logMessage(errorMessage.text || "", "assistant");
+        }, 1500);
+      }
+    } else if (currentQuestion === "website") {
+      // Handle website response (keep existing functionality)
+      setTimeout(async () => {
+        const nextQuestion = {
+          text: "Great! What's your business name?",
+          type: "assistant" as const,
+          timestamp: new Date()
+        };
+        
+        setMessages(prev => [...prev, nextQuestion]);
+        setCurrentQuestion("business");
+        
+        // Log next question to Supabase
+        await logMessage(nextQuestion.text || "", "assistant");
+      }, 1500);
+    } else {
+      // Handle other questions (keep existing functionality for future questions)
+      setTimeout(async () => {
+        const nextMessage = {
+          text: "Thanks for sharing that information. Our team will be in touch with you shortly!",
+          type: "assistant" as const,
+          timestamp: new Date()
+        };
+        
+        setMessages(prev => [...prev, nextMessage]);
+        setCurrentQuestion("complete");
+        
+        // Log next message to Supabase
+        await logMessage(nextMessage.text || "", "assistant");
+      }, 1500);
+    }
   };
   
   const clearConversation = async () => {
