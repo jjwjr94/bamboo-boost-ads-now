@@ -202,7 +202,7 @@ export const useChat = (options: UseChatOptions = {}) => {
         isLogged: userHasResponded
       },
       {
-        text: "Congrats! 🎉 You've unlocked one month of Bamboo for free. 🤑",
+        text: "Congrats! 🎉 You've unlocked one month FREE. 🤑",
         type: "assistant" as const,
         timestamp: new Date(),
         isLogged: userHasResponded
