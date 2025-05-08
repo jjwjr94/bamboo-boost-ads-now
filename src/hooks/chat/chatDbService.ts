@@ -55,6 +55,7 @@ export const loadMessagesForConversation = async (conversationId: string) => {
       return null;
     }
     
+    console.log("Loaded messages from DB:", data?.length);
     return data || [];
   } catch (error) {
     console.error("Error loading messages:", error);
@@ -81,7 +82,8 @@ export const logMessage = async (conversationId: string, message: string, sender
       .insert([{
         conversation_id: conversationId,
         message: message,
-        sender: sender
+        sender: sender,
+        timestamp: new Date().toISOString() // Explicitly set timestamp to ensure consistency
       }])
       .select();
     

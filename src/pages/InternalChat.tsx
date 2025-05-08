@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Navigation from "../components/Navigation";
 import ChatMessage from "@/components/chat/ChatMessage";
 import ChatInput from "@/components/chat/ChatInput";
@@ -32,6 +32,24 @@ const InternalChat = () => {
   
   // Use the internal chat hook
   const { messages, isLoading, handleSendMessage, clearConversation } = useInternalChat();
+  
+  // Deduplicate messages to handle potential issues when returning to the tab
+  const uniqueMessages = useMemo(() => {
+    // Create a map to store unique messages by their content or ID
+    const uniqueMap = new Map();
+    
+    messages.forEach((message) => {
+      // Use message ID or text+timestamp as a unique key
+      const key = message.id || `${message.type}-${message.text}-${message.timestamp.getTime()}`;
+      if (!uniqueMap.has(key)) {
+        uniqueMap.set(key, message);
+      }
+    });
+    
+    // Convert the map back to an array and ensure it's sorted by timestamp
+    return Array.from(uniqueMap.values())
+      .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+  }, [messages]);
   
   // Monitor messages for marketing insights
   useEffect(() => {
@@ -136,8 +154,8 @@ const InternalChat = () => {
             </div>
           ) : (
             <div className="flex flex-col gap-6">
-              {messages.map((message, index) => (
-                <ChatMessage key={index} message={message} />
+              {uniqueMessages.map((message, index) => (
+                <ChatMessage key={message.id || index} message={message} />
               ))}
               
               {marketingData && (
