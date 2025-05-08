@@ -1,6 +1,5 @@
 
 import { useState, useEffect, useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 export interface Message {
   text?: string;
@@ -38,8 +37,7 @@ export const useChat = (options: UseChatOptions = {}) => {
       {
         text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency. Congrats! 🎉 You've unlocked one month FREE. 🤑",
         type: "assistant" as const,
-        timestamp: new Date(),
-        id: uuidv4()
+        timestamp: new Date()
       }
     ];
     
@@ -50,29 +48,25 @@ export const useChat = (options: UseChatOptions = {}) => {
       followUpMessages.push({
         text: "To redeem and get started, let's chat. Just 15-minutes to start on the right foot. It's really important to me to learn about your business so your first campaign is a success.",
         type: "assistant" as const,
-        timestamp: new Date(),
-        id: uuidv4()
+        timestamp: new Date()
       },
       {
         text: "",
         type: "assistant" as const,
         showCalendly: true,
-        timestamp: new Date(),
-        id: uuidv4()
+        timestamp: new Date()
       });
     } else {
       followUpMessages.push({
         text: "Thanks for sharing! Is there anything else you'd like to tell me about your business?",
         type: "assistant" as const,
-        timestamp: new Date(),
-        id: uuidv4()
+        timestamp: new Date()
       },
       {
         text: "",
         type: "assistant" as const,
         showCalendly: true,
-        timestamp: new Date(),
-        id: uuidv4()
+        timestamp: new Date()
       });
     }
     
@@ -92,8 +86,7 @@ export const useChat = (options: UseChatOptions = {}) => {
     const userMessage = {
       text: inputValue,
       type: "user" as const,
-      timestamp: new Date(),
-      id: uuidv4()
+      timestamp: new Date()
     };
     
     setMessages(prev => [...prev, userMessage]);
@@ -109,8 +102,7 @@ export const useChat = (options: UseChatOptions = {}) => {
     const assistantMessage = {
       text: responseText,
       type: "assistant" as const,
-      timestamp: new Date(),
-      id: uuidv4()
+      timestamp: new Date()
     };
     
     // Add first response after delay
@@ -123,8 +115,7 @@ export const useChat = (options: UseChatOptions = {}) => {
         text: "",
         type: "assistant" as const,
         showCalendly: true,
-        timestamp: new Date(),
-        id: uuidv4()
+        timestamp: new Date()
       };
       
       await addMessageWithDelay(buttonMessage, 1500);
