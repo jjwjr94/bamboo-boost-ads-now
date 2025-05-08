@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { v4 as uuidv4 } from "uuid";
@@ -33,7 +34,8 @@ export const useChat = () => {
     try {
       setIsLoading(true);
       const deviceId = getDeviceId();
-      const urlChatId = new URLSearchParams(window.location.search).get('id') || 'main';
+      // Generate a unique conversation ID from the URL or create a new one
+      const urlChatId = new URLSearchParams(window.location.search).get('id') || uuidv4();
       
       // Try to find existing conversation for this device + url chat ID
       const { data: existingConversations, error: fetchError } = await supabase
