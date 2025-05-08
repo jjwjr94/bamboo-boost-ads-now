@@ -128,15 +128,15 @@ export const useInternalChat = () => {
           text: msg.message,
           type: msg.sender as "assistant" | "user",
           timestamp: new Date(msg.timestamp || new Date()),
-          showCalendly: msg.message.includes('book a kickoff call'),
+          showCalendly: msg.message.includes('book a quick live meeting with me'),
           id: msg.id,
           isLogged: true // Mark as already logged in database
         }));
         
-        // Always show the initial conversation messages first
-        initializeConversation(loadedMessages);
+        // Display the loaded messages
+        setMessages(loadedMessages);
       } else {
-        // If no messages, start with initial greeting
+        // If no messages, start with initial welcome messages
         initializeConversation();
       }
     } catch (error) {
@@ -189,16 +189,10 @@ export const useInternalChat = () => {
   };
   
   const initializeConversation = (existingMessages: Message[] = []) => {
-    // Initial welcome messages
+    // Only the essential welcome messages for internal chat
     const initialMessages: Message[] = [
       {
         text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency.",
-        type: "assistant" as const,
-        timestamp: new Date(),
-        isLogged: userHasResponded
-      },
-      {
-        text: "Congrats! 🎉 You've unlocked one month FREE. 🤑",
         type: "assistant" as const,
         timestamp: new Date(),
         isLogged: userHasResponded
@@ -220,20 +214,7 @@ export const useInternalChat = () => {
     
     // If existing messages, filter out welcome messages to avoid duplicates
     if (existingMessages.length > 0) {
-      const nonWelcomeMessages = existingMessages.filter(msg => {
-        return !(
-          msg.type === "assistant" && 
-          (
-            msg.text?.includes("Hey! I'm Jay") ||
-            msg.text?.includes("Congrats! 🎉") ||
-            msg.text?.includes("book a 15-minute intro call") ||
-            msg.text?.includes("I just have a few quick questions to get started")
-          )
-        );
-      });
-      
-      // Combine initial messages with filtered existing messages
-      setMessages([...initialMessages, ...nonWelcomeMessages]);
+      setMessages(existingMessages);
     } else {
       // If no existing messages, just use the initial ones
       setMessages(initialMessages);
