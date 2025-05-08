@@ -192,7 +192,7 @@ export const useInternalChat = () => {
     // Only the essential welcome messages for internal chat
     const initialMessages: Message[] = [
       {
-        text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency.",
+        text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency. Congrats! 🎉 You've unlocked one month FREE. 🤑",
         type: "assistant" as const,
         timestamp: new Date(),
         isLogged: userHasResponded
@@ -209,7 +209,19 @@ export const useInternalChat = () => {
         showCalendly: true,
         timestamp: new Date(),
         isLogged: userHasResponded
-      }
+      },
+            {
+        text: "First, what's the best email to contact you?",
+        type: "assistant" as const,
+        timestamp: new Date(),
+        isLogged: userHasResponded
+      },
+                  {
+        text: "What's your business's website?",
+        type: "assistant" as const,
+        timestamp: new Date(),
+        isLogged: userHasResponded
+      },
     ];
     
     // If existing messages, filter out welcome messages to avoid duplicates
