@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,8 @@ interface Message {
   type: "assistant" | "action" | "user";
   timestamp: Date;
   showCalendly?: boolean;
+  id?: string; // Optional ID from database
+  isLogged?: boolean; // Flag to indicate if message has been logged to database
 }
 
 const Chat = () => {
@@ -31,6 +34,7 @@ const Chat = () => {
   const [inputValue, setInputValue] = useState("");
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [userHasResponded, setUserHasResponded] = useState(false);
   
   // Generate or retrieve device ID
   const getDeviceId = () => {
@@ -106,19 +110,27 @@ const Chat = () => {
       
       if (error) {
         console.error("Error loading messages:", error);
+        initializeConversation();
         return;
       }
       
       if (data && data.length > 0) {
+        // User has previously responded if there's at least one user message
+        const hasUserMessage = data.some(msg => msg.sender === 'user');
+        setUserHasResponded(hasUserMessage);
+        
         // Convert database messages to UI messages
         const loadedMessages: Message[] = data.map(msg => ({
           text: msg.message,
           type: msg.sender as "assistant" | "user",
           timestamp: new Date(msg.timestamp || new Date()),
           showCalendly: msg.message.includes('book a kickoff call'),
+          id: msg.id,
+          isLogged: true // Mark as already logged in database
         }));
         
-        setMessages(loadedMessages);
+        // Always show the initial conversation messages first
+        initializeConversation(loadedMessages);
       } else {
         // If no messages, start with initial greeting
         initializeConversation();
@@ -151,19 +163,24 @@ const Chat = () => {
         .eq('id', convId);
       
       // Insert message
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('chat_messages')
         .insert([{
           conversation_id: convId,
           message: message,
           sender: sender
-        }]);
+        }])
+        .select();
       
       if (error) {
         console.error("Error logging message:", error);
+        return null;
       }
+      
+      return data && data.length > 0 ? data[0].id : null;
     } catch (error) {
       console.error("Error logging message:", error);
+      return null;
     }
   };
   
@@ -180,8 +197,20 @@ const Chat = () => {
     
     setMessages(prev => [...prev, userMessage]);
     
-    // Log user message to Supabase
-    await logMessage(inputValue, "user");
+    // Set user has responded flag
+    setUserHasResponded(true);
+    
+    // Now log messages to database since user has responded
+    // First log the user message
+    const userMessageId = await logMessage(inputValue, "user");
+    
+    // Then log any assistant messages that haven't been logged yet
+    const unloggedMessages = messages.filter(m => !m.isLogged && m.type === "assistant" && m.text);
+    for (const msg of unloggedMessages) {
+      if (msg.text) {
+        await logMessage(msg.text, "assistant");
+      }
+    }
     
     // Clear input
     setInputValue("");
@@ -196,8 +225,8 @@ const Chat = () => {
       
       setMessages(prev => [...prev, assistantMessage]);
       
-      // Log assistant message to Supabase
-      await logMessage(assistantMessage.text || "", "assistant");
+      // Log assistant message to Supabase since user has responded
+      const assistantMessageId = await logMessage(assistantMessage.text || "", "assistant");
       
       // Add calendar booking option
       setTimeout(async () => {
@@ -228,60 +257,65 @@ const Chat = () => {
     }
   };
   
-  const initializeConversation = async () => {
-    // Display first message immediately
-    const initialMessage = {
-      text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency.",
-      type: "assistant" as const,
-      timestamp: new Date()
-    };
-    
-    setMessages([initialMessage]);
-    
-    // Log initial message
-    if (conversationId) {
-      await logMessage(initialMessage.text || "", "assistant");
-    }
-    
-    // Display second message after 1.5 seconds
-    setTimeout(async () => {
-      const secondMessage = {
+  const initializeConversation = (existingMessages: Message[] = []) => {
+    // Initial welcome messages
+    const initialMessages = [
+      {
+        text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency.",
+        type: "assistant" as const,
+        timestamp: new Date(),
+        isLogged: userHasResponded // Only mark as logged if user has already responded
+      },
+      {
         text: "Congrats! 🎉 You've unlocked one month of Bamboo for free. 🤑",
         type: "assistant" as const,
-        timestamp: new Date()
-      };
-      
-      setMessages(prev => [...prev, secondMessage]);
-      
-      // Log message
-      await logMessage(secondMessage.text || "", "assistant");
-    }, 1500);
-    
-    // Display schedule button message after 3 seconds
-    setTimeout(async () => {
-      const thirdMessage = {
+        timestamp: new Date(),
+        isLogged: userHasResponded // Only mark as logged if user has already responded
+      },
+      {
         text: "Even before entering your credit card, please book a 15-minute intro call. It's really important to me to learn about your business so your first campaign is a success.",
         type: "assistant" as const,
-        timestamp: new Date()
-      };
-      
-      setMessages(prev => [...prev, thirdMessage]);
-      
-      // Log message
-      await logMessage(thirdMessage.text || "", "assistant");
-    }, 3000);
-
-    // Display schedule button message after 4.5 seconds
-    setTimeout(async () => {
-      const buttonMessage = {
+        timestamp: new Date(),
+        isLogged: userHasResponded // Only mark as logged if user has already responded
+      },
+      {
         text: "",
         type: "assistant" as const,
         showCalendly: true,
-        timestamp: new Date()
-      };
+        timestamp: new Date(),
+        isLogged: userHasResponded // Only mark as logged if user has already responded
+      }
+    ];
+    
+    // Always start with the initial welcome messages, then add existing messages if any
+    if (existingMessages.length > 0) {
+      // Filter out any welcome messages from the database to avoid duplicates
+      const nonWelcomeMessages = existingMessages.filter(msg => {
+        return !(
+          msg.type === "assistant" && 
+          (
+            msg.text?.includes("Hey! I'm Jay") ||
+            msg.text?.includes("Congrats! 🎉") ||
+            msg.text?.includes("book a 15-minute intro call")
+          )
+        );
+      });
       
-      setMessages(prev => [...prev, buttonMessage]);
-    }, 4500);
+      // Combine initial messages with filtered existing messages
+      setMessages([...initialMessages, ...nonWelcomeMessages]);
+    } else {
+      // If no existing messages, just use the initial ones
+      setMessages(initialMessages);
+      
+      // Log initial messages to database if the user has already responded in a previous session
+      if (userHasResponded && conversationId) {
+        initialMessages.forEach(async (message) => {
+          if (message.text) {
+            await logMessage(message.text, "assistant");
+          }
+        });
+      }
+    }
   };
 
   useEffect(() => {
