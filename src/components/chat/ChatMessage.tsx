@@ -28,9 +28,12 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
       source: 'chat_message'
     });
     
+    // Get the current URL to use as return URL
+    const returnUrl = encodeURIComponent(window.location.href);
+    
     if (window.Calendly) {
       window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/jayjeffwong/bamboo-intro'
+        url: `https://calendly.com/jayjeffwong/bamboo-intro?hide_gdpr_banner=1&return_url=${returnUrl}`
       });
     }
   };

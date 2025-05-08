@@ -7,6 +7,7 @@ import { useInternalChat } from "@/hooks/useInternalChat";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
+import { useLocation } from "react-router-dom";
 
 // Define the Calendly interface to fix TypeScript error
 declare global {
@@ -18,10 +19,28 @@ declare global {
 }
 
 const InternalChat = () => {
+  const location = useLocation();
   // Use the internal chat hook
   const { messages, isLoading, handleSendMessage, clearConversation } = useInternalChat();
   
   useEffect(() => {
+    // Check if this is a return from Calendly
+    const params = new URLSearchParams(window.location.search);
+    const fromCalendly = params.get('calendly_scheduled') === 'true';
+    
+    if (fromCalendly) {
+      // Clean URL by removing the calendly_scheduled parameter
+      const url = new URL(window.location.href);
+      url.searchParams.delete('calendly_scheduled');
+      window.history.replaceState({}, document.title, url.toString());
+      
+      // Show a toast notification
+      toast({
+        title: "Meeting scheduled",
+        description: "Your meeting has been scheduled successfully. We'll send you an email confirmation shortly.",
+      });
+    }
+    
     // Load Calendly widget
     const link = document.createElement("link");
     link.href = "https://assets.calendly.com/assets/external/widget.css";
@@ -35,12 +54,14 @@ const InternalChat = () => {
     
     return () => {
       // Clean up scripts when component unmounts
-      document.head.removeChild(link);
+      if (document.head.contains(link)) {
+        document.head.removeChild(link);
+      }
       if (document.body.contains(script)) {
         document.body.removeChild(script);
       }
     };
-  }, []);
+  }, [location]);
 
   const handleRestartChat = async () => {
     const success = await clearConversation();
