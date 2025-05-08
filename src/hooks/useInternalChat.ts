@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Message } from "./chat/types";
+import type { Message } from "./chat/types";
 import { getDeviceId, getConversationId } from "./chat/utils";
 import { 
   findOrCreateConversation, 
@@ -10,7 +10,8 @@ import {
 } from "./chat/chatDbService";
 import { MessageManager } from "./chat/messageManager";
 
-export { Message } from "./chat/types";
+// Fix the re-export by using 'export type'
+export type { Message } from "./chat/types";
 
 export const useInternalChat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
