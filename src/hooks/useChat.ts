@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { v4 as uuidv4 } from "uuid";
@@ -30,19 +29,41 @@ export const useChat = () => {
     }
   };
   
+  // Generate or retrieve consistent conversation ID
+  const getConversationId = () => {
+    // First check URL parameter
+    const urlParam = new URLSearchParams(window.location.search).get('id');
+    
+    if (urlParam) {
+      // If URL has parameter, use that
+      return urlParam;
+    } else {
+      // Otherwise check local storage for a default conversation ID
+      const storedId = localStorage.getItem('bamboo_default_conversation_id');
+      if (storedId) {
+        return storedId;
+      } else {
+        // Create new default conversation ID if none exists
+        const newId = uuidv4();
+        localStorage.setItem('bamboo_default_conversation_id', newId);
+        return newId;
+      }
+    }
+  };
+  
   const findOrCreateConversation = async () => {
     try {
       setIsLoading(true);
       const deviceId = getDeviceId();
-      // Generate a unique conversation ID from the URL or create a new one
-      const urlChatId = new URLSearchParams(window.location.search).get('id') || uuidv4();
+      // Get consistent conversation ID
+      const conversationIdToUse = getConversationId();
       
-      // Try to find existing conversation for this device + url chat ID
+      // Try to find existing conversation for this device + conversation ID
       const { data: existingConversations, error: fetchError } = await supabase
         .from('chat_conversations')
         .select('id, last_message_at')
         .eq('user_agent', deviceId)
-        .eq('conversation_id', urlChatId)
+        .eq('conversation_id', conversationIdToUse)
         .order('last_message_at', { ascending: false })
         .limit(1);
       
@@ -63,7 +84,7 @@ export const useChat = () => {
       
       const { data, error } = await supabase
         .from('chat_conversations')
-        .insert([{ user_agent: userAgent, conversation_id: urlChatId }])
+        .insert([{ user_agent: userAgent, conversation_id: conversationIdToUse }])
         .select();
       
       if (error) {
