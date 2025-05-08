@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Navigation from "../components/Navigation";
 import ChatMessage from "@/components/chat/ChatMessage";
 import ChatInput from "@/components/chat/ChatInput";
-import { useChat } from "@/hooks/useChat";
+import { useInternalChat } from "@/hooks/useInternalChat";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
@@ -18,10 +18,8 @@ declare global {
 }
 
 const InternalChat = () => {
-  // Pass option to skip the intro call message
-  const { messages, isLoading, handleSendMessage, clearConversation } = useChat({
-    skipIntroCallMessage: true
-  });
+  // Use the internal chat hook
+  const { messages, isLoading, handleSendMessage, clearConversation } = useInternalChat();
   
   useEffect(() => {
     // Load Calendly widget
