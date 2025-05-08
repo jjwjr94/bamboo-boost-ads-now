@@ -4,6 +4,9 @@ import Navigation from "../components/Navigation";
 import ChatMessage from "@/components/chat/ChatMessage";
 import ChatInput from "@/components/chat/ChatInput";
 import { useChat } from "@/hooks/useChat";
+import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
+import { toast } from "@/components/ui/use-toast";
 
 // Define the Calendly interface to fix TypeScript error
 declare global {
@@ -16,7 +19,7 @@ declare global {
 
 const InternalChat = () => {
   // Pass option to skip the intro call message
-  const { messages, isLoading, handleSendMessage } = useChat({
+  const { messages, isLoading, handleSendMessage, clearConversation } = useChat({
     skipIntroCallMessage: true
   });
   
@@ -41,14 +44,42 @@ const InternalChat = () => {
     };
   }, []);
 
+  const handleRestartChat = async () => {
+    const success = await clearConversation();
+    if (success) {
+      toast({
+        title: "Chat restarted",
+        description: "All messages have been cleared.",
+      });
+      // Refresh the page to reset the UI state completely
+      window.location.reload();
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to restart chat. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navigation />
       <div className="pt-24 pb-24 px-4 flex-grow overflow-y-auto">
         <div className="container mx-auto max-w-3xl">
-          <div className="bg-amber-100 p-4 mb-6 rounded-md border border-amber-300">
-            <p className="text-amber-700 font-medium">Internal Testing Chat</p>
-            <p className="text-amber-600 text-sm">This is a copy of the production chat for testing purposes.</p>
+          <div className="bg-amber-100 p-4 mb-6 rounded-md border border-amber-300 flex justify-between items-center">
+            <div>
+              <p className="text-amber-700 font-medium">Internal Testing Chat</p>
+              <p className="text-amber-600 text-sm">This is a copy of the production chat for testing purposes.</p>
+            </div>
+            <Button
+              variant="outline"
+              className="border-amber-500 text-amber-700 hover:bg-amber-200"
+              onClick={handleRestartChat}
+            >
+              <RefreshCw className="mr-2 h-4 w-4" />
+              Restart Chat
+            </Button>
           </div>
           
           {isLoading ? (

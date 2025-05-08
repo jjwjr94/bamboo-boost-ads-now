@@ -310,6 +310,36 @@ export const useChat = (options: UseChatOptions = {}) => {
     }, 1000);
   };
   
+  const clearConversation = async () => {
+    try {
+      if (conversationId) {
+        // Delete all messages for this conversation
+        const { error: deleteError } = await supabase
+          .from('chat_messages')
+          .delete()
+          .eq('conversation_id', conversationId);
+        
+        if (deleteError) {
+          console.error("Error deleting messages:", deleteError);
+          return false;
+        }
+        
+        // Reset the conversation state
+        setMessages([]);
+        setUserHasResponded(false);
+        
+        // Reinitialize conversation with welcome messages
+        initializeConversation();
+        
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Error clearing conversation:", error);
+      return false;
+    }
+  };
+  
   useEffect(() => {
     // Set up the initial conversation when component mounts
     findOrCreateConversation();
@@ -318,6 +348,7 @@ export const useChat = (options: UseChatOptions = {}) => {
   return {
     messages,
     isLoading,
-    handleSendMessage
+    handleSendMessage,
+    clearConversation  // Expose the clear conversation function
   };
 };
