@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { v4 as uuidv4 } from "uuid";
@@ -284,8 +285,13 @@ export const useChat = (options: UseChatOptions = {}) => {
     
     // Simulate AI response after a delay
     setTimeout(async () => {
+      // Modified response for internal chat
+      const responseText = options.skipIntroCallMessage ? 
+        "I just have a few quick questions to get started. If you'd rather chat live, you can book a quick live meeting with me:" :
+        "Thanks for your message! To get started, please book a kickoff call.";
+        
       const assistantMessage = {
-        text: "Thanks for your message! To get started, please book a kickoff call.",
+        text: responseText,
         type: "assistant" as const,
         timestamp: new Date()
       };
@@ -349,6 +355,6 @@ export const useChat = (options: UseChatOptions = {}) => {
     messages,
     isLoading,
     handleSendMessage,
-    clearConversation  // Expose the clear conversation function
+    clearConversation
   };
 };
