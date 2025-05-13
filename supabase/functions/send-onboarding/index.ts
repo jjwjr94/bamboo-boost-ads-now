@@ -58,8 +58,7 @@ serve(async (req) => {
     }
 
     // During development, send an email to the verified email address
-    // In production with a verified domain, you'd send to hello@withbamboo.com
-    const verifiedEmail = "jay@withbamboo.com"; // Updated to the new verified email
+    const verifiedEmail = "jay@withbamboo.com"; 
     
     try {
       // Prepare email content that would normally go to hello@withbamboo.com
@@ -84,13 +83,16 @@ serve(async (req) => {
 
       console.log("Resend API response:", emailResult);
       
-      return new Response(JSON.stringify({ 
-        success: true, 
-        note: "Email sent to verified development email. In production, this would go to hello@withbamboo.com." 
-      }), {
-        status: 200,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          note: "Email sent to verified development email. In production, this would go to hello@withbamboo.com." 
+        }), 
+        {
+          status: 200,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
     } catch (emailError: any) {
       console.error("Error sending onboarding email:", emailError);
       

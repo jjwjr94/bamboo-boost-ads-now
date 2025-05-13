@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Check, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -44,36 +45,32 @@ const OnboardingFormMessage: React.FC<OnboardingFormMessageProps> = ({ onSubmitS
       
       console.log("Submitting form to edge function:", values);
       
-      // Full URL of the Supabase edge function
-      const functionUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-onboarding`;
-      console.log("Edge function URL:", functionUrl);
-      
-      // Call the onboarding edge function
-      const response = await fetch(functionUrl, {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-      
-      const responseData = await response.json();
-      console.log("Edge function response:", responseData);
-      
-      if (!response.ok) {
-        throw new Error(responseData.error || "Failed to submit onboarding form");
-      }
-      
-      // Mark as submitted and show success message
-      setIsSubmitted(true);
-      toast({
-        title: "Submission received",
-        description: "Thanks for your information! Our team will be in touch soon.",
-      });
-      
-      // Call the success callback if provided
-      if (onSubmitSuccess) {
-        onSubmitSuccess();
+      try {
+        // Use supabase client to invoke the function instead of direct fetch
+        const { data, error } = await supabase.functions.invoke('send-onboarding', {
+          body: values
+        });
+        
+        console.log("Edge function response:", data, error);
+        
+        if (error) {
+          throw new Error(error.message || "Failed to submit the form");
+        }
+        
+        // Mark as submitted and show success message
+        setIsSubmitted(true);
+        toast({
+          title: "Submission received",
+          description: "Thanks for your information! Our team will be in touch soon.",
+        });
+        
+        // Call the success callback if provided
+        if (onSubmitSuccess) {
+          onSubmitSuccess();
+        }
+      } catch (error: any) {
+        console.error("Error invoking function:", error);
+        throw error;
       }
       
     } catch (error: any) {
