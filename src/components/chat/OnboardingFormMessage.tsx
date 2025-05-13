@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -79,8 +78,10 @@ const OnboardingFormMessage = ({ onSubmitSuccess }: OnboardingFormMessageProps) 
         setDevNote(data.note);
       }
       
-      toast.success("Onboarding request submitted!", {
-        description: "We'll get back to you shortly to continue the process.",
+      toast({
+        title: "Success",
+        description: "Onboarding request submitted! We'll get back to you shortly.",
+        variant: "default",
       });
       
       form.reset();
@@ -92,8 +93,10 @@ const OnboardingFormMessage = ({ onSubmitSuccess }: OnboardingFormMessageProps) 
     } catch (error) {
       console.error("Error submitting onboarding request:", error);
       setSubmissionError("We couldn't send your request. Please try again later.");
-      toast.error("Failed to submit request", {
-        description: "Please try again or contact us directly.",
+      toast({
+        title: "Error",
+        description: "Failed to submit request. Please try again or contact us directly.",
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
