@@ -39,7 +39,7 @@ serve(async (req) => {
 
     // During development, send an email to the verified email address
     // In production with a verified domain, you'd send to hello@withbamboo.com
-    const verifiedEmail = "jay@adocointech.com"; // This is the verified email in your Resend account
+    const verifiedEmail = "jay@withbamboo.com"; // Updated to the new verified email
     
     try {
       // Prepare email content that would normally go to hello@withbamboo.com
