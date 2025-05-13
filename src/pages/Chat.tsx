@@ -17,7 +17,7 @@ declare global {
 }
 
 const Chat = () => {
-  const { messages, isLoading, handleSendMessage, handleFormSubmitSuccess } = useChat();
+  const { messages, isLoading, handleSendMessage } = useChat();
   const location = useLocation();
   
   // Deduplicate messages to handle potential issues when returning to the tab
@@ -92,11 +92,7 @@ const Chat = () => {
           ) : (
             <div className="flex flex-col gap-6">
               {uniqueMessages.map((message, index) => (
-                <ChatMessage 
-                  key={index} 
-                  message={message}
-                  onFormSubmitSuccess={handleFormSubmitSuccess}
-                />
+                <ChatMessage key={index} message={message} />
               ))}
             </div>
           )}
