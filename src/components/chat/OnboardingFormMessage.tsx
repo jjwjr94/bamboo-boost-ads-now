@@ -101,7 +101,7 @@ const OnboardingFormMessage: React.FC<OnboardingFormMessageProps> = ({ onSubmitS
       ) : (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <h3 className="text-lg font-semibold mb-4">Please share some information to get started</h3>
+            <h3 className="text-lg font-semibold mb-4">Onboarding Form</h3>
             
             {submissionError && (
               <Alert variant="destructive" className="mb-4">
