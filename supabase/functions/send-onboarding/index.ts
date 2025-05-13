@@ -24,10 +24,30 @@ serve(async (req) => {
   }
 
   try {
-    const { email, phone, companyUrl, companyDescription } = await req.json() as OnboardingRequest;
+    console.log("Received onboarding request");
+    const body = await req.text();
+    console.log("Request body text:", body);
+    
+    let data;
+    try {
+      data = JSON.parse(body);
+      console.log("Parsed request data:", data);
+    } catch (parseError) {
+      console.error("Error parsing JSON:", parseError);
+      return new Response(
+        JSON.stringify({ error: "Invalid JSON in request body" }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
+    
+    const { email, phone, companyUrl, companyDescription } = data as OnboardingRequest;
 
     // Validate inputs
     if (!email || !phone || !companyUrl || !companyDescription) {
+      console.error("Missing required fields:", { email, phone, companyUrl, companyDescription });
       return new Response(
         JSON.stringify({ error: "All fields are required" }),
         {
@@ -52,8 +72,9 @@ serve(async (req) => {
         <p>${companyDescription.replace(/\n/g, "<br/>")}</p>
       `;
       
+      console.log("Sending email with Resend");
       // Send email to the verified email (for development)
-      const data = await resend.emails.send({
+      const emailResult = await resend.emails.send({
         from: "Bamboo AI Onboarding <onboarding@resend.dev>",
         to: [verifiedEmail], // Send to the verified email
         reply_to: email,
@@ -61,7 +82,7 @@ serve(async (req) => {
         html: htmlContent,
       });
 
-      console.log("Onboarding email sent successfully to verified email:", data);
+      console.log("Resend API response:", emailResult);
       
       return new Response(JSON.stringify({ 
         success: true, 

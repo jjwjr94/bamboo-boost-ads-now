@@ -8,7 +8,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, AlertCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -24,6 +25,7 @@ interface OnboardingFormMessageProps {
 const OnboardingFormMessage: React.FC<OnboardingFormMessageProps> = ({ onSubmitSuccess }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,9 +40,16 @@ const OnboardingFormMessage: React.FC<OnboardingFormMessageProps> = ({ onSubmitS
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsSubmitting(true);
+      setSubmissionError(null);
+      
+      console.log("Submitting form to edge function:", values);
+      
+      // Full URL of the Supabase edge function
+      const functionUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-onboarding`;
+      console.log("Edge function URL:", functionUrl);
       
       // Call the onboarding edge function
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-onboarding`, {
+      const response = await fetch(functionUrl, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -48,9 +57,11 @@ const OnboardingFormMessage: React.FC<OnboardingFormMessageProps> = ({ onSubmitS
         body: JSON.stringify(values),
       });
       
+      const responseData = await response.json();
+      console.log("Edge function response:", responseData);
+      
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to submit onboarding form");
+        throw new Error(responseData.error || "Failed to submit onboarding form");
       }
       
       // Mark as submitted and show success message
@@ -65,8 +76,9 @@ const OnboardingFormMessage: React.FC<OnboardingFormMessageProps> = ({ onSubmitS
         onSubmitSuccess();
       }
       
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error submitting onboarding form:", error);
+      setSubmissionError(error.message || "There was an error submitting your information. Please try again.");
       toast({
         title: "Submission failed",
         description: "There was an error submitting your information. Please try again.",
@@ -93,6 +105,14 @@ const OnboardingFormMessage: React.FC<OnboardingFormMessageProps> = ({ onSubmitS
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <h3 className="text-lg font-semibold mb-4">Please share some information to get started</h3>
+            
+            {submissionError && (
+              <Alert variant="destructive" className="mb-4">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{submissionError}</AlertDescription>
+              </Alert>
+            )}
             
             <FormField
               control={form.control}
