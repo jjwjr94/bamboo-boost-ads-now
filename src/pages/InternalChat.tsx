@@ -31,7 +31,7 @@ const InternalChat = () => {
   const [showMarketingDialog, setShowMarketingDialog] = useState(false);
   
   // Use the internal chat hook
-  const { messages, isLoading, handleSendMessage, clearConversation } = useInternalChat();
+  const { messages, isLoading, handleSendMessage, clearConversation, handleFormSubmitSuccess } = useInternalChat();
   
   // Deduplicate messages to handle potential issues when returning to the tab
   const uniqueMessages = useMemo(() => {
@@ -155,7 +155,11 @@ const InternalChat = () => {
           ) : (
             <div className="flex flex-col gap-6">
               {uniqueMessages.map((message, index) => (
-                <ChatMessage key={message.id || index} message={message} />
+                <ChatMessage 
+                  key={message.id || index} 
+                  message={message} 
+                  onFormSubmitSuccess={handleFormSubmitSuccess}
+                />
               ))}
               
               {marketingData && (

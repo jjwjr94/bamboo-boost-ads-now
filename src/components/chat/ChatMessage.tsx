@@ -6,10 +6,11 @@ import { Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import posthog from "posthog-js";
+import OnboardingFormMessage from "./OnboardingFormMessage";
 
 export interface Message {
   text?: string;
-  type: "assistant" | "action" | "user";
+  type: "assistant" | "action" | "user" | "onboarding-form";
   timestamp: Date;
   showCalendly?: boolean;
   id?: string;
@@ -18,9 +19,10 @@ export interface Message {
 
 interface ChatMessageProps {
   message: Message;
+  onFormSubmitSuccess?: () => void;
 }
 
-const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
+const ChatMessage: React.FC<ChatMessageProps> = ({ message, onFormSubmitSuccess }) => {
   const openCalendly = () => {
     // Track the "Book Meeting" button click
     posthog.capture('book_meeting_clicked', {
@@ -42,7 +44,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
     <div className={`flex items-start gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500 ${
       message.type === "user" ? "justify-end" : "justify-start"
     }`}>
-      {message.type === "assistant" ? (
+      {message.type === "assistant" || message.type === "onboarding-form" ? (
         <>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -54,16 +56,24 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
               <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
             </TooltipContent>
           </Tooltip>
-          <div className="bg-white p-4 rounded-lg rounded-tl-none max-w-[80%] shadow-sm border border-gray-100">
-            {message.text && <p className="text-bamboo-navy">{message.text}</p>}
-            {message.showCalendly && (
-              <Button 
-                onClick={openCalendly}
-                className="mt-2 bg-bamboo-primary hover:bg-bamboo-secondary text-white"
-              >
-                <Calendar className="h-4 w-4 mr-2" />
-                Book a Meeting
-              </Button>
+          <div className={`bg-white p-4 rounded-lg rounded-tl-none max-w-[80%] shadow-sm border border-gray-100 ${
+            message.type === "onboarding-form" ? "max-w-[90%]" : ""
+          }`}>
+            {message.type === "onboarding-form" ? (
+              <OnboardingFormMessage onSubmitSuccess={onFormSubmitSuccess} />
+            ) : (
+              <>
+                {message.text && <p className="text-bamboo-navy">{message.text}</p>}
+                {message.showCalendly && (
+                  <Button 
+                    onClick={openCalendly}
+                    className="mt-2 bg-bamboo-primary hover:bg-bamboo-secondary text-white"
+                  >
+                    <Calendar className="h-4 w-4 mr-2" />
+                    Book a Meeting
+                  </Button>
+                )}
+              </>
             )}
           </div>
         </>

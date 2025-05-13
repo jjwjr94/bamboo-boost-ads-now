@@ -1,246 +1,235 @@
 
-import { useState, useEffect } from "react";
-import type { Message } from "./chat/types";
-import { getDeviceId, getConversationId } from "./chat/utils";
-import { 
-  findOrCreateConversation, 
-  loadMessagesForConversation, 
-  logMessage,
-  deleteConversationMessages 
-} from "./chat/chatDbService";
+import { useState, useCallback } from "react";
+import { Message } from "./chat/types";
 import { MessageManager } from "./chat/messageManager";
+import { v4 as uuidv4 } from "uuid";
 
-// Fix the re-export by using 'export type'
-export type { Message } from "./chat/types";
+interface UseInternalChatOptions {
+  skipIntroCallMessage?: boolean;
+}
 
-export const useInternalChat = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [conversationId, setConversationId] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+export const useInternalChat = (options: UseInternalChatOptions = {}) => {
+  const [messages, setMessages] = useState<Message[]>(() => {
+    // Initialize with the first welcome message immediately
+    const initialMessages: Message[] = [
+      {
+        text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency. Congrats! 🎉 You've unlocked one month FREE. 🤑",
+        type: "assistant",
+        timestamp: new Date(),
+        id: uuidv4()
+      }
+    ];
+    
+    return initialMessages;
+  });
+  
+  const [isLoading, setIsLoading] = useState(false);
   const [userHasResponded, setUserHasResponded] = useState(false);
   const [messageManager, setMessageManager] = useState<MessageManager | null>(null);
-  
-  // Initialization
-  useEffect(() => {
-    const initChat = async () => {
-      try {
-        console.log("Initializing chat...");
-        setIsLoading(true);
-        const deviceId = getDeviceId();
-        // Get consistent conversation ID
-        const conversationIdToUse = getConversationId();
+  const [showingOnboardingForm, setShowingOnboardingForm] = useState(false);
+
+  // Initialize the message manager
+  useState(() => {
+    const manager = new MessageManager(messages, null, userHasResponded);
+    setMessageManager(manager);
+    
+    // Add a small delay to simulate typing
+    const timer1 = setTimeout(() => {
+      const nextMsg = {
+        text: options.skipIntroCallMessage 
+          ? "Thanks for sharing! Is there anything else you'd like to tell me about your business?" 
+          : "To redeem and get started, let's chat. Just 15-minutes to start on the right foot. It's really important to me to learn about your business so your first campaign is a success.",
+        type: "assistant" as const,
+        timestamp: new Date(),
+        id: uuidv4()
+      };
+      
+      setMessages(prev => [...prev, nextMsg]);
+      
+      // Add the third message (calendly button) after another small delay
+      const timer2 = setTimeout(() => {
+        const calendlyMsg = {
+          text: "",
+          type: "assistant" as const,
+          showCalendly: true,
+          timestamp: new Date(),
+          id: uuidv4()
+        };
         
-        // Find or create the conversation in the database
-        const convId = await findOrCreateConversation(deviceId, conversationIdToUse);
-        setConversationId(convId);
-        
-        if (convId) {
-          console.log("Loading messages for conversation:", convId);
-          // Load existing messages
-          const data = await loadMessagesForConversation(convId);
-          
-          if (data && data.length > 0) {
-            console.log("Found messages:", data.length);
-            // User has previously responded if there's at least one user message
-            const hasUserMessage = data.some(msg => msg.sender === 'user');
-            setUserHasResponded(hasUserMessage);
-            
-            // Convert database messages to UI messages and ensure they're sorted by timestamp
-            const loadedMessages: Message[] = data
-              .map(msg => ({
-                text: msg.message,
-                type: msg.sender as "assistant" | "user",
-                timestamp: new Date(msg.timestamp || new Date()),
-                showCalendly: msg.message.includes('book a quick live meeting with me'),
-                id: msg.id,
-                isLogged: true // Mark as already logged in database
-              }))
-              .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime()); // Ensure chronological order
-            
-            // Log the messages we're displaying to help debug ordering issues
-            console.log("Messages after sorting:", 
-              loadedMessages.map(m => ({
-                text: m.text?.substring(0, 20) + "...",
-                type: m.type,
-                time: m.timestamp.toISOString()
-              }))
-            );
-            
-            // Initialize message manager with existing messages
-            const manager = new MessageManager(loadedMessages, convId, hasUserMessage);
-            setMessageManager(manager);
-            
-            // Display the loaded messages
-            setMessages(loadedMessages);
-          } else {
-            console.log("No existing messages found, starting new conversation");
-            // If no messages, start with initial welcome messages
-            const manager = new MessageManager([], convId, false);
-            setMessageManager(manager);
-            await startNewConversation(manager);
-          }
-        } else {
-          // Failed to create conversation
-          console.error("Failed to create conversation");
-          const manager = new MessageManager([], null, false);
-          setMessageManager(manager);
-          await startNewConversation(manager);
-        }
-      } catch (error) {
-        console.error("Error initializing chat:", error);
-        const manager = new MessageManager([], null, false);
-        setMessageManager(manager);
-        await startNewConversation(manager);
-      } finally {
+        setMessages(prev => [...prev, calendlyMsg]);
         setIsLoading(false);
-      }
-    };
+      }, 800);
+      
+      return () => clearTimeout(timer2);
+    }, 800);
     
-    initChat();
-    
-    // Add visibility change listener to refresh messages when tab becomes visible
-    const handleVisibilityChange = async () => {
-      if (document.visibilityState === 'visible' && conversationId) {
-        console.log("Tab became visible, refreshing messages");
-        // Refresh messages from the database to ensure we have the latest state
-        const data = await loadMessagesForConversation(conversationId);
-        if (data && data.length > 0) {
-          const refreshedMessages: Message[] = data
-            .map(msg => ({
-              text: msg.message,
-              type: msg.sender as "assistant" | "user",
-              timestamp: new Date(msg.timestamp || new Date()),
-              showCalendly: msg.message.includes('book a quick live meeting with me'),
-              id: msg.id,
-              isLogged: true
-            }))
-            .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
-          
-          console.log("Refreshed messages:", refreshedMessages.length);
-          
-          // Update the message manager and state with refreshed messages
-          if (messageManager) {
-            messageManager.setMessages(refreshedMessages);
-          }
-          setMessages(refreshedMessages);
-        }
-      }
-    };
-    
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
+    return () => clearTimeout(timer1);
   }, []);
   
-  // Start a new conversation with welcome messages
-  const startNewConversation = async (manager: MessageManager) => {
-    await manager.initializeConversation();
-    setMessages(manager.getMessages());
+  const handleSendMessage = (inputValue: string) => {
+    // Check for onboarding trigger words
+    const onboardingTriggers = ['onboarding', 'sign up', 'register', 'signup', 'onboard'];
+    const shouldShowOnboardingForm = onboardingTriggers.some(trigger => 
+      inputValue.toLowerCase().includes(trigger)
+    );
     
-    // Add second message after delay
-    setTimeout(async () => {
-      await manager.addSecondMessage();
-      setMessages([...manager.getMessages()]);
-      
-      // Add calendly widget after another delay
-      setTimeout(async () => {
-        await manager.addCalendlyMessage();
-        setMessages([...manager.getMessages()]);
-        
-        // Add email question after another delay
-        setTimeout(async () => {
-          await manager.addEmailQuestion();
-          setMessages([...manager.getMessages()]);
-        }, 1500);
-      }, 1500);
-    }, 1500);
-  };
-  
-  // Handle sending messages
-  const handleSendMessage = async (inputValue: string) => {
-    if (!messageManager) return;
-    
-    // Add user message
+    // Add user message immediately
     const userMessage = {
       text: inputValue,
       type: "user" as const,
-      timestamp: new Date()
+      timestamp: new Date(),
+      id: uuidv4()
     };
     
-    messageManager.addMessage(userMessage);
-    setMessages([...messageManager.getMessages()]);
-    
-    // Set user has responded flag
+    setMessages(prev => [...prev, userMessage]);
     setUserHasResponded(true);
-    messageManager.setUserHasResponded(true);
     
-    // Log user message to database
-    const convId = messageManager.getConversationId();
-    if (convId) {
-      await logMessage(convId, inputValue, "user");
+    // If trigger word detected, show onboarding form
+    if (shouldShowOnboardingForm && !showingOnboardingForm) {
+      setTimeout(() => {
+        setMessages(prev => [
+          ...prev,
+          {
+            text: "Great! Let's get you onboarded with Bamboo AI. Please fill out this quick form:",
+            type: "assistant",
+            timestamp: new Date(),
+            id: uuidv4()
+          }
+        ]);
+        
+        // Add onboarding form after a short delay
+        setTimeout(() => {
+          setMessages(prev => [
+            ...prev,
+            {
+              type: "onboarding-form",
+              timestamp: new Date(),
+              id: uuidv4()
+            }
+          ]);
+          setShowingOnboardingForm(true);
+        }, 500);
+      }, 800);
+      return;
+    }
+    
+    // Regular message flow - we can use parts of the message manager logic for consistency
+    setTimeout(() => {
+      const responseText = options.skipIntroCallMessage ? 
+        "Thanks for sharing! Is there anything else you'd like to tell me about your business?" :
+        "Thanks for your message! To get started, please book a kickoff call.";
       
-      // Log any unlogged assistant messages
-      const unloggedMessages = messageManager.getMessages().filter(m => 
-        !m.isLogged && m.type === "assistant" && m.text
-      );
+      const responseMessage = {
+        text: responseText,
+        type: "assistant" as const,
+        timestamp: new Date(),
+        id: uuidv4()
+      };
       
-      for (const msg of unloggedMessages) {
-        if (msg.text) {
-          await logMessage(convId, msg.text, "assistant");
-        }
+      setMessages(prev => [...prev, responseMessage]);
+      
+      // Add calendly button after another short delay
+      if (!options.skipIntroCallMessage) {
+        setTimeout(() => {
+          const calendlyMessage = {
+            text: "",
+            type: "assistant" as const,
+            showCalendly: true,
+            timestamp: new Date(),
+            id: uuidv4()
+          };
+          
+          setMessages(prev => [...prev, calendlyMessage]);
+        }, 800);
       }
-    }
-    
-    // Process the response based on the current question
-    const currentQuestion = messageManager.getCurrentQuestion();
-    
-    if (currentQuestion === "email") {
-      setTimeout(async () => {
-        await messageManager.handleEmailResponse(inputValue);
-        setMessages([...messageManager.getMessages()]);
-      }, 1500);
-    } else if (currentQuestion === "website") {
-      setTimeout(async () => {
-        await messageManager.handleWebsiteResponse(inputValue);
-        setMessages([...messageManager.getMessages()]);
-      }, 1000);
-    } else {
-      // Handle other questions
-      setTimeout(async () => {
-        await messageManager.handleOtherResponse();
-        setMessages([...messageManager.getMessages()]);
-      }, 1500);
-    }
+    }, 800);
   };
   
-  // Clear conversation
+  // Function to handle successful form submission
+  const handleFormSubmitSuccess = useCallback(() => {
+    // Add a follow-up message after form submission
+    setTimeout(() => {
+      setMessages(prev => [
+        ...prev,
+        {
+          text: "Thank you for completing the onboarding form! Our team will review your information and get back to you soon. In the meantime, feel free to ask any questions about our services.",
+          type: "assistant",
+          timestamp: new Date(),
+          id: uuidv4()
+        }
+      ]);
+      setShowingOnboardingForm(false);
+    }, 1000);
+  }, []);
+  
+  // Function to manually trigger showing the onboarding form
+  const showOnboardingForm = useCallback(() => {
+    if (!showingOnboardingForm) {
+      setMessages(prev => [
+        ...prev,
+        {
+          text: "Here's our onboarding form. Please fill it out to get started with Bamboo AI:",
+          type: "assistant",
+          timestamp: new Date(),
+          id: uuidv4()
+        },
+        {
+          type: "onboarding-form",
+          timestamp: new Date(),
+          id: uuidv4()
+        }
+      ]);
+      setShowingOnboardingForm(true);
+    }
+  }, [showingOnboardingForm]);
+  
   const clearConversation = async () => {
     try {
-      if (conversationId) {
-        // Delete all messages for this conversation
-        const success = await deleteConversationMessages(conversationId);
-        
-        if (!success) {
-          return false;
+      // Reset conversation to initial state
+      setMessages([
+        {
+          text: "Hey! I'm Jay, founder of Bamboo, the AI Ad Agency. Congrats! 🎉 You've unlocked one month FREE. 🤑",
+          type: "assistant",
+          timestamp: new Date(),
+          id: uuidv4()
         }
+      ]);
+      setUserHasResponded(false);
+      setShowingOnboardingForm(false);
+      
+      // Create a new message manager
+      const manager = new MessageManager([], null, false);
+      setMessageManager(manager);
+      
+      // Add follow-up messages with slight delays
+      setTimeout(() => {
+        const secondMessage = {
+          text: options.skipIntroCallMessage 
+            ? "Thanks for sharing! Is there anything else you'd like to tell me about your business?" 
+            : "To redeem and get started, let's chat. Just 15-minutes to start on the right foot. It's really important to me to learn about your business so your first campaign is a success.",
+          type: "assistant" as const,
+          timestamp: new Date(),
+          id: uuidv4()
+        };
         
-        // Reset the conversation state
-        setMessages([]);
-        setUserHasResponded(false);
+        setMessages(prev => [...prev, secondMessage]);
         
-        if (messageManager) {
-          messageManager.setMessages([]);
-          messageManager.setUserHasResponded(false);
-          // Reinitialize conversation with welcome messages
-          await startNewConversation(messageManager);
-        }
-        
-        return true;
-      }
-      return false;
+        setTimeout(() => {
+          const calendlyMessage = {
+            text: "",
+            type: "assistant" as const,
+            showCalendly: true,
+            timestamp: new Date(),
+            id: uuidv4()
+          };
+          
+          setMessages(prev => [...prev, calendlyMessage]);
+        }, 800);
+      }, 800);
+      
+      return true;
     } catch (error) {
-      console.error("Error clearing conversation:", error);
+      console.error("Failed to clear conversation:", error);
       return false;
     }
   };
@@ -249,6 +238,8 @@ export const useInternalChat = () => {
     messages,
     isLoading,
     handleSendMessage,
-    clearConversation
+    clearConversation,
+    showOnboardingForm,
+    handleFormSubmitSuccess
   };
 };

@@ -1,9 +1,9 @@
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 export interface Message {
   text?: string;
-  type: "assistant" | "user";
+  type: "assistant" | "user" | "onboarding-form";
   timestamp: Date;
   showCalendly?: boolean;
 }
@@ -28,6 +28,7 @@ export const useChat = (options: UseChatOptions = {}) => {
   
   const [isLoading, setIsLoading] = useState(false);
   const [userHasResponded, setUserHasResponded] = useState(false);
+  const [showingOnboardingForm, setShowingOnboardingForm] = useState(false);
   
   // Load the follow-up messages immediately after component mounts
   useState(() => {
@@ -65,6 +66,12 @@ export const useChat = (options: UseChatOptions = {}) => {
   });
   
   const handleSendMessage = (inputValue: string) => {
+    // Check for onboarding trigger words
+    const onboardingTriggers = ['onboarding', 'sign up', 'register', 'signup', 'onboard'];
+    const shouldShowOnboardingForm = onboardingTriggers.some(trigger => 
+      inputValue.toLowerCase().includes(trigger)
+    );
+    
     // Add user message immediately
     const userMessage = {
       text: inputValue,
@@ -75,7 +82,34 @@ export const useChat = (options: UseChatOptions = {}) => {
     setMessages(prev => [...prev, userMessage]);
     setUserHasResponded(true);
     
-    // Add assistant response after a short delay
+    // If trigger word detected, show onboarding form
+    if (shouldShowOnboardingForm && !showingOnboardingForm) {
+      setTimeout(() => {
+        setMessages(prev => [
+          ...prev,
+          {
+            text: "Great! Let's get you onboarded with Bamboo AI. Please fill out this quick form:",
+            type: "assistant",
+            timestamp: new Date()
+          }
+        ]);
+        
+        // Add onboarding form after a short delay
+        setTimeout(() => {
+          setMessages(prev => [
+            ...prev,
+            {
+              type: "onboarding-form",
+              timestamp: new Date()
+            }
+          ]);
+          setShowingOnboardingForm(true);
+        }, 500);
+      }, 800);
+      return;
+    }
+    
+    // Regular message flow
     setTimeout(() => {
       const responseText = options.skipIntroCallMessage ? 
         "Thanks for sharing! Is there anything else you'd like to tell me about your business?" :
@@ -107,6 +141,41 @@ export const useChat = (options: UseChatOptions = {}) => {
     }, 800);
   };
   
+  // Function to handle successful form submission
+  const handleFormSubmitSuccess = useCallback(() => {
+    // Add a follow-up message after form submission
+    setTimeout(() => {
+      setMessages(prev => [
+        ...prev,
+        {
+          text: "Thank you for completing the onboarding form! Our team will review your information and get back to you soon. In the meantime, feel free to ask any questions about our services.",
+          type: "assistant",
+          timestamp: new Date()
+        }
+      ]);
+      setShowingOnboardingForm(false);
+    }, 1000);
+  }, []);
+  
+  // Function to manually trigger showing the onboarding form
+  const showOnboardingForm = useCallback(() => {
+    if (!showingOnboardingForm) {
+      setMessages(prev => [
+        ...prev,
+        {
+          text: "Here's our onboarding form. Please fill it out to get started with Bamboo AI:",
+          type: "assistant",
+          timestamp: new Date()
+        },
+        {
+          type: "onboarding-form",
+          timestamp: new Date()
+        }
+      ]);
+      setShowingOnboardingForm(true);
+    }
+  }, [showingOnboardingForm]);
+  
   const clearConversation = () => {
     // Reset conversation to initial state
     setMessages([
@@ -117,6 +186,7 @@ export const useChat = (options: UseChatOptions = {}) => {
       }
     ]);
     setUserHasResponded(false);
+    setShowingOnboardingForm(false);
     
     // Add follow-up messages with slight delays
     setTimeout(() => {
@@ -151,6 +221,8 @@ export const useChat = (options: UseChatOptions = {}) => {
     messages,
     isLoading,
     handleSendMessage,
-    clearConversation
+    clearConversation,
+    showOnboardingForm,
+    handleFormSubmitSuccess
   };
 };
