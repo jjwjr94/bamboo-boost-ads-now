@@ -44,35 +44,20 @@ export const useChat = (options: UseChatOptions = {}) => {
         }
       ]);
       
-      // Add the third message (calendly button) after another small delay
-      const timer2 = setTimeout(() => {
+      // Add the onboarding form message after another small delay
+      const timer3 = setTimeout(() => {
         setMessages(prev => [
           ...prev,
           {
             text: "",
-            type: "assistant",
-            showCalendly: true,
+            type: "onboardingForm",
             timestamp: new Date()
           }
         ]);
-        
-        // Add the fourth message (onboarding form) after another small delay
-        const timer3 = setTimeout(() => {
-          setMessages(prev => [
-            ...prev,
-            {
-              text: "",
-              type: "onboardingForm",
-              timestamp: new Date()
-            }
-          ]);
-          setIsLoading(false);
-        }, 800);
-        
-        return () => clearTimeout(timer3);
+        setIsLoading(false);
       }, 800);
       
-      return () => clearTimeout(timer2);
+      return () => clearTimeout(timer3);
     }, 800);
     
     return () => clearTimeout(timer1);
@@ -93,7 +78,7 @@ export const useChat = (options: UseChatOptions = {}) => {
     setTimeout(() => {
       const responseText = options.skipIntroCallMessage ? 
         "Thanks for sharing! Is there anything else you'd like to tell me about your business?" :
-        "Thanks for your message! To get started, please book a kickoff call.";
+        "Thanks for your message! Is there anything else you'd like to tell me about your business?";
       
       setMessages(prev => [
         ...prev,
@@ -104,21 +89,13 @@ export const useChat = (options: UseChatOptions = {}) => {
         }
       ]);
       
-      // Add calendly button after another short delay
+      // Add onboarding form after a delay if not already shown and we're not skipping intro message
       if (!options.skipIntroCallMessage) {
         setTimeout(() => {
-          setMessages(prev => [
-            ...prev,
-            {
-              text: "",
-              type: "assistant",
-              showCalendly: true,
-              timestamp: new Date()
-            }
-          ]);
+          // Check if onboarding form already exists
+          const hasOnboardingForm = messages.some(m => m.type === "onboardingForm");
           
-          // Add onboarding form after another delay
-          setTimeout(() => {
+          if (!hasOnboardingForm) {
             setMessages(prev => [
               ...prev,
               {
@@ -127,7 +104,7 @@ export const useChat = (options: UseChatOptions = {}) => {
                 timestamp: new Date()
               }
             ]);
-          }, 800);
+          }
         }, 800);
       }
     }, 800);
@@ -151,34 +128,22 @@ export const useChat = (options: UseChatOptions = {}) => {
         {
           text: options.skipIntroCallMessage 
             ? "Thanks for sharing! Is there anything else you'd like to tell me about your business?" 
-            : "To redeem and get started, let's chat. Just 15-minutes to start on the right foot. It's really important to me to learn about your business so your first campaign is a success.",
+            : "To redeem and get started, please fill out this form.",
           type: "assistant",
           timestamp: new Date()
         }
       ]);
       
+      // Add onboarding form after a delay
       setTimeout(() => {
         setMessages(prev => [
           ...prev,
           {
             text: "",
-            type: "assistant",
-            showCalendly: true,
+            type: "onboardingForm",
             timestamp: new Date()
           }
         ]);
-        
-        // Add onboarding form after another delay
-        setTimeout(() => {
-          setMessages(prev => [
-            ...prev,
-            {
-              text: "",
-              type: "onboardingForm",
-              timestamp: new Date()
-            }
-          ]);
-        }, 800);
       }, 800);
     }, 800);
     
