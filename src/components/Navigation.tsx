@@ -84,21 +84,15 @@ const Navigation = () => {
             </Link>
           </div>
           
-          {/* Desktop Right Navigation */}
+          {/* Desktop Right Navigation - Removed Feedback and Onboarding links */}
           <div className="hidden lg:flex gap-4 items-center">
-            <Link to="/feedback">
-              <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Feedback</Button>
-            </Link>
-            <Link to="/onboarding">
-              <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Onboarding</Button>
-            </Link>
             <Link to="/chat" onClick={handleGetStartedClick}>
               <Button className="bg-bamboo-primary hover:bg-bamboo-secondary text-white">Get Started</Button>
             </Link>
           </div>
         </div>
 
-        {/* Mobile Menu (Expanded) */}
+        {/* Mobile Menu (Expanded) - Removed Feedback and Onboarding links */}
         {isMenuOpen && (
           <div className="lg:hidden bg-white flex flex-col w-full py-4 animate-fade-in">
             <div className="flex flex-col gap-2">
@@ -110,12 +104,6 @@ const Navigation = () => {
               </Link>
               <Link to={getSectionLink("pricing")} onClick={toggleMenu}>
                 <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">Pricing</Button>
-              </Link>
-              <Link to="/feedback" onClick={toggleMenu}>
-                <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">Feedback</Button>
-              </Link>
-              <Link to="/onboarding" onClick={toggleMenu}>
-                <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">Onboarding</Button>
               </Link>
               <Link to="/chat" onClick={() => { toggleMenu(); handleGetStartedClick(); }}>
                 <Button className="w-full justify-start bg-bamboo-primary hover:bg-bamboo-secondary text-white">Get Started</Button>
