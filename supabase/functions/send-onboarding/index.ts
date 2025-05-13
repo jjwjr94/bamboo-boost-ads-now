@@ -37,26 +37,36 @@ serve(async (req) => {
       );
     }
 
-    // Send email to hello@withbamboo.com
+    // During development, send an email to the verified email address
+    // In production with a verified domain, you'd send to hello@withbamboo.com
+    const verifiedEmail = "jay@adocointech.com"; // This is the verified email in your Resend account
+    
     try {
+      // Prepare email content that would normally go to hello@withbamboo.com
+      const htmlContent = `
+        <h2>New Onboarding Request from Bamboo AI</h2>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Company Website:</strong> <a href="${companyUrl}" target="_blank">${companyUrl}</a></p>
+        <p><strong>Company Description:</strong></p>
+        <p>${companyDescription.replace(/\n/g, "<br/>")}</p>
+      `;
+      
+      // Send email to the verified email (for development)
       const data = await resend.emails.send({
         from: "Bamboo AI Onboarding <onboarding@resend.dev>",
-        to: ["hello@withbamboo.com"],
+        to: [verifiedEmail], // Send to the verified email
         reply_to: email,
-        subject: "New Onboarding Request",
-        html: `
-          <h2>New Onboarding Request from Bamboo AI</h2>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Phone:</strong> ${phone}</p>
-          <p><strong>Company Website:</strong> <a href="${companyUrl}" target="_blank">${companyUrl}</a></p>
-          <p><strong>Company Description:</strong></p>
-          <p>${companyDescription.replace(/\n/g, "<br/>")}</p>
-        `,
+        subject: "[DEV] New Onboarding Request (would go to hello@withbamboo.com)",
+        html: htmlContent,
       });
 
-      console.log("Onboarding email sent successfully:", data);
+      console.log("Onboarding email sent successfully to verified email:", data);
       
-      return new Response(JSON.stringify({ success: true }), {
+      return new Response(JSON.stringify({ 
+        success: true, 
+        note: "Email sent to verified development email. In production, this would go to hello@withbamboo.com." 
+      }), {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });

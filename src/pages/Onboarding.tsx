@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -37,6 +36,7 @@ const Onboarding = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [devNote, setDevNote] = useState<string | null>(null);
 
   // Initialize the form with React Hook Form
   const form = useForm<FormValues>({
@@ -54,6 +54,7 @@ const Onboarding = () => {
     setIsSubmitting(true);
     setSubmissionError(null);
     setSubmitSuccess(false);
+    setDevNote(null);
     
     try {
       // Call the Supabase Edge Function to send the onboarding email
@@ -71,6 +72,11 @@ const Onboarding = () => {
       }
       
       setSubmitSuccess(true);
+      
+      // Check if there's a development note
+      if (data && data.note) {
+        setDevNote(data.note);
+      }
       
       toast.success("Onboarding request submitted!", {
         description: "We'll get back to you shortly to continue the process.",
@@ -109,6 +115,14 @@ const Onboarding = () => {
                 </Alert>
               )}
               
+              {devNote && (
+                <Alert className="mb-6 bg-amber-50 border-amber-200">
+                  <AlertDescription className="text-amber-800">
+                    <strong>Developer Note:</strong> {devNote}
+                  </AlertDescription>
+                </Alert>
+              )}
+              
               {submitSuccess ? (
                 <div className="text-center py-8">
                   <h3 className="text-2xl font-semibold mb-4" style={{ color: "#00D1A1" }}>
@@ -121,6 +135,7 @@ const Onboarding = () => {
                   <Button 
                     onClick={() => {
                       setSubmitSuccess(false);
+                      setDevNote(null);
                       form.reset();
                     }}
                     variant="outline"
