@@ -36,9 +36,7 @@ export const useChat = (options: UseChatOptions = {}) => {
       setMessages(prev => [
         ...prev,
         {
-          text: options.skipIntroCallMessage 
-            ? "Thanks for sharing! Is there anything else you'd like to tell me about your business?" 
-            : "",
+          text: "Please share some information to get started",
           type: "assistant",
           timestamp: new Date()
         }
@@ -124,9 +122,7 @@ export const useChat = (options: UseChatOptions = {}) => {
       setMessages(prev => [
         ...prev,
         {
-          text: options.skipIntroCallMessage 
-            ? "Thanks for sharing! Is there anything else you'd like to tell me about your business?" 
-            : "",
+          text: "Please share some information to get started",
           type: "assistant",
           timestamp: new Date()
         }
