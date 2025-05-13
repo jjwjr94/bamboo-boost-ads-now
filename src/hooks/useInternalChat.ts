@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import type { Message } from "./chat/types";
 import { getDeviceId, getConversationId } from "./chat/utils";
@@ -67,7 +66,7 @@ export const useInternalChat = () => {
             );
             
             // Initialize message manager with existing messages
-            const manager = new MessageManager(loadedMessages, convId, hasUserMessage);
+            const manager = new MessageManager(loadedMessages, convId);
             setMessageManager(manager);
             
             // Display the loaded messages
@@ -75,20 +74,20 @@ export const useInternalChat = () => {
           } else {
             console.log("No existing messages found, starting new conversation");
             // If no messages, start with initial welcome messages
-            const manager = new MessageManager([], convId, false);
+            const manager = new MessageManager([], convId);
             setMessageManager(manager);
             await startNewConversation(manager);
           }
         } else {
           // Failed to create conversation
           console.error("Failed to create conversation");
-          const manager = new MessageManager([], null, false);
+          const manager = new MessageManager([], null);
           setMessageManager(manager);
           await startNewConversation(manager);
         }
       } catch (error) {
         console.error("Error initializing chat:", error);
-        const manager = new MessageManager([], null, false);
+        const manager = new MessageManager([], null);
         setMessageManager(manager);
         await startNewConversation(manager);
       } finally {

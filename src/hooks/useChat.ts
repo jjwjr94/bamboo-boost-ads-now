@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export interface Message {
   text?: string;
-  type: "assistant" | "user";
+  type: "assistant" | "user" | "onboardingForm";
   timestamp: Date;
   showCalendly?: boolean;
 }
@@ -55,7 +55,21 @@ export const useChat = (options: UseChatOptions = {}) => {
             timestamp: new Date()
           }
         ]);
-        setIsLoading(false);
+        
+        // Add the fourth message (onboarding form) after another small delay
+        const timer3 = setTimeout(() => {
+          setMessages(prev => [
+            ...prev,
+            {
+              text: "",
+              type: "onboardingForm",
+              timestamp: new Date()
+            }
+          ]);
+          setIsLoading(false);
+        }, 800);
+        
+        return () => clearTimeout(timer3);
       }, 800);
       
       return () => clearTimeout(timer2);
@@ -102,6 +116,18 @@ export const useChat = (options: UseChatOptions = {}) => {
               timestamp: new Date()
             }
           ]);
+          
+          // Add onboarding form after another delay
+          setTimeout(() => {
+            setMessages(prev => [
+              ...prev,
+              {
+                text: "",
+                type: "onboardingForm",
+                timestamp: new Date()
+              }
+            ]);
+          }, 800);
         }, 800);
       }
     }, 800);
@@ -141,6 +167,18 @@ export const useChat = (options: UseChatOptions = {}) => {
             timestamp: new Date()
           }
         ]);
+        
+        // Add onboarding form after another delay
+        setTimeout(() => {
+          setMessages(prev => [
+            ...prev,
+            {
+              text: "",
+              type: "onboardingForm",
+              timestamp: new Date()
+            }
+          ]);
+        }, 800);
       }, 800);
     }, 800);
     

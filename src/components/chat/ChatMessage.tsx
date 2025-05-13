@@ -5,11 +5,12 @@ import { Avatar } from "@/components/ui/avatar";
 import { Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import OnboardingFormMessage from "./OnboardingFormMessage";
 import posthog from "posthog-js";
 
 export interface Message {
   text?: string;
-  type: "assistant" | "action" | "user";
+  type: "assistant" | "action" | "user" | "onboardingForm";
   timestamp: Date;
   showCalendly?: boolean;
   id?: string;
@@ -37,6 +38,26 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
       });
     }
   };
+
+  // For onboarding form message type
+  if (message.type === "onboardingForm") {
+    return (
+      <div className="flex items-start gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500 justify-start">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Avatar className="h-10 w-10 border">
+              <img src="/lovable-uploads/ee7f1b89-e60e-4121-8fb6-dba324f20c21.png" alt="Bamboo AI" />
+            </Avatar>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{format(message.timestamp, "MMM d, h:mm a")}</p>
+          </TooltipContent>
+        </Tooltip>
+        
+        <OnboardingFormMessage />
+      </div>
+    );
+  }
 
   return (
     <div className={`flex items-start gap-4 animate-in fade-in slide-in-from-bottom-3 duration-500 ${
