@@ -38,7 +38,7 @@ export const useChat = (options: UseChatOptions = {}) => {
         {
           text: options.skipIntroCallMessage 
             ? "Thanks for sharing! Is there anything else you'd like to tell me about your business?" 
-            : "To redeem and get started, please fill out this form.",
+            : "",
           type: "assistant",
           timestamp: new Date()
         }
@@ -78,7 +78,7 @@ export const useChat = (options: UseChatOptions = {}) => {
     setTimeout(() => {
       const responseText = options.skipIntroCallMessage ? 
         "Thanks for sharing! Is there anything else you'd like to tell me about your business?" :
-        "Thanks for your message! Is there anything else you'd like to tell me about your business?";
+        "Thanks for your message! If you submitted the contact form above, we'll be in touch shortly.";
       
       setMessages(prev => [
         ...prev,
@@ -128,7 +128,7 @@ export const useChat = (options: UseChatOptions = {}) => {
         {
           text: options.skipIntroCallMessage 
             ? "Thanks for sharing! Is there anything else you'd like to tell me about your business?" 
-            : "To redeem and get started, please fill out this form.",
+            : "",
           type: "assistant",
           timestamp: new Date()
         }
