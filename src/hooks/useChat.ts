@@ -38,7 +38,7 @@ export const useChat = (options: UseChatOptions = {}) => {
         {
           text: options.skipIntroCallMessage 
             ? "Thanks for sharing! Is there anything else you'd like to tell me about your business?" 
-            : "To redeem and get started, let's chat. Just 15-minutes to start on the right foot. It's really important to me to learn about your business so your first campaign is a success.",
+            : "To redeem and get started, please fill out this form.",
           type: "assistant",
           timestamp: new Date()
         }
