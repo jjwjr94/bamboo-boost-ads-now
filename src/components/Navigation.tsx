@@ -86,8 +86,11 @@ const Navigation = () => {
           
           {/* Desktop Right Navigation */}
           <div className="hidden lg:flex gap-4 items-center">
-            <Link to="/chat">
-              <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">App</Button>
+            <Link to="/feedback">
+              <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Feedback</Button>
+            </Link>
+            <Link to="/onboarding">
+              <Button variant="ghost" className="text-bamboo-navy hover:text-bamboo-primary">Onboarding</Button>
             </Link>
             <Link to="/chat" onClick={handleGetStartedClick}>
               <Button className="bg-bamboo-primary hover:bg-bamboo-secondary text-white">Get Started</Button>
@@ -108,8 +111,11 @@ const Navigation = () => {
               <Link to={getSectionLink("pricing")} onClick={toggleMenu}>
                 <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">Pricing</Button>
               </Link>
-              <Link to="/chat" onClick={toggleMenu}>
-                <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">App</Button>
+              <Link to="/feedback" onClick={toggleMenu}>
+                <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">Feedback</Button>
+              </Link>
+              <Link to="/onboarding" onClick={toggleMenu}>
+                <Button variant="ghost" className="w-full justify-start text-bamboo-navy hover:text-bamboo-primary">Onboarding</Button>
               </Link>
               <Link to="/chat" onClick={() => { toggleMenu(); handleGetStartedClick(); }}>
                 <Button className="w-full justify-start bg-bamboo-primary hover:bg-bamboo-secondary text-white">Get Started</Button>

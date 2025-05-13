@@ -68,6 +68,96 @@ export type Database = {
           },
         ]
       }
+      org_marketing_profiles: {
+        Row: {
+          ad_history: Json | null
+          channel_priority: string[] | null
+          company_description: string | null
+          company_name: string | null
+          competitors: string[] | null
+          created_at: string
+          current_tools: string[] | null
+          geo_markets: string[] | null
+          id: number
+          industry: string | null
+          monthly_ad_budget: string | null
+          org_id: string
+          primary_audiences: string[] | null
+          priority_marketing_objectives: string[] | null
+          product_descriptions: Json | null
+          products: string[] | null
+          regulatory_notes: string | null
+          updated_at: string
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          ad_history?: Json | null
+          channel_priority?: string[] | null
+          company_description?: string | null
+          company_name?: string | null
+          competitors?: string[] | null
+          created_at?: string
+          current_tools?: string[] | null
+          geo_markets?: string[] | null
+          id?: never
+          industry?: string | null
+          monthly_ad_budget?: string | null
+          org_id: string
+          primary_audiences?: string[] | null
+          priority_marketing_objectives?: string[] | null
+          product_descriptions?: Json | null
+          products?: string[] | null
+          regulatory_notes?: string | null
+          updated_at?: string
+          user_id: string
+          website?: string | null
+        }
+        Update: {
+          ad_history?: Json | null
+          channel_priority?: string[] | null
+          company_description?: string | null
+          company_name?: string | null
+          competitors?: string[] | null
+          created_at?: string
+          current_tools?: string[] | null
+          geo_markets?: string[] | null
+          id?: never
+          industry?: string | null
+          monthly_ad_budget?: string | null
+          org_id?: string
+          primary_audiences?: string[] | null
+          priority_marketing_objectives?: string[] | null
+          product_descriptions?: Json | null
+          products?: string[] | null
+          regulatory_notes?: string | null
+          updated_at?: string
+          user_id?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      settings: {
+        Row: {
+          created_at: string | null
+          id: string
+          key: string
+          value: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          key: string
+          value: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          key?: string
+          value?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

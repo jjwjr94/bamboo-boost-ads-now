@@ -3,3 +3,6 @@ project_id = "ncuidluikeknatuqiazj"
 
 [functions.send-feedback]
 verify_jwt = false
+
+[functions.send-onboarding]
+verify_jwt = false
