@@ -36,7 +36,7 @@ export const useChat = (options: UseChatOptions = {}) => {
       setMessages(prev => [
         ...prev,
         {
-          text: "Please share some information to get started",
+          text: "To redeem and get started, please fill out this form.",
           type: "assistant",
           timestamp: new Date()
         }
