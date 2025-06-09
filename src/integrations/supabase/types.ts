@@ -9,6 +9,27 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      campaign_chunks: {
+        Row: {
+          content: Json
+          id: string
+          inserted_at: string | null
+          title: string
+        }
+        Insert: {
+          content: Json
+          id?: string
+          inserted_at?: string | null
+          title: string
+        }
+        Update: {
+          content?: Json
+          id?: string
+          inserted_at?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       chat_conversations: {
         Row: {
           conversation_id: string | null
@@ -68,6 +89,24 @@ export type Database = {
           },
         ]
       }
+      n8n_chat_histories: {
+        Row: {
+          id: number
+          message: Json
+          session_id: string
+        }
+        Insert: {
+          id?: number
+          message: Json
+          session_id: string
+        }
+        Update: {
+          id?: number
+          message?: Json
+          session_id?: string
+        }
+        Relationships: []
+      }
       org_marketing_profiles: {
         Row: {
           ad_history: Json | null
@@ -81,14 +120,15 @@ export type Database = {
           id: number
           industry: string | null
           monthly_ad_budget: string | null
-          org_id: string
+          org_id: string | null
           primary_audiences: string[] | null
           priority_marketing_objectives: string[] | null
           product_descriptions: Json | null
           products: string[] | null
           regulatory_notes: string | null
+          sessionId: string | null
           updated_at: string
-          user_id: string
+          user_id: string | null
           website: string | null
         }
         Insert: {
@@ -103,14 +143,15 @@ export type Database = {
           id?: never
           industry?: string | null
           monthly_ad_budget?: string | null
-          org_id: string
+          org_id?: string | null
           primary_audiences?: string[] | null
           priority_marketing_objectives?: string[] | null
           product_descriptions?: Json | null
           products?: string[] | null
           regulatory_notes?: string | null
+          sessionId?: string | null
           updated_at?: string
-          user_id: string
+          user_id?: string | null
           website?: string | null
         }
         Update: {
@@ -125,14 +166,15 @@ export type Database = {
           id?: never
           industry?: string | null
           monthly_ad_budget?: string | null
-          org_id?: string
+          org_id?: string | null
           primary_audiences?: string[] | null
           priority_marketing_objectives?: string[] | null
           product_descriptions?: Json | null
           products?: string[] | null
           regulatory_notes?: string | null
+          sessionId?: string | null
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
           website?: string | null
         }
         Relationships: []

@@ -12,6 +12,7 @@ import InternalChat from "./pages/InternalChat";
 import Feedback from "./pages/Feedback";
 import Onboarding from "./pages/Onboarding";
 import MeetingConfirmation from "./pages/MeetingConfirmation";
+import OAuth2Callback from "./pages/OAuth2Callback";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/meeting-confirmation" element={<MeetingConfirmation />} />
+          <Route path="/oauth2/callback" element={<OAuth2Callback />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
