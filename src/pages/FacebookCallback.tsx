@@ -1,44 +1,10 @@
 
 import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const FacebookCallback = () => {
   const [status, setStatus] = useState<'processing' | 'success' | 'error'>('processing');
   const [message, setMessage] = useState('Processing Meta authorization...');
-
-  const exchangeCodeForToken = async (code: string) => {
-    // You'll need to replace these with your actual Facebook App credentials
-    const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID || 'YOUR_FACEBOOK_APP_ID';
-    const FACEBOOK_APP_SECRET = process.env.REACT_APP_FACEBOOK_APP_SECRET || 'YOUR_FACEBOOK_APP_SECRET';
-    const REDIRECT_URI = `${window.location.origin}/auth/facebook/callback`;
-
-    const params = new URLSearchParams({
-      client_id: FACEBOOK_APP_ID,
-      redirect_uri: REDIRECT_URI,
-      client_secret: FACEBOOK_APP_SECRET,
-      code,
-    });
-
-    try {
-      const response = await fetch(
-        `https://graph.facebook.com/v18.0/oauth/access_token?${params.toString()}`
-      );
-      
-      if (!response.ok) {
-        throw new Error(`Facebook API error: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      if (data.error) {
-        throw new Error(`Facebook OAuth error: ${data.error.message}`);
-      }
-      
-      return data.access_token;
-    } catch (error) {
-      console.error('Error exchanging code for token:', error);
-      throw error;
-    }
-  };
 
   useEffect(() => {
     const handleFacebookAuth = async () => {
@@ -63,38 +29,31 @@ const FacebookCallback = () => {
           return;
         }
 
-        setMessage('Exchanging code for access token...');
-        
-        // Exchange the code for an access token
-        const accessToken = await exchangeCodeForToken(code);
-        
-        setMessage('Sending token to server...');
+        setMessage('Processing Facebook authorization...');
 
-        // Replace with your MCP server's public URL
-        const MCP_SERVER_URL = "https://your-mcp-server.com/auth/facebook/token";
-
-        const response = await fetch(MCP_SERVER_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include', // if you want to set cookies/session
-          body: JSON.stringify({
-            access_token: accessToken,
+        // Call our Supabase Edge Function to handle the token exchange securely
+        const { data, error: functionError } = await supabase.functions.invoke('facebook-auth', {
+          body: {
+            code,
             state,
-            timestamp: new Date().toISOString(),
-            source: 'meta_facebook_callback'
-          }),
+            redirect_uri: `${window.location.origin}/auth/facebook/callback`
+          }
         });
 
-        if (response.ok) {
+        if (functionError) {
+          console.error('Edge function error:', functionError);
+          setStatus('error');
+          setMessage('Failed to process Facebook authorization. Please try again.');
+          return;
+        }
+
+        if (data?.success) {
           setStatus('success');
           setMessage('Meta authorization complete! You can close this window.');
         } else {
-          const errorText = await response.text();
-          console.error(`MCP server responded with status: ${response.status}`, errorText);
+          console.error('Facebook auth failed:', data?.error);
           setStatus('error');
-          setMessage('Failed to complete authorization. Please try again.');
+          setMessage(data?.error || 'Failed to complete authorization. Please try again.');
         }
       } catch (error) {
         console.error('Error during Facebook authentication:', error);
