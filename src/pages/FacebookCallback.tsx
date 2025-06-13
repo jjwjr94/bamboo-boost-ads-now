@@ -20,12 +20,22 @@ const FacebookCallback = () => {
           console.error('Facebook OAuth error:', error, errorDescription);
           setStatus('error');
           setMessage(`Facebook authorization failed: ${errorDescription}`);
+          
+          // Notify parent window of error
+          if (window.opener) {
+            window.opener.postMessage({ type: 'FACEBOOK_AUTH_ERROR', error: errorDescription }, window.location.origin);
+          }
           return;
         }
 
         if (!code) {
           setStatus('error');
           setMessage('No authorization code found in URL');
+          
+          // Notify parent window of error
+          if (window.opener) {
+            window.opener.postMessage({ type: 'FACEBOOK_AUTH_ERROR', error: 'No authorization code found' }, window.location.origin);
+          }
           return;
         }
 
@@ -44,21 +54,45 @@ const FacebookCallback = () => {
           console.error('Edge function error:', functionError);
           setStatus('error');
           setMessage('Failed to process Facebook authorization. Please try again.');
+          
+          // Notify parent window of error
+          if (window.opener) {
+            window.opener.postMessage({ type: 'FACEBOOK_AUTH_ERROR', error: 'Failed to process authorization' }, window.location.origin);
+          }
           return;
         }
 
         if (data?.success) {
           setStatus('success');
           setMessage('Meta authorization complete! You can close this window.');
+          
+          // Notify parent window of success
+          if (window.opener) {
+            window.opener.postMessage({ type: 'FACEBOOK_AUTH_SUCCESS' }, window.location.origin);
+            // Close the popup after a short delay
+            setTimeout(() => {
+              window.close();
+            }, 2000);
+          }
         } else {
           console.error('Facebook auth failed:', data?.error);
           setStatus('error');
           setMessage(data?.error || 'Failed to complete authorization. Please try again.');
+          
+          // Notify parent window of error
+          if (window.opener) {
+            window.opener.postMessage({ type: 'FACEBOOK_AUTH_ERROR', error: data?.error }, window.location.origin);
+          }
         }
       } catch (error) {
         console.error('Error during Facebook authentication:', error);
         setStatus('error');
         setMessage('Unexpected error during authorization. Please try again.');
+        
+        // Notify parent window of error
+        if (window.opener) {
+          window.opener.postMessage({ type: 'FACEBOOK_AUTH_ERROR', error: 'Unexpected error' }, window.location.origin);
+        }
       }
     };
 
@@ -94,7 +128,7 @@ const FacebookCallback = () => {
           {message}
         </p>
         {status === 'success' && (
-          <p className="text-gray-500 text-sm">You can close this window.</p>
+          <p className="text-gray-500 text-sm">This window will close automatically.</p>
         )}
         {status === 'error' && (
           <p className="text-gray-500 text-sm mt-4">
