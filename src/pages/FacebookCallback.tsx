@@ -1,15 +1,61 @@
+
 import { useEffect, useState } from "react";
 
 const FacebookCallback = () => {
   const [status, setStatus] = useState<'processing' | 'success' | 'error'>('processing');
   const [message, setMessage] = useState('Processing Meta authorization...');
 
+  const exchangeCodeForToken = async (code: string) => {
+    // You'll need to replace these with your actual Facebook App credentials
+    const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID || 'YOUR_FACEBOOK_APP_ID';
+    const FACEBOOK_APP_SECRET = process.env.REACT_APP_FACEBOOK_APP_SECRET || 'YOUR_FACEBOOK_APP_SECRET';
+    const REDIRECT_URI = `${window.location.origin}/auth/facebook/callback`;
+
+    const params = new URLSearchParams({
+      client_id: FACEBOOK_APP_ID,
+      redirect_uri: REDIRECT_URI,
+      client_secret: FACEBOOK_APP_SECRET,
+      code,
+    });
+
+    try {
+      const response = await fetch(
+        `https://graph.facebook.com/v18.0/oauth/access_token?${params.toString()}`
+      );
+      
+      if (!response.ok) {
+        throw new Error(`Facebook API error: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data.error) {
+        throw new Error(`Facebook OAuth error: ${data.error.message}`);
+      }
+      
+      return data.access_token;
+    } catch (error) {
+      console.error('Error exchanging code for token:', error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
-    const sendCodeToMCP = async () => {
+    const handleFacebookAuth = async () => {
       try {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code')?.trim();
         const state = urlParams.get('state')?.trim();
+        const error = urlParams.get('error');
+
+        // Check for OAuth errors from Facebook
+        if (error) {
+          const errorDescription = urlParams.get('error_description') || 'Unknown error';
+          console.error('Facebook OAuth error:', error, errorDescription);
+          setStatus('error');
+          setMessage(`Facebook authorization failed: ${errorDescription}`);
+          return;
+        }
 
         if (!code) {
           setStatus('error');
@@ -17,8 +63,15 @@ const FacebookCallback = () => {
           return;
         }
 
+        setMessage('Exchanging code for access token...');
+        
+        // Exchange the code for an access token
+        const accessToken = await exchangeCodeForToken(code);
+        
+        setMessage('Sending token to server...');
+
         // Replace with your MCP server's public URL
-        const MCP_SERVER_URL = "https://your-mcp-server.com/auth/facebook/callback";
+        const MCP_SERVER_URL = "https://your-mcp-server.com/auth/facebook/token";
 
         const response = await fetch(MCP_SERVER_URL, {
           method: 'POST',
@@ -27,7 +80,7 @@ const FacebookCallback = () => {
           },
           credentials: 'include', // if you want to set cookies/session
           body: JSON.stringify({
-            code,
+            access_token: accessToken,
             state,
             timestamp: new Date().toISOString(),
             source: 'meta_facebook_callback'
@@ -44,13 +97,13 @@ const FacebookCallback = () => {
           setMessage('Failed to complete authorization. Please try again.');
         }
       } catch (error) {
-        console.error('Error sending code to MCP server:', error);
+        console.error('Error during Facebook authentication:', error);
         setStatus('error');
-        setMessage('Unexpected error. Please try again.');
+        setMessage('Unexpected error during authorization. Please try again.');
       }
     };
 
-    sendCodeToMCP();
+    handleFacebookAuth();
   }, []);
 
   return (
@@ -83,6 +136,11 @@ const FacebookCallback = () => {
         </p>
         {status === 'success' && (
           <p className="text-gray-500 text-sm">You can close this window.</p>
+        )}
+        {status === 'error' && (
+          <p className="text-gray-500 text-sm mt-4">
+            Check the console for detailed error information.
+          </p>
         )}
       </div>
     </div>
