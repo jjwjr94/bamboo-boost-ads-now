@@ -13,6 +13,7 @@ import Feedback from "./pages/Feedback";
 import Onboarding from "./pages/Onboarding";
 import MeetingConfirmation from "./pages/MeetingConfirmation";
 import OAuth2Callback from "./pages/OAuth2Callback";
+import FacebookCallback from "./pages/FacebookCallback";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/meeting-confirmation" element={<MeetingConfirmation />} />
           <Route path="/oauth2/callback" element={<OAuth2Callback />} />
+          <Route path="/auth/facebook/callback" element={<FacebookCallback />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
