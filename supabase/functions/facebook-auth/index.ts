@@ -82,7 +82,7 @@ serve(async (req) => {
     console.log('Successfully obtained Facebook access token');
 
     // Send token to MCP server
-    const MCP_SERVER_URL = "https://withbamboo.com/auth/facebook/token";
+    const MCP_SERVER_URL = "https://your-mcp-server.com/auth/facebook/token";
     
     try {
       const mcpResponse = await fetch(MCP_SERVER_URL, {
