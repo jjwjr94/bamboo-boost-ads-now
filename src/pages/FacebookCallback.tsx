@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 
 const FacebookCallback = () => {
@@ -6,7 +5,7 @@ const FacebookCallback = () => {
   const [message, setMessage] = useState('Processing Meta authorization...');
 
   useEffect(() => {
-    const sendCodeToWebhook = async () => {
+    const sendCodeToMCP = async () => {
       try {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code')?.trim();
@@ -18,13 +17,15 @@ const FacebookCallback = () => {
           return;
         }
 
-        console.log('Meta authorization code:', code);
+        // Replace with your MCP server's public URL
+        const MCP_SERVER_URL = "https://your-mcp-server.com/auth/facebook/callback";
 
-        const response = await fetch('https://jayjeffwong.app.n8n.cloud/webhook/cdd21577-04ee-4881-83e1-b9f1bb188cf6', {
+        const response = await fetch(MCP_SERVER_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
+          credentials: 'include', // if you want to set cookies/session
           body: JSON.stringify({
             code,
             state,
@@ -35,28 +36,27 @@ const FacebookCallback = () => {
 
         if (response.ok) {
           setStatus('success');
-          setMessage('Meta authorization code sent successfully!');
+          setMessage('Meta authorization complete! You can close this window.');
         } else {
           const errorText = await response.text();
-          console.error(`Webhook responded with status: ${response.status}`, errorText);
+          console.error(`MCP server responded with status: ${response.status}`, errorText);
           setStatus('error');
-          setMessage('Failed to send authorization code. Please try again.');
+          setMessage('Failed to complete authorization. Please try again.');
         }
       } catch (error) {
-        console.error('Error sending code to webhook:', error);
+        console.error('Error sending code to MCP server:', error);
         setStatus('error');
         setMessage('Unexpected error. Please try again.');
       }
     };
 
-    sendCodeToWebhook();
+    sendCodeToMCP();
   }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md text-center">
-        <h1 className="text-2xl font-bold text-blue-600 mb-4">Meta Authorization Complete!</h1>
-
+        <h1 className="text-2xl font-bold text-blue-600 mb-4">Meta Authorization</h1>
         <div className="mb-6">
           {status === 'processing' && (
             <div className="flex items-center justify-center">
@@ -78,11 +78,9 @@ const FacebookCallback = () => {
             </div>
           )}
         </div>
-
         <p className={`text-gray-600 mb-4 ${status === 'error' ? 'text-red-600' : ''}`}>
           {message}
         </p>
-
         {status === 'success' && (
           <p className="text-gray-500 text-sm">You can close this window.</p>
         )}
