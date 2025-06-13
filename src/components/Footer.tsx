@@ -10,8 +10,16 @@ const Footer = () => {
     <footer className="border-t py-6">
       <Container>
         <div className="flex justify-between items-center">
-          <div className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Bamboo AI. All rights reserved.
+          <div className="flex items-center gap-4">
+            <div className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Bamboo AI. All rights reserved.
+            </div>
+            <Link 
+              to="/privacy-policy" 
+              className="text-sm text-muted-foreground hover:text-bamboo-navy transition-colors"
+            >
+              Privacy Policy
+            </Link>
           </div>
           <div>
             <TooltipProvider>
