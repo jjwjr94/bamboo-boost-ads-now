@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +14,7 @@ import MeetingConfirmation from "./pages/MeetingConfirmation";
 import OAuth2Callback from "./pages/OAuth2Callback";
 import FacebookCallback from "./pages/FacebookCallback";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +35,7 @@ const App = () => (
           <Route path="/meeting-confirmation" element={<MeetingConfirmation />} />
           <Route path="/oauth2/callback" element={<OAuth2Callback />} />
           <Route path="/auth/facebook/callback" element={<FacebookCallback />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
