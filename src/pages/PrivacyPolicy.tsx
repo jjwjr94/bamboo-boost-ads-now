@@ -116,7 +116,11 @@ const PrivacyPolicy = () => {
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-bamboo-navy mb-4">10. Contact Us</h2>
                 <p className="text-gray-700 mb-4">
-                  If you have any questions about this privacy policy or our data practices, please contact us through our feedback form or support channels.
+                  If you have any questions about this privacy policy or our data practices, please contact us at{" "}
+                  <a href="mailto:info@withbamboo.com" className="text-bamboo-navy hover:underline">
+                    info@withbamboo.com
+                  </a>{" "}
+                  or through our feedback form or support channels.
                 </p>
               </section>
             </div>
