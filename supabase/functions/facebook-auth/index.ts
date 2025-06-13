@@ -81,10 +81,8 @@ serve(async (req) => {
 
     console.log('Successfully obtained Facebook access token');
 
-    // TODO: Store the access token or send it to your MCP server
-    // For now, we'll just return success
-    // You can add your MCP server integration here
-    const MCP_SERVER_URL = "https://your-mcp-server.com/auth/facebook/token";
+    // Send token to MCP server
+    const MCP_SERVER_URL = "https://withbamboo.com/auth/facebook/token";
     
     try {
       const mcpResponse = await fetch(MCP_SERVER_URL, {
@@ -110,6 +108,8 @@ serve(async (req) => {
           }
         );
       }
+
+      console.log('Successfully sent token to MCP server');
     } catch (mcpError) {
       console.error('Error calling MCP server:', mcpError);
       // Continue anyway - you might want to handle this differently
